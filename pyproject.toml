@@ -1,0 +1,16 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "catala_devtools_fr"
+version = "0.0.1"
+dependencies = [
+  "panflute"
+]
+
+[project.optional-dependencies]
+dev = [
+  "mypy",
+  "tox"
+]
