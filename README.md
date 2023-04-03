@@ -1,6 +1,6 @@
 # catala-devtools-fr
 
-A library of helper tools for [https://catala-lang.org](catala) programming in the context
+A library of helper tools for [catala](https://catala-lang.org) programming in the context
 of French legislative texts.
 
 ## Installing
