@@ -53,7 +53,7 @@ def _query_article_legifrance(id: str, legifrance_args=None) -> Article:
     # Really, Legifrance?
     reply = httpx.post(url, headers=headers, json=params)
     reply.raise_for_status()
-    return reply
+    return json.loads(reply.text)
 
 def _get_legifrance_token(client_id: str, client_secret: str):
     data = {"grant_type": "client_credentials", 
@@ -67,4 +67,4 @@ def _get_legifrance_token(client_id: str, client_secret: str):
 
 if __name__ == "__main__":
     """Example use"""
-    print(_query_article_legifrance("LEGIARTI000038814944").text)
+    print(_query_article_legifrance("LEGIARTI000038814944"))
