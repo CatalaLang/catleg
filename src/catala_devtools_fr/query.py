@@ -37,14 +37,12 @@ def _query_article_legifrance(id: str, legifrance_args=None) -> Article:
     typ, id = parse_article_id(id)
     headers = {"Authorization": f"Bearer {token}",
                "Accept": "application/json"}
-    api_base_url = "https://api.aife.economie.gouv.fr/dila/legifrance-beta/lf-engine-app/"
+    api_base_url = "https://api.aife.economie.gouv.fr/dila/legifrance-beta/lf-engine-app"
     params = {}
     match typ:
-        case ArticleType.LEGIARTI:
-            url = f"{api_base_url}consult/getArticle"
+        case ArticleType.LEGIARTI | ArticleType.JORFARTI:
+            url = f"{api_base_url}/consult/getArticle"
             params = {"id": id}
-        case ArticleType.JORFARTI:
-            raise NotImplementedError("Should be with us real soon now :)")
         case ArticleType.CETATEXT:
             raise NotImplementedError("Should be with us real soon now :)")
         case _:
