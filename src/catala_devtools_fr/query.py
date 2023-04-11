@@ -13,7 +13,11 @@ import json
 
 
 def query_article(id: str) -> Optional[Article]:
-    pass
+    # TODO: configurable backends (legistix...)
+    # and fallbacks (e.g. query legistix but use
+    # Legifrance for CETATEXT records)
+    reply = _query_article_legifrance(id)
+    return _article_from_legifrance_reply(reply)
 
 def _query_article_legistix(id: str):
     raise NotImplementedError("Coming soon...")
@@ -23,8 +27,11 @@ def _check_nonempty_legifrance_credentials(client_id, client_secret):
         raise ValueError("Please supply Legifrance credentials \
                          (using .catdev_secrets.toml or in the environment)")
 
-def _check_and_refresh_token() -> str:
-    pass
+def _check_and_refresh_token(legifrance_args) -> str:
+    if 'token' in legifrance_args:
+        pass
+    else:
+        return _get_legifrance_token()
 
 def _query_article_legifrance(id: str, legifrance_args=None) -> Article:
     client_id = settings.get("client_id")
@@ -48,8 +55,8 @@ def _query_article_legifrance(id: str, legifrance_args=None) -> Article:
         case _:
             raise ValueError("Unknown article type")
 
-    # A POST request to fetch an article?!?
-    # And no way to use a simple query-param?
+    # A POST request to fetch an article?
+    # And no way of using a simple query string?
     # Really, Legifrance?
     reply = httpx.post(url, headers=headers, json=params)
     reply.raise_for_status()
@@ -65,6 +72,22 @@ def _get_legifrance_token(client_id: str, client_secret: str):
     reply.raise_for_status()
     return json.loads(reply.text)
 
+def _article_from_legifrance_reply(reply):
+    if 'article' in reply:
+        article = reply['article']
+    elif 'text' in reply:
+        article = reply['article']
+    else:
+        raise ValueError("cannot parse Legifrance reply")
+    text = article['texte']
+    id = article['id']
+    return {
+        'text': text,
+        'id': id,
+        'expiration_date': None,
+        'new_version': None,
+    }
+
 if __name__ == "__main__":
     """Example use"""
-    print(_query_article_legifrance("LEGIARTI000038814944"))
+    print(query_article("LEGIARTI000038814944"))
