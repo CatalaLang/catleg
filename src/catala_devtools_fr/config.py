@@ -1,9 +1,8 @@
-
-from dynaconf import Dynaconf # type:ignore
+from dynaconf import Dynaconf  # type:ignore
 
 settings = Dynaconf(
     envvar_prefix="CATDEV",
-    settings_files=['.catdev.toml', '.catdev_secrets.toml'],
+    settings_files=[".catdev.toml", ".catdev_secrets.toml"],
 )
 
 # `envvar_prefix` = export envvars with `export DYNACONF_FOO=bar`.

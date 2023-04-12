@@ -1,7 +1,9 @@
-from typing import Tuple, TextIO
+from typing import TextIO, Tuple
+
+import panflute as pf  # type:ignore
+
 from catala_devtools_fr.article import parse_article_id
 
-import panflute as pf # type:ignore
 
 def parse_catala_file(f: TextIO):
     """
@@ -9,12 +11,14 @@ def parse_catala_file(f: TextIO):
     """
     return _parse_catala_doc(pf.convert_text(f.read(), standalone=True))
 
+
 def _parse_catala_doc(doc):
     doc._articles = []
     pf.run_filters([_article_filter_action], doc=doc)
     articles = doc._articles
     del doc._articles
     return articles
+
 
 def _article_filter_action(elem, doc):
     match elem:
@@ -31,11 +35,14 @@ def _article_filter_action(elem, doc):
                     text.append(pf.stringify(elem.next))
                 elem = elem.next
 
-            doc._articles.append({"type": article_type, "id": article_id, "text": "".join(text)})
+            doc._articles.append(
+                {"type": article_type, "id": article_id, "text": "".join(text)}
+            )
 
 
 if __name__ == "__main__":
     import sys
-    with open(sys.argv[1], 'r') as f:
+
+    with open(sys.argv[1], "r") as f:
         doc = parse_catala_file(f)
         print(doc)
