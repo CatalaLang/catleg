@@ -6,7 +6,9 @@ build-backend = "hatchling.build"
 name = "catala_devtools_fr"
 version = "0.0.1"
 dependencies = [
-  "panflute"
+  "dynaconf",
+  "panflute",
+  "httpx"
 ]
 
 [project.optional-dependencies]

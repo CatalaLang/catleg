@@ -1,9 +1,7 @@
-from enum import Enum
 from typing import Tuple, TextIO
+from catala_devtools_fr.article import parse_article_id
 
 import panflute as pf # type:ignore
-
-ArticleType = Enum('ArticleType', ['LEGIARTI', 'CETATEXT', 'JORFARTI'])
 
 def parse_catala_file(f: TextIO):
     """
@@ -21,7 +19,7 @@ def _parse_catala_doc(doc):
 def _article_filter_action(elem, doc):
     match elem:
         case pf.Header() as hd if hd.identifier.startswith("article"):
-            article_type, article_id = _parse_article_id(hd.identifier)
+            article_type, article_id = parse_article_id(hd.identifier)
             # collect all elements up to next header or EOF,
             # skip code blocks and flatten the rest to get the
             # text representation of the legislative article
@@ -35,14 +33,6 @@ def _article_filter_action(elem, doc):
 
             doc._articles.append({"type": article_type, "id": article_id, "text": "".join(text)})
 
-def _parse_article_id(article_id: str) -> Tuple[ArticleType, str]:
-    """
-    Parse a string that looks like 'article-l822-2-legiarti000038814944'
-    and return (ArticleType.LEGIARTI, 'legiarti000038814944')
-    """
-    article_id = article_id.split('-')[-1]
-    typ = ArticleType[article_id[:8].upper()]
-    return typ, article_id
 
 if __name__ == "__main__":
     import sys
