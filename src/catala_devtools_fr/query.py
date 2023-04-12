@@ -5,7 +5,8 @@ Utilities for querying various data sources for law texts:
   - legistix database (auto-api via datasette)
 """
 
-from typing import Optional
+import datetime
+from typing import Optional, Protocol
 from catala_devtools_fr.article import Article, ArticleType, parse_article_id
 from catala_devtools_fr.config import settings
 import httpx
@@ -27,23 +28,13 @@ def _check_nonempty_legifrance_credentials(client_id, client_secret):
         raise ValueError("Please supply Legifrance credentials \
                          (using .catdev_secrets.toml or in the environment)")
 
-def _check_and_refresh_token(legifrance_args) -> str:
-    if 'token' in legifrance_args:
-        pass
-    else:
-        return _get_legifrance_token()
-
 def _query_article_legifrance(id: str, legifrance_args=None) -> Article:
     client_id = settings.get("client_id")
     client_secret = settings.get("client_secret")
     _check_nonempty_legifrance_credentials(client_id, client_secret)
 
-    # XXX TODO: check for an existing token and refresh as needed
-    token = _get_legifrance_token(client_id, client_secret)['access_token']
-
     typ, id = parse_article_id(id)
-    headers = {"Authorization": f"Bearer {token}",
-               "Accept": "application/json"}
+    headers = {"Accept": "application/json"}
     api_base_url = "https://api.aife.economie.gouv.fr/dila/legifrance-beta/lf-engine-app"
     match typ:
         case ArticleType.LEGIARTI | ArticleType.JORFARTI:
@@ -55,22 +46,15 @@ def _query_article_legifrance(id: str, legifrance_args=None) -> Article:
         case _:
             raise ValueError("Unknown article type")
 
-    # A POST request to fetch an article?
-    # And no way of using a simple query string?
-    # Really, Legifrance?
-    reply = httpx.post(url, headers=headers, json=params)
-    reply.raise_for_status()
-    return json.loads(reply.text)
+    # TODO: reuse client
+    with httpx.Client(auth=LegifranceAuth(client_id, client_secret)) as client:
+        # A POST request to fetch an article?
+        # And no way of using a simple query string?
+        # Really, Legifrance?
+        reply = client.post(url, headers=headers, json=params)
+        reply.raise_for_status()
+        return json.loads(reply.text)
 
-def _get_legifrance_token(client_id: str, client_secret: str):
-    data = {"grant_type": "client_credentials", 
-            "scope": "openid",
-            "client_id": client_id, 
-            "client_secret": client_secret
-            }
-    reply = httpx.post("https://oauth.aife.economie.gouv.fr/api/oauth/token", data=data)
-    reply.raise_for_status()
-    return json.loads(reply.text)
 
 def _article_from_legifrance_reply(reply):
     if 'article' in reply:
@@ -88,6 +72,38 @@ def _article_from_legifrance_reply(reply):
         'new_version': None,
     }
 
+
+class LegifranceAuth(httpx.Auth):
+    """
+    Manages authentication for Legifrance API access
+    Requires a client id and a client secret, uses those
+    to fetch and refresh an access token and passes it along
+    in requests.
+    """
+    def __init__(self, client_id: str, client_secret: str):
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.token = None
+        self.token_expires_at = None
+    
+    def auth_flow(self, request: httpx.Request):
+        if self.token is None or self.token_expires_at <= datetime.datetime.now():
+            data = {"grant_type": "client_credentials", 
+            "scope": "openid",
+            "client_id": self.client_id, 
+            "client_secret": self.client_secret
+            }
+            resp = httpx.post("https://oauth.aife.economie.gouv.fr/api/oauth/token", data=data)
+            if not 200 <= resp.status_code < 300:
+                yield resp
+            resp_json = json.loads(resp.text)
+            self.token = resp_json['access_token']
+            self.token_expires_at = datetime.datetime.now() + datetime.timedelta(seconds=resp_json['expires_in'])
+        
+        request.headers["Authorization"] = f"Bearer {self.token}"
+        yield request
+
+    
 if __name__ == "__main__":
     """Example use"""
     print(query_article("LEGIARTI000038814944"))
