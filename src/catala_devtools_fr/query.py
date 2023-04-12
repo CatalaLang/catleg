@@ -84,7 +84,7 @@ class LegifranceAuth(httpx.Auth):
         self.client_id = client_id
         self.client_secret = client_secret
         self.token = None
-        self.token_expires_at = None
+        self.token_expires_at: Optional[datetime.datetime] = None
     
     def auth_flow(self, request: httpx.Request):
         if self.token is None or self.token_expires_at <= datetime.datetime.now():
@@ -98,7 +98,8 @@ class LegifranceAuth(httpx.Auth):
                 yield resp
             resp_json = json.loads(resp.text)
             self.token = resp_json['access_token']
-            self.token_expires_at = datetime.datetime.now() + datetime.timedelta(seconds=resp_json['expires_in'])
+            expires_in = int(resp_json['expires_in'])
+            self.token_expires_at = datetime.datetime.now() + datetime.timedelta(seconds=expires_in)
         
         request.headers["Authorization"] = f"Bearer {self.token}"
         yield request
