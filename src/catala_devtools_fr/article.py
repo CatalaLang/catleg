@@ -19,23 +19,19 @@ ArticleType = Enum("ArticleType", ["LEGIARTI", "CETATEXT", "JORFARTI"])
 class Article(Protocol):
     @property
     def id(self) -> str:
-        """ """
-        pass
+        ...
 
     @property
     def text(self) -> str:
-        """ """
-        pass
+        ...
 
     @property
     def expiration_date(self) -> date:
-        """ """
-        pass
+        ...
 
     @property
     def new_version(self) -> str:
-        """ """
-        pass
+        ...
 
 
 def parse_article_id(article_id: str) -> Tuple[ArticleType, str]:

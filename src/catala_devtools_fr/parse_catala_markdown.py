@@ -1,19 +1,19 @@
 from types import SimpleNamespace
-from typing import TextIO, Tuple
+from typing import List, Optional, TextIO, Tuple
 
 import panflute as pf  # type:ignore
 
-from catala_devtools_fr.article import parse_article_id
+from catala_devtools_fr.article import Article, parse_article_id
 
 
-def parse_catala_file(f: TextIO):
+def parse_catala_file(f: TextIO) -> List[Article]:
     """
     Given a catala file, return a list of articles
     """
     return _parse_catala_doc(pf.convert_text(f.read(), standalone=True))
 
 
-def _parse_catala_doc(doc):
+def _parse_catala_doc(doc) -> List[Article]:
     doc._articles = []  # XXX replace with filter_action attribute
     pf.run_filters([_article_filter_action], doc=doc)
     articles = doc._articles

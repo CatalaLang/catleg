@@ -38,7 +38,7 @@ def _check_nonempty_legifrance_credentials(client_id, client_secret):
         )
 
 
-def _query_article_legifrance(id: str, legifrance_args=None) -> Article:
+def _query_article_legifrance(id: str, legifrance_args=None):
     client_id = settings.get("client_id")
     client_secret = settings.get("client_secret")
     _check_nonempty_legifrance_credentials(client_id, client_secret)
