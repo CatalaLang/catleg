@@ -7,6 +7,8 @@ Utilities for querying various data sources for law texts:
 
 import datetime
 import json
+import logging
+from types import SimpleNamespace
 from typing import Optional, Protocol
 
 import httpx
@@ -20,7 +22,8 @@ def query_article(id: str) -> Optional[Article]:
     # and fallbacks (e.g. query legistix but use
     # Legifrance for CETATEXT records)
     reply = _query_article_legifrance(id)
-    return _article_from_legifrance_reply(reply)
+    article = _article_from_legifrance_reply(reply)
+    return article
 
 
 def _query_article_legistix(id: str):
@@ -65,21 +68,23 @@ def _query_article_legifrance(id: str, legifrance_args=None) -> Article:
         return json.loads(reply.text)
 
 
-def _article_from_legifrance_reply(reply):
+def _article_from_legifrance_reply(reply) -> Optional[Article]:
     if "article" in reply:
         article = reply["article"]
+        if article is None:
+            return None
     elif "text" in reply:
         article = reply["article"]
     else:
         raise ValueError("cannot parse Legifrance reply")
     text = article["texte"]
     id = article["id"]
-    return {
-        "text": text,
-        "id": id,
-        "expiration_date": None,
-        "new_version": None,
-    }
+    return SimpleNamespace(
+        text=text,
+        id=id,
+        expiration_date=None,
+        new_version=None,
+    )
 
 
 class LegifranceAuth(httpx.Auth):
@@ -98,6 +103,7 @@ class LegifranceAuth(httpx.Auth):
 
     def auth_flow(self, request: httpx.Request):
         if self.token is None or self.token_expires_at <= datetime.datetime.now():
+            logging.debug("Requesting auth token")
             data = {
                 "grant_type": "client_credentials",
                 "scope": "openid",
@@ -115,6 +121,8 @@ class LegifranceAuth(httpx.Auth):
             self.token_expires_at = datetime.datetime.now() + datetime.timedelta(
                 seconds=expires_in
             )
+        else:
+            logging.debug("Using existing auth token")
 
         request.headers["Authorization"] = f"Bearer {self.token}"
         yield request

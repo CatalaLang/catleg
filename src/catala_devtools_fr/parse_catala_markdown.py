@@ -1,3 +1,4 @@
+from types import SimpleNamespace
 from typing import TextIO, Tuple
 
 import panflute as pf  # type:ignore
@@ -13,7 +14,7 @@ def parse_catala_file(f: TextIO):
 
 
 def _parse_catala_doc(doc):
-    doc._articles = []
+    doc._articles = []  # XXX replace with filter_action attribute
     pf.run_filters([_article_filter_action], doc=doc)
     articles = doc._articles
     del doc._articles
@@ -36,7 +37,7 @@ def _article_filter_action(elem, doc):
                 elem = elem.next
 
             doc._articles.append(
-                {"type": article_type, "id": article_id, "text": "".join(text)}
+                SimpleNamespace(type=article_type, id=article_id, text="".join(text))
             )
 
 
