@@ -113,7 +113,7 @@ class LegifranceAuth(httpx.Auth):
 
     def auth_flow(self, request: httpx.Request):
         if self.token is None or self.token_expires_at <= datetime.datetime.now():
-            logging.debug("Requesting auth token")
+            logging.info("Requesting auth token")
             data = {
                 "grant_type": "client_credentials",
                 "scope": "openid",
@@ -132,7 +132,7 @@ class LegifranceAuth(httpx.Auth):
                 seconds=expires_in
             )
         else:
-            logging.debug("Using existing auth token")
+            logging.info("Using existing auth token")
 
         request.headers["Authorization"] = f"Bearer {self.token}"
         yield request
