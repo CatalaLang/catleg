@@ -1,14 +1,3 @@
-"""
-Current OCaml API
-
-
-val get_article_id : article -> string
-val get_article_text : article -> string
-val get_article_title : article -> string
-val get_article_expiration_date : article -> Unix.tm
-val get_article_new_version : article -> string
-
-"""
 from datetime import date
 from enum import Enum
 from typing import Protocol, Tuple

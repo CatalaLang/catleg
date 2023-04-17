@@ -14,6 +14,7 @@ from typing import List, Optional, Protocol
 import httpx
 
 from catala_devtools_fr.article import Article, ArticleType, parse_article_id
+from catala_devtools_fr.cli_util import set_basic_loglevel
 from catala_devtools_fr.config import settings
 
 
@@ -140,5 +141,6 @@ class LegifranceAuth(httpx.Auth):
 
 if __name__ == "__main__":
     """Example use"""
+    set_basic_loglevel()
     back = get_backend("legifrance")
     print(back.query_article("LEGIARTI000038814944"))

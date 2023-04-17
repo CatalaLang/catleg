@@ -13,6 +13,8 @@ description copied from ocaml original
 import warnings
 from difflib import ndiff
 
+from catala_devtools_fr.cli_util import set_basic_loglevel
+
 from catala_devtools_fr.parse_catala_markdown import parse_catala_file
 from catala_devtools_fr.query import get_backend
 
@@ -55,6 +57,8 @@ if __name__ == "__main__":
     Example driver -- a proper CLI is needed too
     """
     import sys
+
+    set_basic_loglevel()
 
     with open(sys.argv[1], "r") as f:
         find_changes(f)
