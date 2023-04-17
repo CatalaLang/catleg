@@ -33,6 +33,8 @@ class LegifranceBackend:
     def query_article(self, id: str) -> Optional[Article]:
         reply = self._query_article_legi(id)
         article = _article_from_legifrance_reply(reply)
+        if article is None:
+            logging.warning(f"Could not retrieve article {id} (wrong identifier?)")
         return article
 
     def _query_article_legi(self, id: str):
@@ -79,7 +81,6 @@ def _article_from_legifrance_reply(reply) -> Optional[Article]:
     if "article" in reply:
         article = reply["article"]
         if article is None:
-            logging.warn(f"Could not retrieve article {id} (wrong identifier?)")
             return None
     elif "text" in reply:
         article = reply["article"]
