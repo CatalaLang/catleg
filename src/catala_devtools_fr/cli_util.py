@@ -9,8 +9,8 @@ def set_basic_loglevel():
     To use, set CATDEV_LOG_LEVEL=INFO in the environment
     or LOG_LEVEL in the .catdev.toml configuration file
     """
-    log_level = settings.get("log_level").upper()
+    log_level = settings.get("log_level")
     if log_level is not None:
         import logging
 
-        logging.basicConfig(level=log_level)
+        logging.basicConfig(level=log_level.upper())
