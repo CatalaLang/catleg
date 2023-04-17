@@ -60,15 +60,11 @@ class LegifranceBackend:
 
 
 def get_backend(spec: str):
-    # XXX TODO: multiple backends, fallbacks...
+    # TODO: multiple backends, fallbacks...
     client_id = settings.get("client_id")
     client_secret = settings.get("client_secret")
     _check_nonempty_legifrance_credentials(client_id, client_secret)
     return LegifranceBackend(client_id, client_secret)
-
-
-def _query_article_legistix(id: str):
-    raise NotImplementedError("Coming soon...")
 
 
 def _check_nonempty_legifrance_credentials(client_id, client_secret):
@@ -83,11 +79,12 @@ def _article_from_legifrance_reply(reply) -> Optional[Article]:
     if "article" in reply:
         article = reply["article"]
         if article is None:
+            logging.warn(f"Could not retrieve article {id} (wrong identifier?)")
             return None
     elif "text" in reply:
         article = reply["article"]
     else:
-        raise ValueError("cannot parse Legifrance reply")
+        raise ValueError("Could not parse Legifrance reply")
     text = article["texte"]
     id = article["id"]
     return SimpleNamespace(

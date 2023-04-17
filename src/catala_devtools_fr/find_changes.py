@@ -42,7 +42,7 @@ def find_changes(f):
             diffcnt += 1
     if diffcnt > 0:
         print(
-            f"found {diffcnt} articles with diffs (out of {len(articles)} articles)",
+            f"Found {diffcnt} articles with diffs (out of {len(articles)} articles)",
             file=sys.stderr,
         )
     # (ci mode : error code != 0 if any diff?)
