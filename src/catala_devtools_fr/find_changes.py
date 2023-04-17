@@ -14,19 +14,20 @@ import warnings
 from difflib import ndiff
 
 from catala_devtools_fr.parse_catala_markdown import parse_catala_file
-from catala_devtools_fr.query import query_article
+from catala_devtools_fr.query import get_backend
 
 
 def find_changes(f):
     # parse articles from file
     articles = parse_catala_file(f)
+    back = get_backend("legifrance")
 
     # fetch articles text (can/should be done in parallel)
     # compute diff
     # display diff
     diffcnt = 0
     for article in articles:
-        ref_article = query_article(article.id.upper())
+        ref_article = back.query_article(article.id.upper())
         if ref_article is None:
             warnings.warn(f"Could not retrieve article '{article.id}'")
             continue
