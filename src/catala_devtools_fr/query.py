@@ -51,9 +51,9 @@ class LegifranceBackend:
             case _:
                 raise ValueError("Unknown article type")
 
-            # A POST request to fetch an article?
-            # And no way of using a simple query string?
-            # Really, Legifrance?
+        # A POST request to fetch an article?
+        # And no way of using a simple query string?
+        # Really, Legifrance?
         reply = self.client.post(url, headers=headers, json=params)
         reply.raise_for_status()
         return json.loads(reply.text)
