@@ -26,7 +26,7 @@ class Backend(Protocol):
         ...
 
 
-class LegifranceBackend:
+class LegifranceBackend(Backend):
     def __init__(self, client_id, client_secret):
         self.client = httpx.Client(auth=LegifranceAuth(client_id, client_secret))
 

@@ -14,6 +14,7 @@ import warnings
 from difflib import ndiff
 
 from catala_devtools_fr.cli_util import set_basic_loglevel
+from catala_devtools_fr.git_diff import wdiff
 
 from catala_devtools_fr.parse_catala_markdown import parse_catala_file
 from catala_devtools_fr.query import get_backend
@@ -36,9 +37,9 @@ def find_changes(f):
         clean_text = _clean_article_text(article.text)
         clean_ref_text = _clean_article_text(ref_article.text)
         if clean_text != clean_ref_text:
-            diff = ndiff(clean_text, clean_ref_text)
+            diff = wdiff(clean_text, clean_ref_text)
             print(article.id)
-            print("".join(diff))
+            print(diff)
             diffcnt += 1
     if diffcnt > 0:
         print(
