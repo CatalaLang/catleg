@@ -10,6 +10,7 @@ description copied from ocaml original
       LégiFrance *)
 
 """
+import asyncio
 import warnings
 
 from catala_devtools_fr.cli_util import set_basic_loglevel
@@ -19,17 +20,20 @@ from catala_devtools_fr.parse_catala_markdown import parse_catala_file
 from catala_devtools_fr.query import get_backend
 
 
-def find_changes(f):
+async def find_changes(f):
     # parse articles from file
     articles = parse_catala_file(f)
-    back = get_backend("legifrance")
 
-    # fetch articles text (can/should be done in parallel)
+    # fetch articles' reference text
     # compute diff
     # display diff
+    back = get_backend("legifrance")
+    ref_articles = await back.query_articles(
+        [article.id.upper() for article in articles]
+    )
+
     diffcnt = 0
-    for article in articles:
-        ref_article = back.query_article(article.id.upper())
+    for article, ref_article in zip(articles, ref_articles):
         if ref_article is None:
             warnings.warn(f"Could not retrieve article '{article.id}'")
             continue
@@ -61,4 +65,4 @@ if __name__ == "__main__":
     set_basic_loglevel()
 
     with open(sys.argv[1], "r") as f:
-        find_changes(f)
+        asyncio.run(find_changes(f))
