@@ -11,7 +11,6 @@ description copied from ocaml original
 
 """
 import warnings
-from difflib import ndiff
 
 from catala_devtools_fr.cli_util import set_basic_loglevel
 from catala_devtools_fr.git_diff import wdiff
