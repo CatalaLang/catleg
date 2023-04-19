@@ -152,7 +152,7 @@ class LegifranceAuth(httpx.Auth):
 
 
 if __name__ == "__main__":
-    """Example use"""
+    # Example use
     set_basic_loglevel()
     back = get_backend("legifrance")
     print(asyncio.run(back.query_article("LEGIARTI000038814944")))

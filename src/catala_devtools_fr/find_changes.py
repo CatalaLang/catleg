@@ -57,9 +57,7 @@ def _clean_article_text(text: str) -> str:
 
 
 if __name__ == "__main__":
-    """
-    Example driver -- a proper CLI is needed too
-    """
+    # Example driver -- a proper CLI is needed too
     import sys
 
     set_basic_loglevel()
