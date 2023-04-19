@@ -14,14 +14,12 @@ def parse_catala_file(f: TextIO) -> List[Article]:
 
 
 def _parse_catala_doc(doc) -> List[Article]:
-    doc._articles = []  # XXX replace with filter_action attribute
-    pf.run_filters([_article_filter_action], doc=doc)
-    articles = doc._articles
-    del doc._articles
+    articles: List[Article] = []
+    pf.run_filters([_article_filter_action], doc=doc, articles=articles)
     return articles
 
 
-def _article_filter_action(elem, doc):
+def _article_filter_action(elem, doc, articles):
     match elem:
         case pf.Header() as hd if hd.identifier.startswith("article"):
             article_type, article_id = parse_article_id(hd.identifier)
@@ -36,7 +34,7 @@ def _article_filter_action(elem, doc):
                     text.append(pf.stringify(elem.next))
                 elem = elem.next
 
-            doc._articles.append(
+            articles.append(
                 SimpleNamespace(type=article_type, id=article_id, text="".join(text))
             )
 
