@@ -48,9 +48,7 @@ class LegifranceBackend(Backend):
     async def _query_article_legi(self, id: str):
         typ, id = parse_article_id(id)
         headers = {"Accept": "application/json"}
-        api_base_url = (
-            "https://api.aife.economie.gouv.fr/dila/legifrance-beta/lf-engine-app"
-        )
+        api_base_url = "https://api.aife.economie.gouv.fr/dila/legifrance/lf-engine-app"
         match typ:
             case ArticleType.LEGIARTI | ArticleType.JORFARTI:
                 url = f"{api_base_url}/consult/getArticle"
