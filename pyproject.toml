@@ -8,8 +8,10 @@ version = "0.0.1"
 dependencies = [
   "aiometer",
   "dynaconf",
-  "panflute",
   "httpx",
+  "linkify-it-py",
+  "markdown-it-py[plugins]",
+  "more-itertools",
 ]
 
 [project.optional-dependencies]
