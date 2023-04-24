@@ -11,6 +11,7 @@ ArticleType = Enum("ArticleType", ["LEGIARTI", "CETATEXT", "JORFARTI"])
 class Article(Protocol):
     @property
     def id(self) -> str:
+        """Article identifier, for instance LEGIARTI000038814944"""
         ...
 
     @property

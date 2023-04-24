@@ -11,6 +11,7 @@ description copied from ocaml original
 
 """
 import asyncio
+import sys
 import warnings
 
 from catala_devtools_fr.cli_util import set_basic_loglevel
@@ -37,12 +38,15 @@ async def find_changes(f):
         if ref_article is None:
             warnings.warn(f"Could not retrieve article '{article.id}'")
             continue
-        clean_text = _clean_article_text(article.text)
-        clean_ref_text = _clean_article_text(ref_article.text)
-        if clean_text != clean_ref_text:
-            diff = wdiff(clean_text, clean_ref_text)
+
+        diff, retcode = wdiff(
+            _reformat(article.text),
+            _reformat(ref_article.text),
+            return_exit_code=True,
+        )
+        if retcode != 0:
             print(article.id)
-            print(diff)
+            sys.stdout.buffer.write(diff)
             diffcnt += 1
     if diffcnt > 0:
         print(
@@ -52,8 +56,12 @@ async def find_changes(f):
     # (ci mode : error code != 0 if any diff?)
 
 
-def _clean_article_text(text: str) -> str:
-    return text.replace("\n", "")
+def _reformat(paragraph: str):
+    """
+    Catala has a 80-char line limit, so law texts will often be manually reformatted.
+    We attempt to remove extra line breaks before comparison.
+    """
+    return paragraph.replace("\n", " ").strip().replace("  ", " ")
 
 
 if __name__ == "__main__":

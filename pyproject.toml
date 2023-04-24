@@ -9,8 +9,8 @@ dependencies = [
   "aiometer",
   "dynaconf",
   "httpx",
-  "linkify-it-py",
   "markdown-it-py[plugins]",
+  "mdformat",
   "more-itertools",
 ]
 
