@@ -34,6 +34,7 @@ def _parse_catala_doc(tree: SyntaxTreeNode) -> List[Article]:
                     while curr_elem.next_sibling is not None:
                         if curr_elem.next_sibling.type == "heading":
                             break
+                        # skip code blocks, retain all other elements
                         if curr_elem.next_sibling.type != "fence":
                             text.append(
                                 renderer.render(
