@@ -6,10 +6,11 @@ import tempfile
 from subprocess import run
 
 
-def wdiff(st1: str, st2: str):
+def wdiff(st1: str, st2: str, *, return_exit_code=False):
     """
     Draft implementation. Has issues:
-      - why does git diff exit with a nonzero code? (currently bypassing with check=False...)
+      - we need to find a proper way of handling the catala character limit
+        and hence the programmers' reformatting of the reference text.
       - use proper file names and line info
     """
     with tempfile.NamedTemporaryFile(mode="w") as sf1, tempfile.NamedTemporaryFile(
@@ -20,7 +21,21 @@ def wdiff(st1: str, st2: str):
         sf1.flush()
         sf2.flush()
         result = run(
-            ["git", "diff", "--no-index", "--color-words", sf1.name, sf2.name],
+            [
+                "git",
+                "--no-pager",
+                "diff",
+                "--ignore-space-at-eol",
+                "--no-index",
+                "--exit-code",
+                "--color-words",
+                sf1.name,
+                sf2.name,
+            ],
+            capture_output=True,
             check=False,
         )
-        return result.stdout
+        if return_exit_code:
+            return result.stdout, result.returncode
+        else:
+            return result.stdout

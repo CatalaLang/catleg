@@ -69,6 +69,7 @@ class LegifranceBackend(Backend):
 
 def get_backend(spec: str):
     # TODO: multiple backends, fallbacks...
+    assert spec == "legifrance"
     client_id, client_secret = _get_legifrance_credentials(raise_if_missing=True)
     return LegifranceBackend(client_id, client_secret)
 
