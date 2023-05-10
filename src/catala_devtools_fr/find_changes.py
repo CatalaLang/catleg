@@ -13,6 +13,8 @@ description copied from ocaml original
 import asyncio
 import sys
 import warnings
+from pathlib import Path
+from typing import Optional, TextIO
 
 from catala_devtools_fr.cli_util import set_basic_loglevel
 from catala_devtools_fr.git_diff import wdiff
@@ -21,9 +23,9 @@ from catala_devtools_fr.parse_catala_markdown import parse_catala_file
 from catala_devtools_fr.query import get_backend
 
 
-async def find_changes(f):
+async def find_changes(f: TextIO, *, file_path: Optional[Path] = None):
     # parse articles from file
-    articles = parse_catala_file(f)
+    articles = parse_catala_file(f, file_path=file_path)
 
     # fetch articles' reference text
     # compute diff
@@ -43,9 +45,11 @@ async def find_changes(f):
             _reformat(article.text),
             _reformat(ref_article.text),
             return_exit_code=True,
+            line_offset=article.start_line,
         )
         if retcode != 0:
             print(article.id)
+            print(f"{article.file_path or 'UNKNOWN_FILE'}:{article.start_line}")
             sys.stdout.buffer.write(diff)
             diffcnt += 1
     if diffcnt > 0:
@@ -71,4 +75,4 @@ if __name__ == "__main__":
     set_basic_loglevel()
 
     with open(sys.argv[1], "r") as f:
-        asyncio.run(find_changes(f))
+        asyncio.run(find_changes(f, file_path=Path(sys.argv[1])))

@@ -1,6 +1,8 @@
 import re
+from dataclasses import dataclass
 from datetime import date
 from enum import Enum
+from pathlib import Path
 from typing import Optional, Protocol, Tuple
 
 from more_itertools import intersperse
@@ -10,6 +12,10 @@ ArticleType = Enum("ArticleType", ["LEGIARTI", "CETATEXT", "JORFARTI"])
 
 class Article(Protocol):
     @property
+    def type(self) -> ArticleType:
+        ...
+
+    @property
     def id(self) -> str:
         """Article identifier, for instance LEGIARTI000038814944"""
         ...
@@ -18,13 +24,36 @@ class Article(Protocol):
     def text(self) -> str:
         ...
 
+
+class ExpiryInfo(Protocol):
     @property
     def expiration_date(self) -> date:
         ...
 
+
+class NewVersionInfo(Protocol):
     @property
     def new_version(self) -> str:
         ...
+
+
+class FileLineInfo(Protocol):
+    @property
+    def file_path(self) -> Optional[Path]:
+        ...
+
+    @property
+    def start_line(self) -> int:
+        ...
+
+
+@dataclass(frozen=True)
+class CatalaFileArticle:
+    type: ArticleType
+    id: str
+    text: str
+    file_path: Optional[Path]
+    start_line: int
 
 
 def parse_article_id(article_id: str) -> Tuple[ArticleType, str]:

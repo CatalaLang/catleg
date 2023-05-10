@@ -1,27 +1,32 @@
+from pathlib import Path
 from types import SimpleNamespace
-from typing import List, TextIO
+from typing import cast, List, Optional, TextIO, Tuple
 
 from markdown_it import MarkdownIt
 from markdown_it.tree import SyntaxTreeNode
 from mdformat.renderer import MDRenderer
 from more_itertools import sliding_window
 
-from catala_devtools_fr.article import Article, find_id_in_string
+from catala_devtools_fr.article import CatalaFileArticle, find_id_in_string
 
 
-def parse_catala_file(f: TextIO) -> List[Article]:
+def parse_catala_file(
+    f: TextIO, file_path: Optional[Path] = None
+) -> List[CatalaFileArticle]:
     """
     Given a catala file, return a list of articles
     """
     md = MarkdownIt("commonmark")
     tokens = md.parse(f.read())
     tree = SyntaxTreeNode(tokens)
-    articles = _parse_catala_doc(tree)
+    articles = _parse_catala_doc(tree, file_path=file_path)
     return articles
 
 
-def _parse_catala_doc(tree: SyntaxTreeNode) -> List[Article]:
-    articles: List[Article] = []
+def _parse_catala_doc(
+    tree: SyntaxTreeNode, file_path: Optional[Path] = None
+) -> List[CatalaFileArticle]:
+    articles: List[CatalaFileArticle] = []
     windowed_tree = sliding_window(tree.walk(), 3)
     renderer = MDRenderer()
     for window in windowed_tree:
@@ -31,6 +36,12 @@ def _parse_catala_doc(tree: SyntaxTreeNode) -> List[Article]:
                     typ, id = type_id
                     text = []
                     curr_elem = window[0]
+
+                    # start line of the first text block
+                    inline_map = window[1].map
+                    assert inline_map is not None
+                    start_line: int = cast(Tuple[int, int], inline_map)[0]
+
                     while curr_elem.next_sibling is not None:
                         if curr_elem.next_sibling.type == "heading":
                             break
@@ -46,7 +57,13 @@ def _parse_catala_doc(tree: SyntaxTreeNode) -> List[Article]:
                         curr_elem = curr_elem.next_sibling
 
                     articles.append(
-                        SimpleNamespace(type=typ, id=id, text=" ".join(text))
+                        CatalaFileArticle(
+                            type=typ,
+                            id=id,
+                            text=" ".join(text),
+                            start_line=start_line,
+                            file_path=file_path,
+                        )
                     )
 
     return articles
