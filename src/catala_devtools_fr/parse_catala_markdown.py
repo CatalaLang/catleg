@@ -8,6 +8,7 @@ from mdformat.renderer import MDRenderer
 from more_itertools import sliding_window
 
 from catala_devtools_fr.article import CatalaFileArticle, find_id_in_string
+from catala_devtools_fr.markdown_it.heading_extension import configure
 
 
 def parse_catala_file(
@@ -16,7 +17,7 @@ def parse_catala_file(
     """
     Given a catala file, return a list of articles
     """
-    md = MarkdownIt("commonmark")
+    md = configure(MarkdownIt("commonmark"))
     tokens = md.parse(f.read())
     tree = SyntaxTreeNode(tokens)
     articles = _parse_catala_doc(tree, file_path=file_path)
