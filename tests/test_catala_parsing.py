@@ -78,7 +78,7 @@ champ d'application ÉligibilitéAidesPersonnelleLogement:
 """
 
 
-def test_markdown_parsing():
+def test_parse_markdown():
     f = StringIO(catala_text)
     articles = parse_catala_file(f)
     assert len(articles) == 2
