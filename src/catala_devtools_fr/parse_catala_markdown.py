@@ -1,5 +1,4 @@
 from pathlib import Path
-from types import SimpleNamespace
 from typing import cast, List, Optional, TextIO, Tuple
 
 from markdown_it import MarkdownIt
@@ -8,7 +7,7 @@ from mdformat.renderer import MDRenderer
 from more_itertools import sliding_window
 
 from catala_devtools_fr.article import CatalaFileArticle, find_id_in_string
-from catala_devtools_fr.markdown_it.heading_extension import configure
+from catala_devtools_fr.markdown_it.heading_extension import replace_heading_rule
 
 
 def parse_catala_file(
@@ -17,11 +16,20 @@ def parse_catala_file(
     """
     Given a catala file, return a list of articles
     """
-    md = configure(MarkdownIt("commonmark"))
+    md = _make_markdown_parser()
     tokens = md.parse(f.read())
     tree = SyntaxTreeNode(tokens)
     articles = _parse_catala_doc(tree, file_path=file_path)
     return articles
+
+
+def _make_markdown_parser() -> MarkdownIt:
+    """
+    Return a markdown parser suitable for Catala files
+    (this currently is a CommonMark parser with an extension that
+    increases the number of possible heading levels)
+    """
+    return replace_heading_rule(MarkdownIt("commonmark"))
 
 
 def _parse_catala_doc(

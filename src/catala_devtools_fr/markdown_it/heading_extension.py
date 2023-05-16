@@ -107,7 +107,6 @@ def more_heading(state: StateBlock, startLine: int, endLine: int, silent: bool):
     return True
 
 
-# there might be a better way?
-def configure(md: MarkdownIt):
+def replace_heading_rule(md: MarkdownIt):
     md.block.ruler.at("heading", more_heading)
     return md
