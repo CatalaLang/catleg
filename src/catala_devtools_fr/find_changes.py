@@ -53,6 +53,7 @@ async def find_changes(f: TextIO, *, file_path: Optional[Path] = None):
             sys.stdout.buffer.write(diff)
             diffcnt += 1
     if diffcnt > 0:
+        sys.stdout.flush()
         print(
             f"Found {diffcnt} articles with diffs (out of {len(articles)} articles)",
             file=sys.stderr,
