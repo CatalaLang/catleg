@@ -13,12 +13,19 @@ app = typer.Typer()
 
 @app.command()
 def diff(file: Path):
+    """
+    Show differences between a catala file (FILE) and
+    a reference version.
+    """
     with open(file, "r") as f:
         asyncio.run(find_changes(f, file_path=file))
 
 
 @app.command()
 def query(article_id: str):
+    """
+    Retrieve a reference version of a French law article.
+    """
     back = get_backend("legifrance")
     print(asyncio.run(back.query_article(article_id)))
 
