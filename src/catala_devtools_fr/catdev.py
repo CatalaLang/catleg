@@ -23,7 +23,7 @@ def query(article_id: str):
     print(asyncio.run(back.query_article(article_id)))
 
 
-if __name__ == "__main__":
+def main():
     set_basic_loglevel()
 
     app()

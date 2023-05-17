@@ -22,3 +22,6 @@ dev = [
   "pytest",
   "tox",
 ]
+
+[project.scripts]
+catdev = "catala_devtools_fr.catdev:main"
