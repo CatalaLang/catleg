@@ -8,10 +8,7 @@ from subprocess import run
 
 def wdiff(st1: str, st2: str, *, return_exit_code=False, line_offset=0):
     """
-    Draft implementation. Has issues:
-      - we need to find a proper way of handling the catala character limit
-        and hence the programmers' reformatting of the reference text.
-      - use proper file names and line info
+    Interface to git's word-level diff.
     """
     with tempfile.NamedTemporaryFile(mode="w") as sf1, tempfile.NamedTemporaryFile(
         mode="w"
