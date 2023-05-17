@@ -67,13 +67,3 @@ def _reformat(paragraph: str):
     We attempt to remove extra line breaks before comparison.
     """
     return paragraph.replace("\n", " ").strip().replace("  ", " ")
-
-
-if __name__ == "__main__":
-    # Example driver -- a proper CLI is needed too
-    import sys
-
-    set_basic_loglevel()
-
-    with open(sys.argv[1], "r") as f:
-        asyncio.run(find_changes(f, file_path=Path(sys.argv[1])))
