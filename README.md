@@ -7,6 +7,10 @@ of French legislative texts.
 
 `catala-devtools-fr` is not released on PyPI yet ; install it by running `pip install -e .` from a source clone.
 
+## Running `catdev`
+
+Run `catdev --help` for a list of commands.
+
 ## Development install
 
 Run `pip install -e .[dev]` for a local, editable install that includes development dependencies.
