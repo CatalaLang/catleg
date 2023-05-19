@@ -6,3 +6,8 @@ repos:
       additional_dependencies:
         - black == 23.3.0
         - usort == 1.0.6
+
+- repo: https://github.com/charliermarsh/ruff-pre-commit
+  rev: 'v0.0.269'
+  hooks:
+    - id: ruff
