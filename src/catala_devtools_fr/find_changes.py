@@ -10,13 +10,11 @@ description copied from ocaml original
       LégiFrance *)
 
 """
-import asyncio
 import sys
 import warnings
 from pathlib import Path
 from typing import Optional, TextIO
 
-from catala_devtools_fr.cli_util import set_basic_loglevel
 from catala_devtools_fr.git_diff import wdiff
 
 from catala_devtools_fr.parse_catala_markdown import parse_catala_file

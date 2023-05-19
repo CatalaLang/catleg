@@ -14,7 +14,7 @@ app = typer.Typer()
 @app.command()
 def diff(file: Path):
     """
-    Show differences between a catala file (FILE) and
+    Show differences between each article in a catala file and
     a reference version.
     """
     with open(file, "r") as f:
