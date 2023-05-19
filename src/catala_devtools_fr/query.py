@@ -5,7 +5,6 @@ Utilities for querying various data sources for law texts:
   - legistix database (auto-api via datasette)
 """
 
-import asyncio
 import datetime
 import functools
 import json
@@ -17,7 +16,6 @@ import aiometer
 import httpx
 
 from catala_devtools_fr.article import Article, ArticleType, parse_article_id
-from catala_devtools_fr.cli_util import set_basic_loglevel
 from catala_devtools_fr.config import settings
 
 
