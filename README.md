@@ -11,6 +11,22 @@ of French legislative texts.
 
 Run `catdev --help` for a list of commands.
 
+### Legifrance credentials
+
+`catdev` uses the Legifrance API (though we hope to orovide our own API soon!) to access French legislative texts.
+
+This API is authenticated and requires credentials, which may be obtained by registering on the
+[Piste portal](https://developer.aife.economie.gouv.fr/).
+
+To provide credentials to `catdev`, create a `.catdev_secrets.toml` file like so:
+
+```toml
+lf_client_id = "your_client_id"
+lf_client_secret = "your_client_secret"
+```
+
+Alternatively, you may define the environment variables `CATDEV_LF_CLIENT_ID` and `CATDEV_LF_CLIENT_SECRET`.
+
 ## Development install
 
 Run `pip install -e .[dev]` for a local, editable install that includes development dependencies.
