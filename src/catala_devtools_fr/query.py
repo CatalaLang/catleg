@@ -28,6 +28,8 @@ class Backend(Protocol):
 
 
 class LegifranceBackend(Backend):
+    API_BASE_URL = "https://api.aife.economie.gouv.fr/dila/legifrance/lf-engine-app"
+
     def __init__(self, client_id, client_secret):
         headers = {"Accept": "application/json"}
         self.client = httpx.AsyncClient(
@@ -48,13 +50,12 @@ class LegifranceBackend(Backend):
 
     async def _query_article_legi(self, id: str):
         typ, id = parse_article_id(id)
-        api_base_url = "https://api.aife.economie.gouv.fr/dila/legifrance/lf-engine-app"
         match typ:
             case ArticleType.LEGIARTI | ArticleType.JORFARTI:
-                url = f"{api_base_url}/consult/getArticle"
+                url = f"{self.API_BASE_URL}/consult/getArticle"
                 params = {"id": id}
             case ArticleType.CETATEXT:
-                url = f"{api_base_url}/consult/juri"
+                url = f"{self.API_BASE_URL}/consult/juri"
                 params = {"textId": id}
             case _:
                 raise ValueError("Unknown article type")
