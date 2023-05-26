@@ -1,6 +1,10 @@
 from io import StringIO
 
-from catala_devtools_fr.article import ArticleType, find_id_in_string, parse_article_id
+from catala_devtools_fr.law_text_fr import (
+    ArticleType,
+    find_id_in_string,
+    parse_article_id,
+)
 from catala_devtools_fr.parse_catala_markdown import parse_catala_file
 
 

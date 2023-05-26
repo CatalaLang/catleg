@@ -27,7 +27,7 @@ def query(article_id: str):
     Retrieve a reference version of a French law article.
     """
     back = get_backend("legifrance")
-    print(asyncio.run(back.query_article(article_id)))
+    print(asyncio.run(back.article(article_id)))
 
 
 def main():

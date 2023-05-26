@@ -29,9 +29,7 @@ async def find_changes(f: TextIO, *, file_path: Optional[Path] = None):
     # compute diff
     # display diff
     back = get_backend("legifrance")
-    ref_articles = await back.query_articles(
-        [article.id.upper() for article in articles]
-    )
+    ref_articles = await back.articles([article.id.upper() for article in articles])
 
     diffcnt = 0
     for article, ref_article in zip(articles, ref_articles):

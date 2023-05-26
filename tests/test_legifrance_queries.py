@@ -10,7 +10,7 @@ from catala_devtools_fr.query import _get_legifrance_credentials, get_backend
 )
 def test_query_article():
     back = get_backend("legifrance")
-    article = asyncio.run(back.query_article("LEGIARTI000038814944"))
+    article = asyncio.run(back.article("LEGIARTI000038814944"))
     assert "logement" in article.text
 
 
@@ -21,7 +21,7 @@ def test_query_article():
 def test_query_articles():
     back = get_backend("legifrance")
     art1, art2 = asyncio.run(
-        back.query_articles(["LEGIARTI000038814944", "LEGIARTI000038814948"])
+        back.articles(["LEGIARTI000038814944", "LEGIARTI000038814948"])
     )
     assert "logement" in art1.text
     assert "pacte" in art2.text

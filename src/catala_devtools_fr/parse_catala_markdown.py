@@ -6,7 +6,7 @@ from markdown_it.tree import SyntaxTreeNode
 from mdformat.renderer import MDRenderer
 from more_itertools import sliding_window
 
-from catala_devtools_fr.article import CatalaFileArticle, find_id_in_string
+from catala_devtools_fr.law_text_fr import CatalaFileArticle, find_id_in_string
 from catala_devtools_fr.markdown_it.heading_extension import replace_heading_rule
 
 
