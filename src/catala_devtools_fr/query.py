@@ -29,7 +29,10 @@ class Backend(Protocol):
 
 class LegifranceBackend(Backend):
     def __init__(self, client_id, client_secret):
-        self.client = httpx.AsyncClient(auth=LegifranceAuth(client_id, client_secret))
+        headers = {"Accept": "application/json"}
+        self.client = httpx.AsyncClient(
+            auth=LegifranceAuth(client_id, client_secret), headers=headers
+        )
 
     async def query_article(self, id: str) -> Optional[Article]:
         reply = await self._query_article_legi(id)
@@ -45,7 +48,6 @@ class LegifranceBackend(Backend):
 
     async def _query_article_legi(self, id: str):
         typ, id = parse_article_id(id)
-        headers = {"Accept": "application/json"}
         api_base_url = "https://api.aife.economie.gouv.fr/dila/legifrance/lf-engine-app"
         match typ:
             case ArticleType.LEGIARTI | ArticleType.JORFARTI:
@@ -60,7 +62,7 @@ class LegifranceBackend(Backend):
         # A POST request to fetch an article?
         # And no way of using a simple query string?
         # Really, Legifrance?
-        reply = await self.client.post(url, headers=headers, json=params)
+        reply = await self.client.post(url, json=params)
         reply.raise_for_status()
         return json.loads(reply.text)
 
