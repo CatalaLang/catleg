@@ -26,6 +26,9 @@ class Backend(Protocol):
     async def query_articles(self, ids: Iterable[str]) -> Iterable[Optional[Article]]:
         ...
 
+    async def list_codes(self):
+        ...
+
 
 class LegifranceBackend(Backend):
     API_BASE_URL = "https://api.aife.economie.gouv.fr/dila/legifrance/lf-engine-app"
@@ -47,6 +50,12 @@ class LegifranceBackend(Backend):
         jobs = [functools.partial(self._query_article_legi, id) for id in ids]
         replies = await aiometer.run_all(jobs, max_at_once=10, max_per_second=15)
         return [_article_from_legifrance_reply(reply) for reply in replies]
+
+    async def list_codes(self):
+        params = {"pageSize": 100, "pageNumber": 1, "states": ["VIGUEUR"]}
+        reply = await self.client.post(f"{self.API_BASE_URL}/list/code", json=params)
+        reply.raise_for_status()
+        return reply.text
 
     async def _query_article_legi(self, id: str):
         typ, id = parse_article_id(id)
