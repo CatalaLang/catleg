@@ -41,7 +41,7 @@ def codes():
     Retrieve a list of available codes.
     """
     back = get_backend("legifrance")
-    print(json.dumps(asyncio.run(back.list_codes()), indent=2))
+    print(json.dumps(asyncio.run(back.list_codes()), indent=2, ensure_ascii=False))
 
 
 def main():
