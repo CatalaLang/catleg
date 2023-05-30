@@ -1,5 +1,6 @@
 # `catdev` entry point
 import asyncio
+import json
 from pathlib import Path
 
 import typer
@@ -28,6 +29,15 @@ def query(article_id: str):
     """
     back = get_backend("legifrance")
     print(asyncio.run(back.article(article_id)))
+
+
+@app.command()
+def codes():
+    """
+    Retrieve a list of available codes.
+    """
+    back = get_backend("legifrance")
+    print(json.dumps(asyncio.run(back.list_codes()), indent=2))
 
 
 def main():
