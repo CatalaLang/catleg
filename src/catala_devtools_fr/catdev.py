@@ -10,6 +10,10 @@ from catala_devtools_fr.find_changes import find_changes
 from catala_devtools_fr.query import get_backend
 
 app = typer.Typer()
+# legifrance-specific commands (query legifrance API and return
+# raw JSON)
+lf = typer.Typer()
+app.add_typer(lf, name="lf", help="Commands for querying the raw Legifrance API")
 
 
 @app.command()
@@ -31,7 +35,7 @@ def query(article_id: str):
     print(asyncio.run(back.article(article_id)))
 
 
-@app.command()
+@lf.command()
 def codes():
     """
     Retrieve a list of available codes.
