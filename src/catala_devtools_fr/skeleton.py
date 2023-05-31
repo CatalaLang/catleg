@@ -6,7 +6,10 @@ from catala_devtools_fr.query import get_backend
 
 
 async def markdown_skeleton(textid: str, sectionid: str) -> str:
-    """ """
+    """
+    Return a skeleton (formatted law text section, with empty
+    Catala code placeholders)
+    """
     if sectionid[:8].upper() != "LEGISCTA":
         raise ValueError("Expected section identifier (should start with 'SCTA')")
 
@@ -40,7 +43,7 @@ async def markdown_skeleton(textid: str, sectionid: str) -> str:
 
 
 def _preorder(node, level=0):
-    """ """
+    """Preorder traversal of articles and sections"""
     yield node, level
     for article in node["articles"]:
         yield article, level
