@@ -8,6 +8,7 @@ import typer
 from catala_devtools_fr.cli_util import set_basic_loglevel
 from catala_devtools_fr.find_changes import find_changes
 from catala_devtools_fr.query import get_backend
+from catala_devtools_fr.skeleton import markdown_skeleton
 
 app = typer.Typer()
 # legifrance-specific commands (query legifrance API and return
@@ -33,6 +34,15 @@ def query(article_id: str):
     """
     back = get_backend("legifrance")
     print(asyncio.run(back.article(article_id)))
+
+
+@app.command()
+def skeleton(textid: str, sectionid: str):
+    """
+    Output a given section of a law text.
+    """
+    skel = asyncio.run(markdown_skeleton(textid, sectionid))
+    print(skel)
 
 
 @lf.command()
