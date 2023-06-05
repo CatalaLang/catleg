@@ -13,7 +13,7 @@ Run `catleg --help` for a list of commands.
 
 ### Legifrance credentials
 
-`catleg` uses the Legifrance API (though we hope to orovide our own API soon!) to access French legislative texts.
+`catleg` uses the Legifrance API (though we hope to provide our own API soon!) to access French legislative texts.
 
 This API is authenticated and requires credentials, which may be obtained by registering on the
 [Piste portal](https://developer.aife.economie.gouv.fr/).
