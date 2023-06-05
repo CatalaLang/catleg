@@ -1,7 +1,15 @@
 from io import StringIO
 
-from catala_devtools_fr.article import ArticleType, find_id_in_string, parse_article_id
-from catala_devtools_fr.parse_catala_markdown import parse_catala_file
+from catala_devtools_fr.law_text_fr import (
+    ArticleType,
+    find_id_in_string,
+    parse_article_id,
+)
+from catala_devtools_fr.parse_catala_markdown import (
+    _make_markdown_parser,
+    parse_catala_file,
+)
+from mdformat.renderer import MDRenderer
 
 
 def test_parse_article_id():
@@ -79,9 +87,23 @@ champ d'application ÉligibilitéAidesPersonnelleLogement:
 
 
 def test_parse_markdown():
+    # Note that we deviate from the markdown spec as
+    # 7 on more '#' signs are parsed as a markdown atx heading
+    # (vanilla markdown has only up to 6 heading levels, mirroring
+    # html)
     f = StringIO(catala_text)
     articles = parse_catala_file(f)
     assert len(articles) == 2
     ids = [article.id for article in articles]
     assert "LEGIARTI000038814944" in ids
     assert "LEGIARTI000038814974" in ids
+
+
+def test_emit_markdown():
+    md_parser = _make_markdown_parser()
+    tok_list = md_parser.parse(catala_text)
+    renderer = MDRenderer()
+    md_result = renderer.render(tok_list, {"wrap": 80}, {})
+    # Note that we deviate from the markdown spec as we may
+    # emit more than 6 '#' characters for atx headings.
+    assert "######## Article L821-2 | LEGIARTI000038814974" in md_result

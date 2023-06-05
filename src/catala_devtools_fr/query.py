@@ -7,7 +7,6 @@ Utilities for querying various data sources for law texts:
 
 import datetime
 import functools
-import json
 import logging
 from types import SimpleNamespace
 from typing import Iterable, Optional, Protocol
@@ -15,44 +14,83 @@ from typing import Iterable, Optional, Protocol
 import aiometer
 import httpx
 
-from catala_devtools_fr.article import Article, ArticleType, parse_article_id
 from catala_devtools_fr.config import settings
+
+from catala_devtools_fr.law_text_fr import Article, ArticleType, parse_article_id
 
 
 class Backend(Protocol):
-    async def query_article(self, id: str) -> Optional[Article]:
+    async def article(self, id: str) -> Optional[Article]:
+        """
+        Retrieve a law article.
+        """
         ...
 
-    async def query_articles(self, ids: Iterable[str]) -> Iterable[Optional[Article]]:
+    async def articles(self, ids: Iterable[str]) -> Iterable[Optional[Article]]:
+        ...
+
+    async def list_codes(self):
+        """
+        List available codes.
+        """
+        ...
+
+    async def code_toc(self, id: str):
+        """
+        Retrieve the structure of a law code (i.e sections,
+        subsections... up to articles).
+        Does not include article text.
+        """
         ...
 
 
 class LegifranceBackend(Backend):
-    def __init__(self, client_id, client_secret):
-        self.client = httpx.AsyncClient(auth=LegifranceAuth(client_id, client_secret))
+    API_BASE_URL = "https://api.aife.economie.gouv.fr/dila/legifrance/lf-engine-app"
 
-    async def query_article(self, id: str) -> Optional[Article]:
+    def __init__(self, client_id, client_secret):
+        headers = {"Accept": "application/json"}
+        self.client = httpx.AsyncClient(
+            auth=LegifranceAuth(client_id, client_secret), headers=headers
+        )
+
+    async def article(self, id: str) -> Optional[Article]:
         reply = await self._query_article_legi(id)
         article = _article_from_legifrance_reply(reply)
         if article is None:
             logging.warning(f"Could not retrieve article {id} (wrong identifier?)")
         return article
 
-    async def query_articles(self, ids: Iterable[str]) -> Iterable[Optional[Article]]:
+    async def articles(self, ids: Iterable[str]) -> Iterable[Optional[Article]]:
         jobs = [functools.partial(self._query_article_legi, id) for id in ids]
         replies = await aiometer.run_all(jobs, max_at_once=10, max_per_second=15)
         return [_article_from_legifrance_reply(reply) for reply in replies]
 
+    async def list_codes(self):
+        # TODO pagination
+        params = {"pageSize": 100, "pageNumber": 1, "states": ["VIGUEUR"]}
+        reply = await self.client.post(f"{self.API_BASE_URL}/list/code", json=params)
+        reply.raise_for_status()
+        reply_json = reply.json()
+        return reply_json["results"]
+
+    async def code_toc(self, id: str):
+        params = {"textId": id, "date": str(datetime.date.today())}
+        reply = await self.client.post(
+            f"{self.API_BASE_URL}/consult/legi/tableMatieres", json=params
+        )
+        reply.raise_for_status()
+        if "sections" not in reply.json():
+            raise ValueError(f"Could not retrieve TOC for text {id}")
+        return reply.json()
+
     async def _query_article_legi(self, id: str):
         typ, id = parse_article_id(id)
-        headers = {"Accept": "application/json"}
-        api_base_url = "https://api.aife.economie.gouv.fr/dila/legifrance/lf-engine-app"
         match typ:
             case ArticleType.LEGIARTI | ArticleType.JORFARTI:
-                url = f"{api_base_url}/consult/getArticle"
+                url = f"{self.API_BASE_URL}/consult/getArticle"
                 params = {"id": id}
             case ArticleType.CETATEXT:
-                url = f"{api_base_url}/consult/juri"
+                url = f"{self.API_BASE_URL}/consult/juri"
                 params = {"textId": id}
             case _:
                 raise ValueError("Unknown article type")
@@ -60,9 +98,9 @@ class LegifranceBackend(Backend):
         # A POST request to fetch an article?
         # And no way of using a simple query string?
         # Really, Legifrance?
-        reply = await self.client.post(url, headers=headers, json=params)
+        reply = await self.client.post(url, json=params)
         reply.raise_for_status()
-        return json.loads(reply.text)
+        return reply.json()
 
 
 def get_backend(spec: str):
@@ -137,7 +175,7 @@ class LegifranceAuth(httpx.Auth):
             )
             if not 200 <= resp.status_code < 300:
                 yield resp
-            resp_json = json.loads(resp.text)
+            resp_json = resp.json()
             self.token = resp_json["access_token"]
             expires_in = int(resp_json["expires_in"])
             self.token_expires_at = datetime.datetime.now() + datetime.timedelta(

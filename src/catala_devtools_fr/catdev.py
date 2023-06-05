@@ -1,5 +1,6 @@
 # `catdev` entry point
 import asyncio
+import json
 from pathlib import Path
 
 import typer
@@ -7,8 +8,13 @@ import typer
 from catala_devtools_fr.cli_util import set_basic_loglevel
 from catala_devtools_fr.find_changes import find_changes
 from catala_devtools_fr.query import get_backend
+from catala_devtools_fr.skeleton import markdown_skeleton
 
 app = typer.Typer()
+# legifrance-specific commands (query legifrance API and return
+# raw JSON)
+lf = typer.Typer()
+app.add_typer(lf, name="lf", help="Commands for querying the raw Legifrance API")
 
 
 @app.command()
@@ -27,7 +33,34 @@ def query(article_id: str):
     Retrieve a reference version of a French law article.
     """
     back = get_backend("legifrance")
-    print(asyncio.run(back.query_article(article_id)))
+    print(asyncio.run(back.article(article_id)))
+
+
+@app.command()
+def skeleton(textid: str, sectionid: str):
+    """
+    Output a given section of a law text.
+    """
+    skel = asyncio.run(markdown_skeleton(textid, sectionid))
+    print(skel)
+
+
+@lf.command()
+def codes():
+    """
+    Retrieve a list of available codes.
+    """
+    back = get_backend("legifrance")
+    print(json.dumps(asyncio.run(back.list_codes()), indent=2, ensure_ascii=False))
+
+
+@lf.command()
+def toc(code: str):
+    """
+    Retrieve the table of contents for a given code.
+    """
+    back = get_backend("legifrance")
+    print(json.dumps(asyncio.run(back.code_toc(code)), indent=2, ensure_ascii=False))
 
 
 def main():
