@@ -2,7 +2,7 @@ from itertools import dropwhile
 
 import mdformat
 
-from catala_devtools_fr.query import get_backend
+from catleg.query import get_backend
 
 
 async def markdown_skeleton(textid: str, sectionid: str) -> str:

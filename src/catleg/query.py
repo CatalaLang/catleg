@@ -14,9 +14,9 @@ from typing import Iterable, Optional, Protocol
 import aiometer
 import httpx
 
-from catala_devtools_fr.config import settings
+from catleg.config import settings
 
-from catala_devtools_fr.law_text_fr import Article, ArticleType, parse_article_id
+from catleg.law_text_fr import Article, ArticleType, parse_article_id
 
 
 class Backend(Protocol):
@@ -117,7 +117,7 @@ def _get_legifrance_credentials(*, raise_if_missing=True):
         if (client_id is None) or (client_secret is None):
             raise ValueError(
                 "Please supply Legifrance credentials \
-                         (using .catdev_secrets.toml or in the environment)"
+                         (using .catleg_secrets.toml or in the environment)"
             )
     return client_id, client_secret
 

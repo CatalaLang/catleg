@@ -1,37 +1,37 @@
-# catala-devtools-fr
+# catleg
 
 A library of helper tools for [catala](https://catala-lang.org) programming in the context
 of French legislative texts.
 
 ## Installing
 
-`catala-devtools-fr` is not released on PyPI yet ; install it by running `pip install -e .` from a source clone.
+`catleg` is not released on PyPI yet ; install it by running `pip install -e .` from a source clone.
 
-## Running `catdev`
+## Running `catleg`
 
-Run `catdev --help` for a list of commands.
+Run `catleg --help` for a list of commands.
 
 ### Legifrance credentials
 
-`catdev` uses the Legifrance API (though we hope to orovide our own API soon!) to access French legislative texts.
+`catleg` uses the Legifrance API (though we hope to orovide our own API soon!) to access French legislative texts.
 
 This API is authenticated and requires credentials, which may be obtained by registering on the
 [Piste portal](https://developer.aife.economie.gouv.fr/).
 
-To provide credentials to `catdev`, create a `.catdev_secrets.toml` file like so:
+To provide credentials to `catleg`, create a `.catleg_secrets.toml` file like so:
 
 ```toml
 lf_client_id = "your_client_id"
 lf_client_secret = "your_client_secret"
 ```
 
-Alternatively, you may define the environment variables `CATDEV_LF_CLIENT_ID` and `CATDEV_LF_CLIENT_SECRET`.
+Alternatively, you may define the environment variables `CATLEG_LF_CLIENT_ID` and `CATLEG_LF_CLIENT_SECRET`.
 
 ## Development install
 
 Run `pip install -e .[dev]` for a local, editable install that includes development dependencies.
 
-`catala-devtools-fr` uses [tox](https://tox.wiki/en/latest/) to run linters and unit tests in various environments.
+`catleg` uses [tox](https://tox.wiki/en/latest/) to run linters and unit tests in various environments.
 
 Run `tox` to execute tests and linters.
 

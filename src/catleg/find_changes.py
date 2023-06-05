@@ -15,10 +15,10 @@ import warnings
 from pathlib import Path
 from typing import Optional, TextIO
 
-from catala_devtools_fr.git_diff import wdiff
+from catleg.git_diff import wdiff
 
-from catala_devtools_fr.parse_catala_markdown import parse_catala_file
-from catala_devtools_fr.query import get_backend
+from catleg.parse_catala_markdown import parse_catala_file
+from catleg.query import get_backend
 
 
 async def find_changes(f: TextIO, *, file_path: Optional[Path] = None):

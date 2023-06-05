@@ -1,14 +1,7 @@
 from io import StringIO
 
-from catala_devtools_fr.law_text_fr import (
-    ArticleType,
-    find_id_in_string,
-    parse_article_id,
-)
-from catala_devtools_fr.parse_catala_markdown import (
-    _make_markdown_parser,
-    parse_catala_file,
-)
+from catleg.law_text_fr import ArticleType, find_id_in_string, parse_article_id
+from catleg.parse_catala_markdown import _make_markdown_parser, parse_catala_file
 from mdformat.renderer import MDRenderer
 
 

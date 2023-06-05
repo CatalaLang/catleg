@@ -1,14 +1,13 @@
-# `catdev` entry point
 import asyncio
 import json
 from pathlib import Path
 
 import typer
 
-from catala_devtools_fr.cli_util import set_basic_loglevel
-from catala_devtools_fr.find_changes import find_changes
-from catala_devtools_fr.query import get_backend
-from catala_devtools_fr.skeleton import markdown_skeleton
+from catleg.cli_util import set_basic_loglevel
+from catleg.find_changes import find_changes
+from catleg.query import get_backend
+from catleg.skeleton import markdown_skeleton
 
 app = typer.Typer()
 # legifrance-specific commands (query legifrance API and return
