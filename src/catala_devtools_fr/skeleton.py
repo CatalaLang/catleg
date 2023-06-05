@@ -26,16 +26,10 @@ async def markdown_skeleton(textid: str, sectionid: str) -> str:
     for node, level in _preorder(root, root_level):
         if node["id"][:8] != "LEGISCTA":
             # If it is not a section, then it is an article
-            parts.append(f"Article {node['num']} | {node['id']}")
+            parts.append(f"{'#' * (level + 1)} Article {node['num']} | {node['id']}")
             article = await back.article(node["id"])
             formatted = mdformat.text(article.text, options={"wrap": 80})
             parts.append(formatted)
-            parts.append(
-                """
-```catala
-  # Add implementation here :-)
-```"""
-            )
         else:
             parts.append(f"{'#' * level} {node['title']}")
 
