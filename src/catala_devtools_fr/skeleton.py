@@ -7,8 +7,7 @@ from catala_devtools_fr.query import get_backend
 
 async def markdown_skeleton(textid: str, sectionid: str) -> str:
     """
-    Return a skeleton (formatted law text section, with empty
-    Catala code placeholders)
+    Return a skeleton (formatted law text section)
     """
     if sectionid[:8].upper() != "LEGISCTA":
         raise ValueError("Expected section identifier (should start with 'SCTA')")
