@@ -1,7 +1,7 @@
 import asyncio
 
 import pytest
-from catala_devtools_fr.query import _get_legifrance_credentials, get_backend
+from catleg.query import _get_legifrance_credentials, get_backend
 
 
 @pytest.mark.skipif(

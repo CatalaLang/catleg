@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "catala_devtools_fr"
+name = "catleg"
 version = "0.0.1"
 dependencies = [
   "aiometer",
@@ -25,4 +25,4 @@ dev = [
 ]
 
 [project.scripts]
-catdev = "catala_devtools_fr.catdev:main"
+catleg = "catleg.catleg:main"
