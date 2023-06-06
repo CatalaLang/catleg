@@ -10,6 +10,7 @@ version-file = "_version.py"
 
 [project]
 name = "catleg"
+description = "A library of helper tools for catala programming in the context of French legislative texts."
 requires-python = ">=3.10"
 license = { file = "LICENSE" }
 readme = "README.md"
