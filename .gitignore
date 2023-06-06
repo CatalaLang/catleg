@@ -1,6 +1,8 @@
+# Version info
+_version.py
 
 # Ignore dynaconf secret files
-.catdev_secrets.*
+.catleg_secrets.*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
