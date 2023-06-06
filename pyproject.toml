@@ -27,3 +27,7 @@ dev = [
 
 [project.scripts]
 catleg = "catleg.catleg:main"
+
+[project.urls]
+"Homepage" = "https://github.com/CatalaLang/catleg/"
+"Bug Tracker" = "https://github.com/CatalaLang/catleg/issues"
