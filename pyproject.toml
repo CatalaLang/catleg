@@ -1,10 +1,24 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "_version.py"
 
 [project]
 name = "catleg"
-version = "0.0.1"
+description = "A library of helper tools for catala programming in the context of French legislative texts."
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
 dependencies = [
   "aiometer",
   "dynaconf",
@@ -14,6 +28,7 @@ dependencies = [
   "more-itertools",
   "typer",
 ]
+dynamic = ["version"]
 
 [project.optional-dependencies]
 dev = [
@@ -26,3 +41,7 @@ dev = [
 
 [project.scripts]
 catleg = "catleg.catleg:main"
+
+[project.urls]
+"Homepage" = "https://github.com/CatalaLang/catleg/"
+"Bug Tracker" = "https://github.com/CatalaLang/catleg/issues"
