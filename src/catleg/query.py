@@ -54,14 +54,14 @@ class LegifranceBackend(Backend):
         )
 
     async def article(self, id: str) -> Optional[Article]:
-        reply = await self._query_article_legi(id)
+        reply = await self.query_article_legi(id)
         article = _article_from_legifrance_reply(reply)
         if article is None:
             logging.warning(f"Could not retrieve article {id} (wrong identifier?)")
         return article
 
     async def articles(self, ids: Iterable[str]) -> Iterable[Optional[Article]]:
-        jobs = [functools.partial(self._query_article_legi, id) for id in ids]
+        jobs = [functools.partial(self.query_article_legi, id) for id in ids]
         replies = await aiometer.run_all(jobs, max_at_once=10, max_per_second=15)
         return [_article_from_legifrance_reply(reply) for reply in replies]
 
@@ -83,7 +83,7 @@ class LegifranceBackend(Backend):
             raise ValueError(f"Could not retrieve TOC for text {id}")
         return reply.json()
 
-    async def _query_article_legi(self, id: str):
+    async def query_article_legi(self, id: str):
         typ, id = parse_article_id(id)
         match typ:
             case ArticleType.LEGIARTI | ArticleType.JORFARTI:
