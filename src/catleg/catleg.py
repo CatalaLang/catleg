@@ -45,6 +45,19 @@ def skeleton(textid: str, sectionid: str):
 
 
 @lf.command()
+def article(article_id: str):
+    """Retrieve an article from Legifrance"""
+    back = get_backend("legifrance")
+    print(
+        json.dumps(
+            asyncio.run(back.query_article_legi(article_id)),
+            indent=2,
+            ensure_ascii=False,
+        )
+    )
+
+
+@lf.command()
 def codes():
     """
     Retrieve a list of available codes.
