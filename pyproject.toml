@@ -26,7 +26,7 @@ dependencies = [
   "markdown-it-py[plugins]",
   "mdformat>=0.7.16",
   "more-itertools",
-  "typer",
+  "typer[all]",
 ]
 dynamic = ["version"]
 
