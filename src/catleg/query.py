@@ -132,7 +132,7 @@ def _article_from_legifrance_reply(reply) -> Optional[Article]:
     else:
         raise ValueError("Could not parse Legifrance reply")
     text = article["texte"]
-    if "nota" in article and len(article["nota"]):
+    if "nota" in article and article["nota"] is not None:
         text += f" NOTA : {article['nota']}"
     id = article["id"]
     return SimpleNamespace(
