@@ -13,7 +13,7 @@ from typing import Iterable, Optional, Protocol
 
 import aiometer
 import httpx
-from markdownify import markdownify as md
+from markdownify import markdownify as md  # type: ignore
 
 from catleg.config import settings
 
@@ -111,19 +111,23 @@ def get_backend(spec: str):
     return LegifranceBackend(client_id, client_secret)
 
 
-@dataclass(frozen=True)
-class LegifranceArticle:
+@dataclass
+class LegifranceArticle(Article):
     id: str
     text: str
     textHtml: str
     nota: str
     notaHtml: str
 
+    @property
+    def type(self) -> ArticleType:
+        return parse_article_id(self.id)[0]
+
     def to_markdown(self) -> str:
         text_md = md(self.textHtml)
         if len(self.notaHtml):
             nota_md = md(self.notaHtml)
-            text_md += f"\n\nNOTA :\n\n{nota_md}"
+            text_md += f"NOTA :\n\n{nota_md}"
         return text_md
 
 
