@@ -51,4 +51,4 @@ def test_no_extraneous_nota():
 def test_nota_format():
     article = _json_from_test_file("LEGIARTI000046790860.json")
     res = _article_from_legifrance_reply(article)
-    assert "NOTA" in res.text
+    assert "\n\nNOTA :\n\nConformément à l'article 89" in res.text
