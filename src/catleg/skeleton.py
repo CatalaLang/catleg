@@ -2,7 +2,7 @@ from itertools import dropwhile
 
 import mdformat
 
-from catleg.query import get_backend
+from catleg.query import Backend, get_backend
 
 
 async def markdown_skeleton(textid: str, sectionid: str) -> str:
@@ -14,6 +14,12 @@ async def markdown_skeleton(textid: str, sectionid: str) -> str:
 
     back = get_backend("legifrance")
     toc = await back.code_toc(textid)
+    return await _markdown_skeleton(back, toc, sectionid)
+
+
+# we separate this part to ease testing, but this should probably be
+# reworked to be part of the tools' API
+async def _markdown_skeleton(back: Backend, toc, sectionid: str) -> str:
     nodes = dropwhile(
         lambda node_level: node_level[0]["cid"] != sectionid, _preorder(toc)
     )
