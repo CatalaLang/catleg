@@ -10,6 +10,15 @@ from catleg.query import (
 )
 
 
+def _json_from_test_file(fname):
+    path_to_current_file = os.path.realpath(__file__)
+    current_directory = os.path.dirname(path_to_current_file)
+    file_path = os.path.join(current_directory, fname)
+    with open(file_path, "r") as f:
+        json_contents = load(f)
+    return json_contents
+
+
 @pytest.mark.skipif(
     _get_legifrance_credentials(raise_if_missing=False)[0] is None,
     reason="this test requires legifrance credentials",
@@ -34,10 +43,6 @@ def test_query_articles():
 
 
 def test_no_extraneous_nota():
-    path_to_current_file = os.path.realpath(__file__)
-    current_directory = os.path.dirname(path_to_current_file)
-    article_path = os.path.join(current_directory, "LEGIARTI000038814944.json")
-    with open(article_path, "r") as f:
-        article = load(f)
+    article = _json_from_test_file("LEGIARTI000038814944.json")
     res = _article_from_legifrance_reply(article)
     assert "NOTA" not in res.text
