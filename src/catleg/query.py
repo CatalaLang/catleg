@@ -8,11 +8,12 @@ Utilities for querying various data sources for law texts:
 import datetime
 import functools
 import logging
-from types import SimpleNamespace
+from dataclasses import dataclass
 from typing import Iterable, Optional, Protocol
 
 import aiometer
 import httpx
+from markdownify import markdownify as md
 
 from catleg.config import settings
 
@@ -110,6 +111,22 @@ def get_backend(spec: str):
     return LegifranceBackend(client_id, client_secret)
 
 
+@dataclass(frozen=True)
+class LegifranceArticle:
+    id: str
+    text: str
+    textHtml: str
+    nota: str
+    notaHtml: str
+
+    def to_markdown(self) -> str:
+        text_md = md(self.textHtml)
+        if len(self.notaHtml):
+            nota_md = md(self.notaHtml)
+            text_md += f"\n\nNOTA :\n\n{nota_md}"
+        return text_md
+
+
 def _get_legifrance_credentials(*, raise_if_missing=True):
     client_id = settings.get("lf_client_id")
     client_secret = settings.get("lf_client_secret")
@@ -131,15 +148,13 @@ def _article_from_legifrance_reply(reply) -> Optional[Article]:
         article = reply["article"]
     else:
         raise ValueError("Could not parse Legifrance reply")
-    text = article["texte"]
-    if "nota" in article and article["nota"] is not None and len(article["nota"]):
-        text += f"\n\nNOTA :\n\n{article['nota']}"
-    id = article["id"]
-    return SimpleNamespace(
-        text=text,
-        id=id,
-        expiration_date=None,
-        new_version=None,
+
+    return LegifranceArticle(
+        id=article["id"],
+        text=article["texte"],
+        textHtml=article["texteHtml"],
+        nota=article["nota"],
+        notaHtml=article["notaHtml"],
     )
 
 

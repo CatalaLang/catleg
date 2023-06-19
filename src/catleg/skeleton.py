@@ -28,7 +28,7 @@ async def markdown_skeleton(textid: str, sectionid: str) -> str:
             # If it is not a section, then it is an article
             parts.append(f"{'#' * (level + 1)} Article {node['num']} | {node['id']}")
             article = await back.article(node["id"])
-            formatted = mdformat.text(article.text, options={"wrap": 80})
+            formatted = mdformat.text(article.to_markdown(), options={"wrap": 80})
             parts.append(formatted)
         else:
             parts.append(f"{'#' * level} {node['title']}")
