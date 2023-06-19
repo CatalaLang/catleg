@@ -46,3 +46,9 @@ def test_no_extraneous_nota():
     article = _json_from_test_file("LEGIARTI000038814944.json")
     res = _article_from_legifrance_reply(article)
     assert "NOTA" not in res.text
+
+
+def test_nota_format():
+    article = _json_from_test_file("LEGIARTI000046790860.json")
+    res = _article_from_legifrance_reply(article)
+    assert "NOTA" in res.text

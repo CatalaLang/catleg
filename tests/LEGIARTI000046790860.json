@@ -1,0 +1,231 @@
+{
+  "executionTime": 0,
+  "dereferenced": false,
+  "article": {
+    "id": "LEGIARTI000046790860",
+    "idTexte": null,
+    "type": "AUTONOME",
+    "texte": "Pour son administration, l'autorité délibère sur : 1° Le budget ; 2° Le compte financier et l'affectation des résultats ; 3° Le règlement comptable et financier ; ce dernier est transmis pour information au ministre chargé du budget et à la Cour des comptes ; 4° Le règlement intérieur ; 5° Les conditions générales de recrutement et de rémunération du personnel, après avis des instances représentatives du personnel compétentes ; 6° Les acquisitions, échanges et aliénations de biens immobiliers ; 7° Les actions en justice et les transactions dans les conditions fixées par les articles 2044 à 2052 du code civil ; 8° Les conditions générales, y compris financières, de consultation d'experts ; 9° Les cas prévus au 8° de l'article 2 ainsi qu'aux articles 3-1 et 7-1 du décret du 3 juillet 2006 susvisé. Pour les 1°, 2°, 4° et 7°, l'autorité délibère sur proposition du président. Dans la limite d'un seuil qu'elle fixe, l'autorité peut déléguer au président son pouvoir de décision prévu aux 6°, et 7°. Toutefois, en cas d'urgence, le président peut agir en justice sous réserve d'en informer l'autorité dans les plus brefs délais.",
+    "texteHtml": "<p></p><p><br/>\nPour son administration, l'autorité délibère sur :<br/><br/>\n1° Le budget ;<br/><br/>\n2° Le compte financier et l'affectation des résultats ;<br/><br/>\n3° Le règlement comptable et financier ; ce dernier est transmis pour information au ministre chargé du budget et à la Cour des comptes ;<br/><br/>\n4° Le règlement intérieur ;<br/><br/>\n5° Les conditions générales de recrutement et de rémunération du personnel, après avis des instances représentatives du personnel compétentes ;<br/><br/>\n6° Les acquisitions, échanges et aliénations de biens immobiliers ;<br/><br/>\n7° Les actions en justice et les transactions dans les conditions fixées par les <a href='/affichCodeArticle.do?cidTexte=LEGITEXT000006070721&idArticle=LEGIARTI000006445609&dateTexte=&categorieLien=cid'>articles 2044 à 2052 du code civil</a> ;<br/><br/>\n8° Les conditions générales, y compris financières, de consultation d'experts ;<br/><br/>\n9° Les cas prévus au 8° de l'article 2 ainsi qu'aux articles <a href='/affichTexteArticle.do?cidTexte=JORFTEXT000000242359&idArticle=LEGIARTI000038180319&dateTexte=&categorieLien=cid'>3-1</a> et <a href='/affichTexteArticle.do?cidTexte=JORFTEXT000000242359&idArticle=LEGIARTI000038180437&dateTexte=&categorieLien=cid'>7-1</a> du décret du 3 juillet 2006 susvisé.<br/><br/>\nPour les 1°, 2°, 4° et 7°, l'autorité délibère sur proposition du président.<br/><br/>\nDans la limite d'un seuil qu'elle fixe, l'autorité peut déléguer au président son pouvoir de décision prévu aux 6°, et 7°.<br/><br/>\nToutefois, en cas d'urgence, le président peut agir en justice sous réserve d'en informer l'autorité dans les plus brefs délais.</p><p></p>",
+    "num": "3",
+    "origine": "LEGI",
+    "nature": "Article",
+    "versionArticle": "2.0",
+    "etat": "VIGUEUR",
+    "dateDebut": 1672531200000,
+    "dateFin": 32472144000000,
+    "dateDebutExtension": 32472144000000,
+    "dateFinExtension": 32472144000000,
+    "inap": null,
+    "ordre": 1572861,
+    "context": {
+      "titresTM": [
+        {
+          "debut": "2022-04-03",
+          "fin": "2999-01-01",
+          "titre": "Chapitre Ier : L'Autorité de régulation de la communication audiovisuelle et numérique et son président",
+          "xPath": "/ARTICLE/CONTEXTE/TEXTE/TM/TITRE_TM",
+          "cid": "JORFSCTA000045462577",
+          "id": "LEGISCTA000045464860",
+          "etat": "VIGUEUR"
+        }
+      ],
+      "nombreVersionParent": 1,
+      "longeurChemin": 35,
+      "titreTxt": [
+        {
+          "debut": "2999-01-01",
+          "fin": "2999-01-01",
+          "titre": "Décret n° 2022-469 du 1er avril 2022 relatif à l'organisation et au fonctionnement de l'Autorité de régulation de la communication audiovisuelle et numérique",
+          "xPath": "/ARTICLE/CONTEXTE/TEXTE/TITRE_TXT",
+          "cid": "JORFTEXT000045462563",
+          "id": "JORFTEXT000045462563",
+          "etat": ""
+        },
+        {
+          "debut": "2022-04-03",
+          "fin": "2999-01-01",
+          "titre": "Décret n° 2022-469 du 1er avril 2022 relatif à l'organisation et au fonctionnement de l'Autorité de régulation de la communication audiovisuelle et numérique",
+          "xPath": "/ARTICLE/CONTEXTE/TEXTE/TITRE_TXT",
+          "cid": "JORFTEXT000045462563",
+          "id": "LEGITEXT000045464846",
+          "etat": "VIGUEUR"
+        }
+      ]
+    },
+    "cid": "JORFARTI000045462583",
+    "cidTexte": null,
+    "sectionParentCid": "JORFSCTA000045462577",
+    "sectionParentId": "LEGISCTA000045464860",
+    "sectionParentTitre": "Chapitre Ier : L'Autorité de régulation de la communication audiovisuelle et numérique et son président",
+    "fullSectionsTitre": "Chapitre Ier : L'Autorité de régulation de la communication audiovisuelle et numérique et son président",
+    "refInjection": "IG-20230221",
+    "idTechInjection": "LEGIARTI000046790860",
+    "idEli": null,
+    "idEliAlias": null,
+    "calipsos": [],
+    "textTitles": [
+      {
+        "id": "JORFTEXT000045462563",
+        "titre": "Décret n°2022-469 du 1er avril 2022",
+        "titreLong": "Décret n° 2022-469 du 1er avril 2022 relatif à l'organisation et au fonctionnement de l'Autorité de régulation de la communication audiovisuelle et numérique",
+        "etat": "",
+        "dateDebut": 32472144000000,
+        "dateFin": 32472144000000,
+        "cid": "JORFTEXT000045462563",
+        "datePubli": 1648857600000,
+        "datePubliComputed": 1648857600000,
+        "dateTexte": 1648771200000,
+        "dateTexteComputed": 1648771200000,
+        "nature": "DECRET",
+        "nor": "MICE2138264D",
+        "num": "2022-469",
+        "numParution": "0078",
+        "originePubli": "JORF n° 0078 du 02 avril 2022",
+        "appliGeo": null,
+        "codesNomenclatures": [],
+        "visas": null,
+        "nota": null,
+        "notice": null,
+        "travauxPreparatoires": null,
+        "signataires": null,
+        "dossiersLegislatifs": [],
+        "ancienId": null
+      },
+      {
+        "id": "LEGITEXT000045464846",
+        "titre": "Décret n°2022-469 du 1er avril 2022",
+        "titreLong": "Décret n° 2022-469 du 1er avril 2022 relatif à l'organisation et au fonctionnement de l'Autorité de régulation de la communication audiovisuelle et numérique",
+        "etat": "VIGUEUR",
+        "dateDebut": 1648944000000,
+        "dateFin": 32472144000000,
+        "cid": "JORFTEXT000045462563",
+        "datePubli": 1648857600000,
+        "datePubliComputed": 1648857600000,
+        "dateTexte": 1648771200000,
+        "dateTexteComputed": 1648771200000,
+        "nature": "DECRET",
+        "nor": "MICE2138264D",
+        "num": "2022-469",
+        "numParution": "0078",
+        "originePubli": "JORF n° 0078 du 02 avril 2022",
+        "appliGeo": null,
+        "codesNomenclatures": [],
+        "visas": null,
+        "nota": null,
+        "notice": null,
+        "travauxPreparatoires": null,
+        "signataires": null,
+        "dossiersLegislatifs": [],
+        "ancienId": null
+      }
+    ],
+    "nota": "Conformément à l'article 89 du décret n° 2022-1605 du 22 décembre 2022, ces dispositions sont applicables à compter du 1er janvier 2023 dans les conditions fixées aux II à IV dudit article.",
+    "notaHtml": "<p>Conformément à l'article 89 du décret n° 2022-1605 du 22 décembre 2022, ces dispositions sont applicables à compter du 1er janvier 2023 dans les conditions fixées aux II à IV dudit article.</p>",
+    "activitePro": [],
+    "numeroBrochure": [],
+    "numeroBo": null,
+    "conteneurs": [],
+    "lienModifications": [
+      {
+        "textCid": "JORFTEXT000046778725",
+        "textTitle": "Décret n°2022-1605 du 22 décembre 2022 - art. 45",
+        "linkType": "MODIFIE",
+        "linkOrientation": "cible",
+        "articleNum": "45",
+        "articleId": "LEGIARTI000046781810",
+        "natureText": "DECRET",
+        "datePubliTexte": "2022-12-23",
+        "dateSignaTexte": "2022-12-22",
+        "dateDebutCible": "2022-12-24"
+      }
+    ],
+    "lienCitations": [
+      {
+        "textCid": "JORFTEXT000000242359",
+        "textTitle": "Décret n° 2006-781 du 3 juillet 2006 - art. 3-1",
+        "linkType": "CITATION",
+        "linkOrientation": "source",
+        "articleNum": "3-1",
+        "articleId": "LEGIARTI000038180319",
+        "natureText": "DECRET",
+        "date": 1676976367472,
+        "parentCid": null,
+        "numTexte": "2006-781",
+        "datePubli": 1151971200000,
+        "dateDebut": 1551398400000
+      },
+      {
+        "textCid": "JORFTEXT000000242359",
+        "textTitle": "Décret n° 2006-781 du 3 juillet 2006 - art. 7-1",
+        "linkType": "CITATION",
+        "linkOrientation": "source",
+        "articleNum": "7-1",
+        "articleId": "LEGIARTI000038180437",
+        "natureText": "DECRET",
+        "date": 1676976367472,
+        "parentCid": null,
+        "numTexte": "2006-781",
+        "datePubli": 1151971200000,
+        "dateDebut": 1551398400000
+      },
+      {
+        "textCid": "LEGITEXT000006070721",
+        "textTitle": "Code civil - art. 2044",
+        "linkType": "CITATION",
+        "linkOrientation": "source",
+        "articleNum": "2044",
+        "articleId": "LEGIARTI000006445609",
+        "natureText": "CODE",
+        "date": 1676976367472,
+        "parentCid": null,
+        "numTexte": "",
+        "datePubli": 32472144000000,
+        "dateDebut": 1479600000000
+      }
+    ],
+    "lienConcordes": [],
+    "lienAutres": [],
+    "articleVersions": [
+      {
+        "id": "LEGIARTI000045464868",
+        "etat": "MODIFIE",
+        "version": "1.0",
+        "dateDebut": 1648944000000,
+        "dateFin": 1672531200000,
+        "numero": null,
+        "ordre": null
+      },
+      {
+        "id": "LEGIARTI000046790860",
+        "etat": "VIGUEUR",
+        "version": "2.0",
+        "dateDebut": 1672531200000,
+        "dateFin": 32472144000000,
+        "numero": null,
+        "ordre": null
+      },
+      {
+        "id": "JORFARTI000045462583",
+        "etat": "",
+        "version": "INITIALE",
+        "dateDebut": 32472144000000,
+        "dateFin": 32472144000000,
+        "numero": null,
+        "ordre": null
+      }
+    ],
+    "computedNums": [
+      "3"
+    ],
+    "versionPrecedente": "LEGIARTI000045464868",
+    "conditionDiffere": null,
+    "historique": null,
+    "surtitre": null,
+    "renvoi": null,
+    "infosComplementaires": null,
+    "infosComplementairesHtml": null,
+    "infosRestructurationBranche": null,
+    "infosRestructurationBrancheHtml": null
+  }
+}
