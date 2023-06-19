@@ -1,7 +1,13 @@
 import asyncio
+import os
+from json import load
 
 import pytest
-from catleg.query import _get_legifrance_credentials, get_backend
+from catleg.query import (
+    _article_from_legifrance_reply,
+    _get_legifrance_credentials,
+    get_backend,
+)
 
 
 @pytest.mark.skipif(
@@ -25,3 +31,13 @@ def test_query_articles():
     )
     assert "logement" in art1.text
     assert "pacte" in art2.text
+
+
+def test_no_extraneous_nota():
+    path_to_current_file = os.path.realpath(__file__)
+    current_directory = os.path.dirname(path_to_current_file)
+    article_path = os.path.join(current_directory, "LEGIARTI000038814944.json")
+    with open(article_path, "r") as f:
+        article = load(f)
+    res = _article_from_legifrance_reply(article)
+    assert "NOTA" not in res.text
