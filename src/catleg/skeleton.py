@@ -35,7 +35,7 @@ async def markdown_skeleton(textid: str, sectionid: str) -> str:
     return "\n\n".join(parts)
 
 
-def _preorder(node, level=0):
+def _preorder(node, level=1):
     """Preorder traversal of articles and sections"""
     yield node, level
     for article in node["articles"]:
