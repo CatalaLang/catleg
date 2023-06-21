@@ -8,7 +8,6 @@ Utilities for querying various data sources for law texts:
 import datetime
 import functools
 import logging
-from dataclasses import dataclass
 from typing import Iterable, Optional, Protocol
 
 import aiometer
@@ -111,22 +110,42 @@ def get_backend(spec: str):
     return LegifranceBackend(client_id, client_secret)
 
 
-@dataclass
 class LegifranceArticle(Article):
-    id: str
-    text: str
-    textHtml: str
-    nota: str
-    notaHtml: str
+    def __init__(self, id: str, text: str, text_html: str, nota: str, nota_html: str):
+        self._id = id
+        self._text = text
+        self._text_html = text_html
+        self._nota = nota
+        self._nota_html = nota_html
+
+    @property
+    def id(self) -> str:
+        return self._id
+
+    @property
+    def text(self) -> str:
+        return self._text
+
+    @property
+    def text_html(self) -> str:
+        return self._text_html
+
+    @property
+    def nota(self) -> str:
+        return self._nota
+
+    @property
+    def nota_html(self) -> str:
+        return self._nota_html
 
     @property
     def type(self) -> ArticleType:
         return parse_article_id(self.id)[0]
 
     def to_markdown(self) -> str:
-        text_md = md(self.textHtml)
-        if len(self.notaHtml):
-            nota_md = md(self.notaHtml)
+        text_md = md(self.text_html)
+        if len(self.nota_html):
+            nota_md = md(self.nota_html)
             text_md += f"NOTA :\n\n{nota_md}"
         return text_md
 
@@ -156,9 +175,9 @@ def _article_from_legifrance_reply(reply) -> Optional[Article]:
     return LegifranceArticle(
         id=article["id"],
         text=article["texte"],
-        textHtml=article["texteHtml"],
+        text_html=article["texteHtml"],
         nota=article["nota"],
-        notaHtml=article["notaHtml"],
+        nota_html=article["notaHtml"],
     )
 
 
