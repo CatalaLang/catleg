@@ -143,11 +143,17 @@ class LegifranceArticle(Article):
         return parse_article_id(self.id)[0]
 
     def to_markdown(self) -> str:
-        text_md = md(self.text_html)
+        text_md = md(_clean_legifrance_html(self.text_html))
         if len(self.nota_html):
-            nota_md = md(self.nota_html)
+            nota_md = md(_clean_legifrance_html(self.nota_html))
             text_md += f"NOTA :\n\n{nota_md}"
         return text_md
+
+
+def _clean_legifrance_html(html: str) -> str:
+    # remove empty paragraphs
+    # remove newlines after html line breaks
+    return html.replace("<p></p>", "").replace("<br/>\n", "<br/>")
 
 
 def _get_legifrance_credentials(*, raise_if_missing=True):
