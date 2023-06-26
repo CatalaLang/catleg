@@ -8,11 +8,11 @@ Utilities for querying various data sources for law texts:
 import datetime
 import functools
 import logging
-from types import SimpleNamespace
 from typing import Iterable, Optional, Protocol
 
 import aiometer
 import httpx
+from markdownify import markdownify as md  # type: ignore
 
 from catleg.config import settings
 
@@ -110,6 +110,46 @@ def get_backend(spec: str):
     return LegifranceBackend(client_id, client_secret)
 
 
+class LegifranceArticle(Article):
+    def __init__(self, id: str, text: str, text_html: str, nota: str, nota_html: str):
+        self._id = id
+        self._text = text
+        self._text_html = text_html
+        self._nota = nota
+        self._nota_html = nota_html
+
+    @property
+    def id(self) -> str:
+        return self._id
+
+    @property
+    def text(self) -> str:
+        return self._text
+
+    @property
+    def text_html(self) -> str:
+        return self._text_html
+
+    @property
+    def nota(self) -> str:
+        return self._nota
+
+    @property
+    def nota_html(self) -> str:
+        return self._nota_html
+
+    @property
+    def type(self) -> ArticleType:
+        return parse_article_id(self.id)[0]
+
+    def to_markdown(self) -> str:
+        text_md = md(self.text_html).strip()
+        if len(self.nota_html):
+            nota_md = md(self.nota_html).strip()
+            text_md += f"\n\nNOTA :\n\n{nota_md}"
+        return text_md
+
+
 def _get_legifrance_credentials(*, raise_if_missing=True):
     client_id = settings.get("lf_client_id")
     client_secret = settings.get("lf_client_secret")
@@ -131,15 +171,13 @@ def _article_from_legifrance_reply(reply) -> Optional[Article]:
         article = reply["article"]
     else:
         raise ValueError("Could not parse Legifrance reply")
-    text = article["texte"]
-    if "nota" in article and article["nota"] is not None:
-        text += f" NOTA : {article['nota']}"
-    id = article["id"]
-    return SimpleNamespace(
-        text=text,
-        id=id,
-        expiration_date=None,
-        new_version=None,
+
+    return LegifranceArticle(
+        id=article["id"],
+        text=article["texte"],
+        text_html=article["texteHtml"],
+        nota=article["nota"],
+        nota_html=article["notaHtml"],
     )
 
 

@@ -1,0 +1,256 @@
+{
+  "executionTime": 0,
+  "dereferenced": false,
+  "article": {
+    "id": "LEGIARTI000038814944",
+    "idTexte": null,
+    "type": "AUTONOME",
+    "texte": "I.-Peuvent bénéficier d'une aide personnelle au logement : 1° Les personnes de nationalité française ; 2° Les personnes de nationalité étrangère remplissant les conditions prévues par les deux premiers alinéas de l' article L. 512-2 du code de la sécurité sociale . II.-Parmi les personnes mentionnées au I, peuvent bénéficier d'une aide personnelle au logement celles remplissant les conditions prévues par le présent livre pour son attribution qui sont locataires, résidents en logement-foyer ou qui accèdent à la propriété d'un local à usage exclusif d'habitation et constituant leur résidence principale. Les sous-locataires, sous les mêmes conditions, peuvent également en bénéficier.",
+    "texteHtml": "<p><br/>I.-Peuvent bénéficier d'une aide personnelle au logement : <br/>1° Les personnes de nationalité française ; <br/>2° Les personnes de nationalité étrangère remplissant les conditions prévues par les deux premiers alinéas de l'<a href='/affichCodeArticle.do?cidTexte=LEGITEXT000006073189&idArticle=LEGIARTI000006743201&dateTexte=&categorieLien=cid' title='Code de la sécurité sociale. - art. L512-2 (V)'>article L. 512-2 du code de la sécurité sociale</a>. <br/>II.-Parmi les personnes mentionnées au I, peuvent bénéficier d'une aide personnelle au logement celles remplissant les conditions prévues par le présent livre pour son attribution qui sont locataires, résidents en logement-foyer ou qui accèdent à la propriété d'un local à usage exclusif d'habitation et constituant leur résidence principale. <br/>Les sous-locataires, sous les mêmes conditions, peuvent également en bénéficier.</p>",
+    "num": "L822-2",
+    "origine": "LEGI",
+    "nature": "Article",
+    "versionArticle": "1.0",
+    "etat": "VIGUEUR",
+    "dateDebut": 1567296000000,
+    "dateFin": 32472144000000,
+    "dateDebutExtension": 32472144000000,
+    "dateFinExtension": 32472144000000,
+    "inap": null,
+    "ordre": 536870911,
+    "context": {
+      "titresTM": [
+        {
+          "debut": "1978-06-08",
+          "fin": "2999-01-01",
+          "titre": "Partie législative",
+          "xPath": "/ARTICLE/CONTEXTE/TEXTE/TM/TITRE_TM",
+          "cid": "LEGISCTA000006108136",
+          "id": "LEGISCTA000006108136",
+          "etat": "VIGUEUR"
+        },
+        {
+          "debut": "2019-09-01",
+          "fin": "2999-01-01",
+          "titre": "Livre VIII : AIDES PERSONNELLES AU LOGEMENT",
+          "xPath": "/ARTICLE/CONTEXTE/TEXTE/TM/TM/TITRE_TM",
+          "cid": "LEGISCTA000038814412",
+          "id": "LEGISCTA000038815034",
+          "etat": "VIGUEUR"
+        },
+        {
+          "debut": "2019-09-01",
+          "fin": "2999-01-01",
+          "titre": "Titre II : Dispositions communes aux aides personnelles au logement",
+          "xPath": "/ARTICLE/CONTEXTE/TEXTE/TM/TM/TM/TITRE_TM",
+          "cid": "LEGISCTA000038814460",
+          "id": "LEGISCTA000038814986",
+          "etat": "VIGUEUR"
+        },
+        {
+          "debut": "2019-09-01",
+          "fin": "2999-01-01",
+          "titre": "Chapitre II : Conditions générales d'attribution",
+          "xPath": "/ARTICLE/CONTEXTE/TEXTE/TM/TM/TM/TM/TITRE_TM",
+          "cid": "LEGISCTA000038814496",
+          "id": "LEGISCTA000038814950",
+          "etat": "VIGUEUR"
+        },
+        {
+          "debut": "2019-09-01",
+          "fin": "2999-01-01",
+          "titre": "Section 1 : Conditions relatives au bénéficiaire",
+          "xPath": "/ARTICLE/CONTEXTE/TEXTE/TM/TM/TM/TM/TM/TITRE_TM",
+          "cid": "LEGISCTA000038814500",
+          "id": "LEGISCTA000038814946",
+          "etat": "VIGUEUR"
+        }
+      ],
+      "nombreVersionParent": 1,
+      "longeurChemin": 47,
+      "titreTxt": [
+        {
+          "debut": "1977-03-10",
+          "fin": "2999-01-01",
+          "titre": "Code de la construction et de l'habitation",
+          "xPath": "/ARTICLE/CONTEXTE/TEXTE/TITRE_TXT",
+          "cid": "LEGITEXT000006074096",
+          "id": "LEGITEXT000006074096",
+          "etat": "VIGUEUR"
+        }
+      ]
+    },
+    "cid": "LEGIARTI000038814502",
+    "cidTexte": null,
+    "sectionParentCid": "LEGISCTA000038814500",
+    "sectionParentId": "LEGISCTA000038814946",
+    "sectionParentTitre": "Section 1 : Conditions relatives au bénéficiaire",
+    "fullSectionsTitre": "Partie législative &gt; Livre VIII : AIDES PERSONNELLES AU LOGEMENT &gt; Titre II : Dispositions communes aux aides personnelles au logement &gt; Chapitre II : Conditions générales d'attribution &gt; Section 1 : Conditions relatives au bénéficiaire",
+    "refInjection": "MD-20230404_190534_801_BDJQUOT",
+    "idTechInjection": "index_DATA_ARTICLE_LEGIARTI000038814944",
+    "idEli": null,
+    "idEliAlias": null,
+    "calipsos": [],
+    "textTitles": [
+      {
+        "id": "LEGITEXT000006074096",
+        "titre": "Code de la construction et de l'habitation.",
+        "titreLong": "Code de la construction et de l'habitation",
+        "etat": "VIGUEUR",
+        "dateDebut": 226800000000,
+        "dateFin": 32472144000000,
+        "cid": "LEGITEXT000006074096",
+        "datePubli": 32472144000000,
+        "datePubliComputed": null,
+        "dateTexte": 32472144000000,
+        "dateTexteComputed": null,
+        "nature": "CODE",
+        "nor": "",
+        "num": "",
+        "numParution": "",
+        "originePubli": "",
+        "appliGeo": null,
+        "codesNomenclatures": [],
+        "visas": null,
+        "nota": null,
+        "notice": null,
+        "travauxPreparatoires": null,
+        "signataires": null,
+        "dossiersLegislatifs": [],
+        "ancienId": null
+      }
+    ],
+    "nota": "",
+    "notaHtml": "",
+    "activitePro": [],
+    "numeroBrochure": [],
+    "numeroBo": null,
+    "conteneurs": [],
+    "lienModifications": [
+      {
+        "textCid": "JORFTEXT000038812074",
+        "textTitle": "Ordonnance n°2019-770 du 17 juillet 2019 - art.",
+        "linkType": "CREE",
+        "linkOrientation": "cible",
+        "articleNum": "",
+        "articleId": "LEGIARTI000038813988",
+        "natureText": "ORDONNANCE",
+        "datePubliTexte": "2019-07-25",
+        "dateSignaTexte": "2019-07-17",
+        "dateDebutCible": "2019-09-01"
+      }
+    ],
+    "lienCitations": [
+      {
+        "textCid": "JORFTEXT000042756398",
+        "textTitle": "Décret n°2020-1734 du 16 décembre 2020 - art. R142-16, v. init.",
+        "linkType": "CITATION",
+        "linkOrientation": "cible",
+        "articleNum": "R142-16",
+        "articleId": "JORFARTI000042759197",
+        "natureText": "DECRET",
+        "date": 1680637179463,
+        "parentCid": null,
+        "numTexte": "2020-1734",
+        "datePubli": 1609286400000,
+        "dateDebut": 32472144000000
+      },
+      {
+        "textCid": "LEGITEXT000006073189",
+        "textTitle": "Code de la sécurité sociale. - art. L512-2 (V)",
+        "linkType": "CITATION",
+        "linkOrientation": "source",
+        "articleNum": "L512-2",
+        "articleId": "LEGIARTI000006743201",
+        "natureText": "CODE",
+        "date": 1680637179463,
+        "parentCid": null,
+        "numTexte": "",
+        "datePubli": 32472144000000,
+        "dateDebut": 1477958400000
+      },
+      {
+        "textCid": "LEGITEXT000006074096",
+        "textTitle": "Code de la construction et de l'habitation. - art. L861-5 (V)",
+        "linkType": "CITATION",
+        "linkOrientation": "cible",
+        "articleNum": "L861-5",
+        "articleId": "LEGIARTI000044405110",
+        "natureText": "CODE",
+        "date": 1680637179463,
+        "parentCid": null,
+        "numTexte": "",
+        "datePubli": 32472144000000,
+        "dateDebut": 1638489600000
+      },
+      {
+        "textCid": "LEGITEXT000006074096",
+        "textTitle": "Code de la construction et de l'habitation. - art. R822-23 (V)",
+        "linkType": "CITATION",
+        "linkOrientation": "cible",
+        "articleNum": "R822-23",
+        "articleId": "LEGIARTI000038878949",
+        "natureText": "CODE",
+        "date": 1680637179463,
+        "parentCid": null,
+        "numTexte": "",
+        "datePubli": 32472144000000,
+        "dateDebut": 1567296000000
+      }
+    ],
+    "lienConcordes": [
+      {
+        "textCid": "LEGITEXT000006073189",
+        "textTitle": "Code de la sécurité sociale. - art. L831-1 alinéa 1 première phrase (Ab)",
+        "linkType": "CONCORDANCE",
+        "linkOrientation": "source",
+        "articleNum": "L831-1",
+        "articleId": "LEGIARTI000037993847",
+        "natureText": "CODE"
+      },
+      {
+        "textCid": "LEGITEXT000006073189",
+        "textTitle": "Code de la sécurité sociale. - art. R831-1 alinéa 1 (Ab)",
+        "linkType": "CONCORDANCE",
+        "linkOrientation": "source",
+        "articleNum": "R831-1",
+        "articleId": "LEGIARTI000006754273",
+        "natureText": "CODE"
+      },
+      {
+        "textCid": "LEGITEXT000006074096",
+        "textTitle": "Code de la construction et de l'habitation. - art. L351-2-1 alinéa 1 (Ab)",
+        "linkType": "CONCORDANCE",
+        "linkOrientation": "source",
+        "articleNum": "L351-2-1",
+        "articleId": "LEGIARTI000036432718",
+        "natureText": "CODE"
+      }
+    ],
+    "lienAutres": [],
+    "articleVersions": [
+      {
+        "id": "LEGIARTI000038814944",
+        "etat": "VIGUEUR",
+        "version": "1.0",
+        "dateDebut": 1567296000000,
+        "dateFin": 32472144000000,
+        "numero": null,
+        "ordre": null
+      }
+    ],
+    "computedNums": [
+      "L822-2",
+      "822-2"
+    ],
+    "versionPrecedente": null,
+    "conditionDiffere": null,
+    "historique": null,
+    "surtitre": null,
+    "renvoi": null,
+    "infosComplementaires": null,
+    "infosComplementairesHtml": null,
+    "infosRestructurationBranche": null,
+    "infosRestructurationBrancheHtml": null
+  }
+}

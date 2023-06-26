@@ -14,6 +14,7 @@ async def markdown_skeleton(textid: str, sectionid: str) -> str:
 
     back = get_backend("legifrance")
     toc = await back.code_toc(textid)
+
     nodes = dropwhile(
         lambda node_level: node_level[0]["cid"] != sectionid, _preorder(toc)
     )
@@ -27,7 +28,7 @@ async def markdown_skeleton(textid: str, sectionid: str) -> str:
             # If it is not a section, then it is an article
             parts.append(f"{'#' * (level + 1)} Article {node['num']} | {node['id']}")
             article = await back.article(node["id"])
-            formatted = mdformat.text(article.text, options={"wrap": 80})
+            formatted = mdformat.text(article.to_markdown(), options={"wrap": 80})
             parts.append(formatted)
         else:
             parts.append(f"{'#' * level} {node['title']}")
@@ -35,7 +36,7 @@ async def markdown_skeleton(textid: str, sectionid: str) -> str:
     return "\n\n".join(parts)
 
 
-def _preorder(node, level=0):
+def _preorder(node, level=1):
     """Preorder traversal of articles and sections"""
     yield node, level
     for article in node["articles"]:

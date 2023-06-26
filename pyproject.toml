@@ -23,6 +23,7 @@ dependencies = [
   "aiometer",
   "dynaconf",
   "httpx",
+  "markdownify",  # convert pre-formatted HTML from Legifrance to markdown for skeletons
   "markdown-it-py[plugins]",
   "mdformat>=0.7.16",
   "more-itertools",
