@@ -13,7 +13,7 @@ description copied from ocaml original
 import sys
 import warnings
 from pathlib import Path
-from typing import Optional, TextIO
+from typing import TextIO
 
 from catleg.git_diff import wdiff
 
@@ -21,7 +21,7 @@ from catleg.parse_catala_markdown import parse_catala_file
 from catleg.query import get_backend
 
 
-async def find_changes(f: TextIO, *, file_path: Optional[Path] = None):
+async def find_changes(f: TextIO, *, file_path: Path | None = None):
     # parse articles from file
     articles = parse_catala_file(f, file_path=file_path)
 

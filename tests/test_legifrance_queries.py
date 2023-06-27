@@ -14,7 +14,7 @@ def _json_from_test_file(fname):
     path_to_current_file = os.path.realpath(__file__)
     current_directory = os.path.dirname(path_to_current_file)
     file_path = os.path.join(current_directory, fname)
-    with open(file_path, "r", encoding="utf-8") as f:
+    with open(file_path, encoding="utf-8") as f:
         json_contents = load(f)
     return json_contents
 

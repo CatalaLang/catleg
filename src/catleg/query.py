@@ -8,7 +8,8 @@ Utilities for querying various data sources for law texts:
 import datetime
 import functools
 import logging
-from typing import Iterable, Optional, Protocol
+from collections.abc import Iterable
+from typing import Protocol
 
 import aiometer
 import httpx
@@ -20,13 +21,13 @@ from catleg.law_text_fr import Article, ArticleType, parse_article_id
 
 
 class Backend(Protocol):
-    async def article(self, id: str) -> Optional[Article]:
+    async def article(self, id: str) -> Article | None:
         """
         Retrieve a law article.
         """
         ...
 
-    async def articles(self, ids: Iterable[str]) -> Iterable[Optional[Article]]:
+    async def articles(self, ids: Iterable[str]) -> Iterable[Article | None]:
         ...
 
     async def list_codes(self):
@@ -53,14 +54,14 @@ class LegifranceBackend(Backend):
             auth=LegifranceAuth(client_id, client_secret), headers=headers
         )
 
-    async def article(self, id: str) -> Optional[Article]:
+    async def article(self, id: str) -> Article | None:
         reply = await self.query_article_legi(id)
         article = _article_from_legifrance_reply(reply)
         if article is None:
             logging.warning(f"Could not retrieve article {id} (wrong identifier?)")
         return article
 
-    async def articles(self, ids: Iterable[str]) -> Iterable[Optional[Article]]:
+    async def articles(self, ids: Iterable[str]) -> Iterable[Article | None]:
         jobs = [functools.partial(self.query_article_legi, id) for id in ids]
         replies = await aiometer.run_all(jobs, max_at_once=10, max_per_second=15)
         return [_article_from_legifrance_reply(reply) for reply in replies]
@@ -162,7 +163,7 @@ def _get_legifrance_credentials(*, raise_if_missing=True):
     return client_id, client_secret
 
 
-def _article_from_legifrance_reply(reply) -> Optional[Article]:
+def _article_from_legifrance_reply(reply) -> Article | None:
     if "article" in reply:
         article = reply["article"]
         if article is None:
@@ -197,7 +198,7 @@ class LegifranceAuth(httpx.Auth):
         self.client_id = client_id
         self.client_secret = client_secret
         self.token = None
-        self.token_expires_at: Optional[datetime.datetime] = None
+        self.token_expires_at: datetime.datetime | None = None
 
     def auth_flow(self, request: httpx.Request):
         if self.token is None or self.token_expires_at <= datetime.datetime.now():
