@@ -66,13 +66,21 @@ class LegifranceBackend(Backend):
         replies = await aiometer.run_all(jobs, max_at_once=10, max_per_second=15)
         return [_article_from_legifrance_reply(reply) for reply in replies]
 
-    async def list_codes(self):
-        # TODO pagination
-        params = {"pageSize": 100, "pageNumber": 1, "states": ["VIGUEUR"]}
+    async def list_codes(self): 
+        params = {"pageSize": 8, "pageNumber": 1, "states": ["VIGUEUR"]}
         reply = await self.client.post(f"{self.API_BASE_URL}/list/code", json=params)
         reply.raise_for_status()
         reply_json = reply.json()
-        return reply_json["results"]
+        nb_results = reply_json["totalResultNumber"]
+        results =  reply_json["results"]
+        while len(results) < nb_results: 
+            params["pageNumber"] += 1
+            reply = await self.client.post(f"{self.API_BASE_URL}/list/code", json=params)
+            reply.raise_for_status()
+            reply_json = reply.json()
+            results += reply_json["results"]
+        return results
+
 
     async def code_toc(self, id: str):
         params = {"textId": id, "date": str(datetime.date.today())}
