@@ -181,7 +181,9 @@ def _article_from_legifrance_reply(reply) -> Article | None:
         if article is None:
             return None
     elif "text" in reply:
-        article = reply["article"]
+        article = reply["text"]
+        if article is None:
+            return None
     else:
         raise ValueError("Could not parse Legifrance reply")
 
