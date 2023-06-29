@@ -33,6 +33,16 @@ def test_query_article():
     _get_legifrance_credentials(raise_if_missing=False)[0] is None,
     reason="this test requires legifrance credentials",
 )
+def test_query_article_2():
+    back = get_backend("legifrance")
+    article = asyncio.run(back.article("CETATEXT000035260342"))
+    assert article is not None
+
+
+@pytest.mark.skipif(
+    _get_legifrance_credentials(raise_if_missing=False)[0] is None,
+    reason="this test requires legifrance credentials",
+)
 def test_query_articles():
     back = get_backend("legifrance")
     art1, art2 = asyncio.run(
