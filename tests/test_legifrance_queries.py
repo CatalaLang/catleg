@@ -42,6 +42,17 @@ def test_query_articles():
     assert "pacte" in art2.text
 
 
+@pytest.mark.skipif(
+    _get_legifrance_credentials(raise_if_missing=False)[0] is None,
+    reason="this test requires legifrance credentials",
+)
+@pytest.mark.parametrize("page_size", [20, 100])
+def test_query_codes(page_size):
+    back = get_backend("legifrance")
+    codes, nb_results = asyncio.run(back._list_codes(page_size))
+    assert nb_results == len(codes)
+
+
 def test_no_extraneous_nota():
     article = _json_from_test_file("LEGIARTI000038814944.json")
     res = _article_from_legifrance_reply(article)

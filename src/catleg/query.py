@@ -67,12 +67,24 @@ class LegifranceBackend(Backend):
         return [_article_from_legifrance_reply(reply) for reply in replies]
 
     async def list_codes(self):
-        # TODO pagination
-        params = {"pageSize": 100, "pageNumber": 1, "states": ["VIGUEUR"]}
+        return self._list_codes()[0]
+
+    async def _list_codes(self, page_size=20):
+        params = {"pageSize": page_size, "pageNumber": 1, "states": ["VIGUEUR"]}
         reply = await self.client.post(f"{self.API_BASE_URL}/list/code", json=params)
         reply.raise_for_status()
         reply_json = reply.json()
-        return reply_json["results"]
+        nb_results = reply_json["totalResultNumber"]
+        results = reply_json["results"]
+        while len(results) < nb_results:
+            params["pageNumber"] += 1
+            reply = await self.client.post(
+                f"{self.API_BASE_URL}/list/code", json=params
+            )
+            reply.raise_for_status()
+            reply_json = reply.json()
+            results += reply_json["results"]
+        return results, nb_results
 
     async def code_toc(self, id: str):
         params = {"textId": id, "date": str(datetime.date.today())}
