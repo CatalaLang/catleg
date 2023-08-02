@@ -49,6 +49,3 @@ catleg = "catleg.catleg:main"
 
 [tool.ruff]
 select = ["E", "F", "T100", "UP"]
-
-[tool.ufmt]
-excludes = ["src/catleg/parse_catala_markdown.py"]
