@@ -1,11 +1,11 @@
 repos:
 - repo: https://github.com/omnilib/ufmt
-  rev: v2.1.0
+  rev: v2.2.0
   hooks:
     - id: ufmt
       additional_dependencies:
-        - black == 23.3.0
-        - usort == 1.0.6
+        - black == 23.7.0
+        - usort == 1.0.7
 
 - repo: https://github.com/charliermarsh/ruff-pre-commit
   rev: 'v0.0.269'
