@@ -46,7 +46,7 @@ class Backend(Protocol):
 
 
 class LegifranceBackend(Backend):
-    API_BASE_URL = "https://api.aife.economie.gouv.fr/dila/legifrance/lf-engine-app"
+    API_BASE_URL = "https://api.piste.gouv.fr/dila/legifrance/lf-engine-app"
 
     def __init__(self, client_id, client_secret):
         headers = {"Accept": "application/json"}
@@ -221,9 +221,7 @@ class LegifranceAuth(httpx.Auth):
                 "client_id": self.client_id,
                 "client_secret": self.client_secret,
             }
-            resp = httpx.post(
-                "https://oauth.aife.economie.gouv.fr/api/oauth/token", data=data
-            )
+            resp = httpx.post("https://oauth.piste.gouv.fr/api/oauth/token", data=data)
             if not 200 <= resp.status_code < 300:
                 yield resp
             resp_json = resp.json()
