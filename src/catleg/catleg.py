@@ -9,7 +9,7 @@ from catleg.find_changes import find_changes
 from catleg.query import get_backend
 from catleg.skeleton import markdown_skeleton
 
-app = typer.Typer()
+app = typer.Typer(add_completion=False)
 # legifrance-specific commands (query legifrance API and return
 # raw JSON)
 lf = typer.Typer()
