@@ -39,7 +39,7 @@ async def find_changes(f: TextIO, *, file_path: Path | None = None):
 
         diff, retcode = wdiff(
             _reformat(article.text),
-            _reformat(ref_article.text),
+            _reformat(ref_article.text_and_nota()),
             return_exit_code=True,
             line_offset=article.start_line,
         )

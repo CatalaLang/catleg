@@ -151,6 +151,11 @@ class LegifranceArticle(Article):
     def nota_html(self) -> str:
         return self._nota_html
 
+    def text_and_nota(self) -> str:
+        if len(self.nota):
+            return f"{self._text}\n\nNOTA :\n\n{self._nota}"
+        return self._text
+
     @property
     def type(self) -> ArticleType:
         return parse_article_id(self.id)[0]
