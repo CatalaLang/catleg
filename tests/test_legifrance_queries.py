@@ -81,3 +81,10 @@ def test_keep_newlines():
     article = _json_from_test_file("LEGIARTI000046790860.json")
     res = _article_from_legifrance_reply(article)
     assert "\n" in res.to_markdown()
+
+
+def test_null_notas():
+    article = _json_from_test_file("JORFARTI000046186676.json")
+    res = _article_from_legifrance_reply(article)
+    assert res.nota == ""
+    assert res.nota_html == ""
