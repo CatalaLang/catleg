@@ -67,12 +67,14 @@ def test_no_extraneous_nota():
     article = _json_from_test_file("LEGIARTI000038814944.json")
     res = _article_from_legifrance_reply(article)
     assert "NOTA" not in res.to_markdown()
+    assert "NOTA" not in res.text_and_nota()
 
 
 def test_nota_format():
     article = _json_from_test_file("LEGIARTI000046790860.json")
     res = _article_from_legifrance_reply(article)
     assert "\n\nNOTA :\n\nConformément à l'article 89" in res.to_markdown()
+    assert "\n\nNOTA :\n\nConformément à l'article 89" in res.text_and_nota()
 
 
 def test_keep_newlines():
