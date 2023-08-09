@@ -125,11 +125,11 @@ def get_backend(spec: str):
 
 class LegifranceArticle(Article):
     def __init__(self, id: str, text: str, text_html: str, nota: str, nota_html: str):
-        self._id = id
-        self._text = text
-        self._text_html = text_html
-        self._nota = nota
-        self._nota_html = nota_html
+        self._id: str = id
+        self._text: str = text
+        self._text_html: str = text_html
+        self._nota: str = nota
+        self._nota_html: str = nota_html
 
     @property
     def id(self) -> str:
@@ -196,8 +196,8 @@ def _article_from_legifrance_reply(reply) -> Article | None:
         id=article["id"],
         text=article["texte"],
         text_html=article["texteHtml"],
-        nota=article["nota"],
-        nota_html=article["notaHtml"],
+        nota=article["nota"] or "",
+        nota_html=article["notaHtml"] or "",
     )
 
 
