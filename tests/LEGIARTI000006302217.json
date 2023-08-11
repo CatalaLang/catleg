@@ -1,0 +1,365 @@
+{
+  "executionTime": 0,
+  "dereferenced": false,
+  "article": {
+    "id": "LEGIARTI000006302217",
+    "idTexte": null,
+    "type": "AUTONOME",
+    "texte": "Sous réserve des dispositions de l'article 15 , sont compris dans la catégorie des revenus fonciers, lorsqu'ils ne sont pas inclus dans les bénéfices d'une entreprise industrielle, commerciale ou artisanale, d'une exploitation agricole ou d'une profession non commerciale : 1° Les revenus des propriétés bâties, telles que maisons et usines, ainsi que les revenus : a De l'outillage des établissements industriels attaché au fonds à perpétuelle demeure, dans les conditions indiquées au premier paragraphe de l'article 525 du code civil ou reposant sur des fondations spéciales faisant corps avec l'immeuble ; b De toutes installations commerciales ou industrielles assimilables à des constructions ; c Des bateaux utilisés en un point fixe et aménagés pour l'habitation, le commerce ou l'industrie, même s'ils sont seulement retenus par des amarres. 2° Les revenus des propriétés non bâties de toute nature, y compris ceux des terrains occupés par les carrières, mines et tourbières, les étangs, les salines et marais salants.",
+    "texteHtml": "<p></p>Sous réserve des dispositions de <a href='/affichCodeArticle.do?cidTexte=LEGITEXT000006069577&idArticle=LEGIARTI000006307478&dateTexte=&categorieLien=cid' title='Code général des impôts, CGI. - art. 15 (V)'>l'article 15</a>, sont compris dans la catégorie des revenus fonciers, lorsqu'ils ne sont pas inclus dans les bénéfices d'une entreprise industrielle, commerciale ou artisanale, d'une exploitation agricole ou d'une profession non commerciale : <p></p><p></p>1° Les revenus des propriétés bâties, telles que maisons et usines, ainsi que les revenus : <p></p><p></p>a De l'outillage des établissements industriels attaché au fonds à perpétuelle demeure, dans les conditions indiquées au premier paragraphe de <a href='/affichCodeArticle.do?cidTexte=LEGITEXT000006070721&idArticle=LEGIARTI000006428682&dateTexte=&categorieLien=cid' title='Code civil - art. 525 (V)'>l'article 525 </a>du code civil ou reposant sur des fondations spéciales faisant corps avec l'immeuble ; <p></p><p></p>b De toutes installations commerciales ou industrielles assimilables à des constructions ; <p></p><p></p>c Des bateaux utilisés en un point fixe et aménagés pour l'habitation, le commerce ou l'industrie, même s'ils sont seulement retenus par des amarres. <p></p><p></p>2° Les revenus des propriétés non bâties de toute nature, y compris ceux des terrains occupés par les carrières, mines et tourbières, les étangs, les salines et marais salants.<p></p>",
+    "num": "14",
+    "origine": "LEGI",
+    "nature": "Article",
+    "versionArticle": "3.0",
+    "etat": "VIGUEUR",
+    "dateDebut": 1104537600000,
+    "dateFin": 32472144000000,
+    "dateDebutExtension": 32472144000000,
+    "dateFinExtension": 32472144000000,
+    "inap": null,
+    "ordre": 128847,
+    "context": {
+      "titresTM": [
+        {
+          "debut": "1952-02-14",
+          "fin": "2999-01-01",
+          "titre": "Livre premier : Assiette et liquidation de l'impôt",
+          "xPath": "/ARTICLE/CONTEXTE/TEXTE/TM/TITRE_TM",
+          "cid": "LEGISCTA000006084232",
+          "id": "LEGISCTA000006084232",
+          "etat": "VIGUEUR"
+        },
+        {
+          "debut": "1952-02-14",
+          "fin": "2999-01-01",
+          "titre": "Première Partie : Impôts d'État",
+          "xPath": "/ARTICLE/CONTEXTE/TEXTE/TM/TM/TITRE_TM",
+          "cid": "LEGISCTA000006114494",
+          "id": "LEGISCTA000006114494",
+          "etat": "VIGUEUR"
+        },
+        {
+          "debut": "1954-08-05",
+          "fin": "2999-01-01",
+          "titre": "Titre premier : Impôts directs et taxes assimilées",
+          "xPath": "/ARTICLE/CONTEXTE/TEXTE/TM/TM/TM/TITRE_TM",
+          "cid": "LEGISCTA000006133844",
+          "id": "LEGISCTA000006133844",
+          "etat": "VIGUEUR"
+        },
+        {
+          "debut": "1954-08-05",
+          "fin": "2999-01-01",
+          "titre": "Chapitre premier : Impôt sur le revenu",
+          "xPath": "/ARTICLE/CONTEXTE/TEXTE/TM/TM/TM/TM/TITRE_TM",
+          "cid": "LEGISCTA000006147017",
+          "id": "LEGISCTA000006147017",
+          "etat": "VIGUEUR"
+        },
+        {
+          "debut": "1954-08-05",
+          "fin": "2999-01-01",
+          "titre": "Section II : Revenus imposables",
+          "xPath": "/ARTICLE/CONTEXTE/TEXTE/TM/TM/TM/TM/TM/TITRE_TM",
+          "cid": "LEGISCTA000006162523",
+          "id": "LEGISCTA000006162523",
+          "etat": "VIGUEUR"
+        },
+        {
+          "debut": "1954-08-05",
+          "fin": "2999-01-01",
+          "titre": "1re Sous-section : Détermination des bénéfices ou revenus nets des diverses catégories de revenus",
+          "xPath": "/ARTICLE/CONTEXTE/TEXTE/TM/TM/TM/TM/TM/TM/TITRE_TM",
+          "cid": "LEGISCTA000006179572",
+          "id": "LEGISCTA000006179572",
+          "etat": "VIGUEUR"
+        },
+        {
+          "debut": "1979-07-01",
+          "fin": "2999-01-01",
+          "titre": "I : Revenus fonciers",
+          "xPath": "/ARTICLE/CONTEXTE/TEXTE/TM/TM/TM/TM/TM/TM/TM/TITRE_TM",
+          "cid": "LEGISCTA000006191572",
+          "id": "LEGISCTA000006191572",
+          "etat": "VIGUEUR"
+        },
+        {
+          "debut": "1979-07-01",
+          "fin": "2999-01-01",
+          "titre": "1 : Définition des revenus fonciers",
+          "xPath": "/ARTICLE/CONTEXTE/TEXTE/TM/TM/TM/TM/TM/TM/TM/TM/TITRE_TM",
+          "cid": "LEGISCTA000006197176",
+          "id": "LEGISCTA000006197176",
+          "etat": "VIGUEUR"
+        }
+      ],
+      "nombreVersionParent": 1,
+      "longeurChemin": 56,
+      "titreTxt": [
+        {
+          "debut": "1952-02-14",
+          "fin": "2999-01-01",
+          "titre": "Code général des impôts",
+          "xPath": "/ARTICLE/CONTEXTE/TEXTE/TITRE_TXT",
+          "cid": "LEGITEXT000006069577",
+          "id": "LEGITEXT000006069577",
+          "etat": "VIGUEUR"
+        }
+      ]
+    },
+    "cid": "LEGIARTI000006302215",
+    "cidTexte": null,
+    "sectionParentCid": "LEGISCTA000006197176",
+    "sectionParentId": "LEGISCTA000006197176",
+    "sectionParentTitre": "1 : Définition des revenus fonciers",
+    "fullSectionsTitre": "Livre premier : Assiette et liquidation de l'impôt &gt; Première Partie : Impôts d'État &gt; Titre premier : Impôts directs et taxes assimilées &gt; Chapitre premier : Impôt sur le revenu &gt; Section II : Revenus imposables &gt; 1re Sous-section : Détermination des bénéfices ou revenus nets des diverses catégories de revenus &gt; I : Revenus fonciers &gt; 1 : Définition des revenus fonciers",
+    "refInjection": "IG-20230707",
+    "idTechInjection": "LEGIARTI000006302217",
+    "idEli": null,
+    "idEliAlias": null,
+    "calipsos": [],
+    "textTitles": [
+      {
+        "id": "LEGITEXT000006069577",
+        "titre": "Code général des impôts, CGI.",
+        "titreLong": "Code général des impôts",
+        "etat": "VIGUEUR",
+        "dateDebut": -564278400000,
+        "dateFin": 32472144000000,
+        "cid": "LEGITEXT000006069577",
+        "datePubli": 32472144000000,
+        "datePubliComputed": null,
+        "dateTexte": 32472144000000,
+        "dateTexteComputed": null,
+        "nature": "CODE",
+        "nor": "",
+        "num": "",
+        "numParution": "",
+        "originePubli": "",
+        "appliGeo": null,
+        "codesNomenclatures": [],
+        "visas": null,
+        "nota": null,
+        "notice": null,
+        "travauxPreparatoires": null,
+        "signataires": null,
+        "dossiersLegislatifs": [],
+        "ancienId": null,
+        "appellations": null
+      }
+    ],
+    "nota": "",
+    "notaHtml": "",
+    "activitePro": [],
+    "numeroBrochure": [],
+    "numeroBo": null,
+    "conteneurs": [],
+    "lienModifications": [
+      {
+        "textCid": "JORFTEXT000000592233",
+        "textTitle": "Loi n°2001-1275 du 28 décembre 2001 - art. 11 (V)",
+        "linkType": "MODIFICATION",
+        "linkOrientation": "source",
+        "articleNum": "11",
+        "articleId": "LEGIARTI000006321123",
+        "natureText": "LOI",
+        "datePubliTexte": "2001-12-29",
+        "dateSignaTexte": "2001-12-28",
+        "dateDebutCible": "2001-12-29"
+      },
+      {
+        "textCid": "JORFTEXT000000889388",
+        "textTitle": "Décret 2005-330 2005-04-06",
+        "linkType": "CODIFICATION",
+        "linkOrientation": "source",
+        "articleNum": "",
+        "articleId": "JORFTEXT000000889388",
+        "natureText": "DECRET",
+        "datePubliTexte": "2005-04-08",
+        "dateSignaTexte": "2005-04-06",
+        "dateDebutCible": "2999-01-01"
+      }
+    ],
+    "lienCitations": [
+      {
+        "textCid": "JORFTEXT000033734169",
+        "textTitle": "LOI n°2016-1917 du 29 décembre 2016 - art. 60 (VD)",
+        "linkType": "CITATION",
+        "linkOrientation": "cible",
+        "articleNum": "60",
+        "articleId": "LEGIARTI000038836271",
+        "natureText": "LOI",
+        "date": 1688717485532,
+        "parentCid": null,
+        "numTexte": "2016-1917",
+        "datePubli": 1483056000000,
+        "dateDebut": 1569888000000
+      },
+      {
+        "textCid": "LEGITEXT000006069577",
+        "textTitle": "Code général des impôts, CGI. - art. 1 A (V)",
+        "linkType": "CITATION",
+        "linkOrientation": "cible",
+        "articleNum": "1 A",
+        "articleId": "LEGIARTI000006302199",
+        "natureText": "CODE",
+        "date": 1688717485532,
+        "parentCid": null,
+        "numTexte": "",
+        "datePubli": 32472144000000,
+        "dateDebut": 1135987200000
+      },
+      {
+        "textCid": "LEGITEXT000006069577",
+        "textTitle": "Code général des impôts, CGI. - art. 15 (V)",
+        "linkType": "CITATION",
+        "linkOrientation": "source",
+        "articleNum": "15",
+        "articleId": "LEGIARTI000006307478",
+        "natureText": "CODE",
+        "date": 1688717485532,
+        "parentCid": null,
+        "numTexte": "",
+        "datePubli": 32472144000000,
+        "dateDebut": 299635200000
+      },
+      {
+        "textCid": "LEGITEXT000006069577",
+        "textTitle": "Code général des impôts, CGI. - art. 158 (M)",
+        "linkType": "CITATION",
+        "linkOrientation": "cible",
+        "articleNum": "158",
+        "articleId": "LEGIARTI000042158853",
+        "natureText": "CODE",
+        "date": 1688717485532,
+        "parentCid": null,
+        "numTexte": "",
+        "datePubli": 32472144000000,
+        "dateDebut": 1595635200000
+      },
+      {
+        "textCid": "LEGITEXT000006069577",
+        "textTitle": "Code général des impôts, CGI. - art. 1586 sexies (VD)",
+        "linkType": "CITATION",
+        "linkOrientation": "cible",
+        "articleNum": "1586 sexies",
+        "articleId": "LEGIARTI000043048297",
+        "natureText": "CODE",
+        "date": 1688717485532,
+        "parentCid": null,
+        "numTexte": "",
+        "datePubli": 32472144000000,
+        "dateDebut": 1640995200000
+      },
+      {
+        "textCid": "LEGITEXT000006069577",
+        "textTitle": "Code général des impôts, CGI. - art. 204 G (V)",
+        "linkType": "CITATION",
+        "linkOrientation": "cible",
+        "articleNum": "204 G",
+        "articleId": "LEGIARTI000046860858",
+        "natureText": "CODE",
+        "date": 1688717485532,
+        "parentCid": null,
+        "numTexte": "",
+        "datePubli": 32472144000000,
+        "dateDebut": 1672531200000
+      },
+      {
+        "textCid": "LEGITEXT000006069577",
+        "textTitle": "Code général des impôts, CGI. - art. 33 bis (V)",
+        "linkType": "CITATION",
+        "linkOrientation": "cible",
+        "articleNum": "33 bis",
+        "articleId": "LEGIARTI000006302240",
+        "natureText": "CODE",
+        "date": 1688717485532,
+        "parentCid": null,
+        "numTexte": "",
+        "datePubli": 32472144000000,
+        "dateDebut": 1135987200000
+      },
+      {
+        "textCid": "LEGITEXT000006069577",
+        "textTitle": "Code général des impôts, CGI. - art. 33 quinquies (V)",
+        "linkType": "CITATION",
+        "linkOrientation": "cible",
+        "articleNum": "33 quinquies",
+        "articleId": "LEGIARTI000006302247",
+        "natureText": "CODE",
+        "date": 1688717485532,
+        "parentCid": null,
+        "numTexte": "",
+        "datePubli": 32472144000000,
+        "dateDebut": 922838400000
+      },
+      {
+        "textCid": "LEGITEXT000006070721",
+        "textTitle": "Code civil - art. 525 (V)",
+        "linkType": "CITATION",
+        "linkOrientation": "source",
+        "articleNum": "525",
+        "articleId": "LEGIARTI000006428682",
+        "natureText": "CODE",
+        "date": 1688717485532,
+        "parentCid": null,
+        "numTexte": "",
+        "datePubli": 32472144000000,
+        "dateDebut": -5235580800000
+      }
+    ],
+    "lienConcordes": [],
+    "lienAutres": [
+      {
+        "textCid": "",
+        "textTitle": "Edition du 1er janvier 2005",
+        "linkType": "HISTO",
+        "linkOrientation": "source",
+        "articleNum": "",
+        "articleId": "",
+        "natureText": ""
+      }
+    ],
+    "articleVersions": [
+      {
+        "id": "LEGIARTI000006302215",
+        "etat": "MODIFIE",
+        "version": "1.0",
+        "dateDebut": 299635200000,
+        "dateFin": 677721600000,
+        "numero": null,
+        "ordre": null
+      },
+      {
+        "id": "LEGIARTI000006302216",
+        "etat": "MODIFIE",
+        "version": "2.0",
+        "dateDebut": 677721600000,
+        "dateFin": 1104537600000,
+        "numero": null,
+        "ordre": null
+      },
+      {
+        "id": "LEGIARTI000006302217",
+        "etat": "VIGUEUR",
+        "version": "3.0",
+        "dateDebut": 1104537600000,
+        "dateFin": 32472144000000,
+        "numero": null,
+        "ordre": null
+      }
+    ],
+    "computedNums": [
+      "14"
+    ],
+    "versionPrecedente": "LEGIARTI000006302216",
+    "conditionDiffere": null,
+    "historique": null,
+    "surtitre": null,
+    "renvoi": null,
+    "infosComplementaires": null,
+    "infosComplementairesHtml": null,
+    "infosRestructurationBranche": null,
+    "infosRestructurationBrancheHtml": null
+  }
+}
