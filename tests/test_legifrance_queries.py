@@ -88,3 +88,9 @@ def test_null_notas():
     res = _article_from_legifrance_reply(article)
     assert res.nota == ""
     assert res.nota_html == ""
+
+
+def test_strip_links_from_markdown():
+    article = _json_from_test_file("LEGIARTI000006302217.json")
+    res = _article_from_legifrance_reply(article)
+    assert "affichCodeArticle.do" not in res.to_markdown()

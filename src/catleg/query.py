@@ -161,9 +161,9 @@ class LegifranceArticle(Article):
         return parse_article_id(self.id)[0]
 
     def to_markdown(self) -> str:
-        text_md = md(self.text_html).strip()
+        text_md = md(self.text_html, strip=["a"]).strip()
         if len(self.nota_html):
-            nota_md = md(self.nota_html).strip()
+            nota_md = md(self.nota_html, strip=["a"]).strip()
             text_md += f"\n\nNOTA :\n\n{nota_md}"
         return text_md
 
