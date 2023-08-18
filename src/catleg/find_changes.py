@@ -39,7 +39,7 @@ async def find_changes(f: TextIO, *, file_path: Path | None = None):
 
         diff, retcode = wdiff(
             _reformat(article.text),
-            _reformat(ref_article.text_and_nota()),
+            _reformat(_escape_ref_text(ref_article.text_and_nota())),
             return_exit_code=True,
             line_offset=article.start_line,
         )
@@ -62,4 +62,11 @@ def _reformat(paragraph: str):
     Catala has a 80-char line limit, so law texts will often be manually reformatted.
     We attempt to remove extra line breaks before comparison.
     """
-    return paragraph.replace("\n", " ").strip().replace("  ", " ")
+    paragraph = paragraph.replace("\n", " ")
+    while "  " in paragraph:
+        paragraph = paragraph.replace("  ", " ")
+    return paragraph.strip()
+
+
+def _escape_ref_text(paragraph: str):
+    return paragraph.replace("[", r"\[").replace("]", r"\]").replace("*", r"\*")
