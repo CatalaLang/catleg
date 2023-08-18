@@ -39,7 +39,7 @@ async def find_changes(f: TextIO, *, file_path: Path | None = None):
 
         diff, retcode = wdiff(
             _reformat(article.text),
-            _reformat(ref_article.text_and_nota()),
+            _reformat(_escape_ref_text(ref_article.text_and_nota())),
             return_exit_code=True,
             line_offset=article.start_line,
         )
@@ -66,3 +66,7 @@ def _reformat(paragraph: str):
     while "  " in paragraph:
         paragraph = paragraph.replace("  ", " ")
     return paragraph.strip()
+
+
+def _escape_ref_text(paragraph: str):
+    return paragraph.replace("[", r"\[").replace("]", r"\]").replace("*", r"\*")
