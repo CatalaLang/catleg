@@ -62,4 +62,7 @@ def _reformat(paragraph: str):
     Catala has a 80-char line limit, so law texts will often be manually reformatted.
     We attempt to remove extra line breaks before comparison.
     """
-    return paragraph.replace("\n", " ").strip().replace("  ", " ")
+    paragraph = paragraph.replace("\n", " ")
+    while "  " in paragraph:
+        paragraph = paragraph.replace("  ", " ")
+    return paragraph.strip()
