@@ -10,7 +10,7 @@ import functools
 import logging
 from collections.abc import Iterable
 from time import gmtime, struct_time
-from typing import Protocol
+from typing import assert_never, Protocol
 
 import aiometer
 import httpx
@@ -137,6 +137,7 @@ class LegifranceArticle(Article):
         nota: str,
         nota_html: str,
         date_fin: int | str | None,
+        latest_version_id: str,
     ):
         self._id: str = id
         self._text: str = text
@@ -146,6 +147,7 @@ class LegifranceArticle(Article):
         self._date_fin: struct_time = (
             gmtime(int(date_fin) / 1000) if date_fin is not None else END_OF_TIME
         )
+        self._latest_version_id = latest_version_id
 
     @property
     def date_fin(self) -> struct_time:
@@ -174,6 +176,10 @@ class LegifranceArticle(Article):
     @property
     def nota_html(self) -> str:
         return self._nota_html
+
+    @property
+    def latest_version_id(self) -> str:
+        return self._latest_version_id
 
     def text_and_nota(self) -> str:
         if len(self.nota):
@@ -216,6 +222,18 @@ def _article_from_legifrance_reply(reply) -> Article | None:
     else:
         raise ValueError("Could not parse Legifrance reply")
 
+    article_type, article_id = parse_article_id(article["id"])
+    match article_type:
+        case ArticleType.CETATEXT:
+            latest_version_id = article_id
+        case ArticleType.LEGIARTI | ArticleType.JORFARTI:
+            article_versions = sorted(
+                article["articleVersions"], key=lambda d: d["dateDebut"]
+            )
+            latest_version_id = article_versions[-1]["id"]
+        case _:
+            assert_never()
+
     return LegifranceArticle(
         id=article["id"],
         text=article["texte"],
@@ -223,6 +241,7 @@ def _article_from_legifrance_reply(reply) -> Article | None:
         nota=article["nota"] or "",
         nota_html=article["notaHtml"] or "",
         date_fin=article["dateFin"],
+        latest_version_id=latest_version_id,
     )
 
 

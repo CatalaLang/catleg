@@ -33,7 +33,7 @@ def check_expiry(file: Path):
     Check articles in a catala file for expiry.
     """
     with open(file) as f:
-        asyncio.run(expiry(f, file_path=file))
+        return asyncio.run(expiry(f, file_path=file))
 
 
 @app.command()

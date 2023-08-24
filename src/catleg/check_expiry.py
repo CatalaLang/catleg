@@ -34,12 +34,14 @@ async def check_expiry(f: TextIO, *, file_path: Path | None = None):
         if not ref_article.is_open_ended:
             if now > ref_article.date_fin:
                 warnings.warn(
-                    f"Article '{article.id}' has expired (on {ref_article.date_fin})"
+                    f"Article '{article.id}' has expired (on {ref_article.date_fin}). "
+                    f"It has been replaced by '{ref_article.latest_version_id}'."
                 )
                 has_expired_articles = True
             else:
                 warnings.warn(
-                    f"Article '{article.id}' is set to expire on {ref_article.date_fin}"
+                    f"Article '{article.id}' will expire on {ref_article.date_fin}. "
+                    f"It will be replaced by '{ref_article.latest_version_id}'"
                 )
 
     return 0 if not has_expired_articles else 1
