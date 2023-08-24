@@ -5,11 +5,10 @@ Utilities for querying various data sources for law texts:
   - legistix database (auto-api via datasette)
 """
 
-import datetime
 import functools
 import logging
 from collections.abc import Iterable
-from time import gmtime, struct_time
+from datetime import datetime, timedelta, timezone
 from typing import assert_never, Protocol
 
 import aiometer
@@ -21,8 +20,12 @@ from catleg.config import settings
 from catleg.law_text_fr import Article, ArticleType, parse_article_id
 
 
+def _lf_timestamp_to_datetime(ts):
+    return datetime.fromtimestamp(ts / 1000, timezone.utc)
+
+
 # Legifrance uses 2999-01-01 to mark a non-expired or non-expiring text
-END_OF_TIME = gmtime(32472144000000 / 1000)
+END_OF_TIME = _lf_timestamp_to_datetime(32472144000000)
 
 
 class Backend(Protocol):
@@ -136,7 +139,7 @@ class LegifranceArticle(Article):
         text_html: str,
         nota: str,
         nota_html: str,
-        date_fin: int | str | None,
+        end_date: int | str | None,
         latest_version_id: str,
     ):
         self._id: str = id
@@ -144,18 +147,20 @@ class LegifranceArticle(Article):
         self._text_html: str = text_html
         self._nota: str = nota
         self._nota_html: str = nota_html
-        self._date_fin: struct_time = (
-            gmtime(int(date_fin) / 1000) if date_fin is not None else END_OF_TIME
+        self._end_date: datetime = (
+            _lf_timestamp_to_datetime(int(end_date))
+            if end_date is not None
+            else END_OF_TIME
         )
         self._latest_version_id = latest_version_id
 
     @property
-    def date_fin(self) -> struct_time:
-        return self._date_fin
+    def end_date(self) -> datetime:
+        return self._end_date
 
     @property
     def is_open_ended(self) -> bool:
-        return self._date_fin == END_OF_TIME
+        return self._end_date == END_OF_TIME
 
     @property
     def id(self) -> str:
@@ -228,7 +233,7 @@ def _article_from_legifrance_reply(reply) -> Article | None:
             latest_version_id = article_id
         case ArticleType.LEGIARTI | ArticleType.JORFARTI:
             article_versions = sorted(
-                article["articleVersions"], key=lambda d: d["dateDebut"]
+                article["articleVersions"], key=lambda d: int(d["dateDebut"])
             )
             latest_version_id = article_versions[-1]["id"]
         case _:
@@ -240,7 +245,7 @@ def _article_from_legifrance_reply(reply) -> Article | None:
         text_html=article["texteHtml"],
         nota=article["nota"] or "",
         nota_html=article["notaHtml"] or "",
-        date_fin=article["dateFin"],
+        end_date=article["dateFin"],
         latest_version_id=latest_version_id,
     )
 
@@ -261,10 +266,10 @@ class LegifranceAuth(httpx.Auth):
         self.client_id = client_id
         self.client_secret = client_secret
         self.token = None
-        self.token_expires_at: datetime.datetime | None = None
+        self.token_expires_at: datetime | None = None
 
     def auth_flow(self, request: httpx.Request):
-        if self.token is None or self.token_expires_at <= datetime.datetime.now():
+        if self.token is None or self.token_expires_at <= datetime.now():
             logging.info("Requesting auth token")
             data = {
                 "grant_type": "client_credentials",
@@ -278,9 +283,7 @@ class LegifranceAuth(httpx.Auth):
             resp_json = resp.json()
             self.token = resp_json["access_token"]
             expires_in = int(resp_json["expires_in"])
-            self.token_expires_at = datetime.datetime.now() + datetime.timedelta(
-                seconds=expires_in
-            )
+            self.token_expires_at = datetime.now() + timedelta(seconds=expires_in)
         else:
             logging.info("Using existing auth token")
 

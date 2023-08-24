@@ -1,7 +1,8 @@
+import datetime
 import logging
 import warnings
+from datetime import timezone
 from pathlib import Path
-from time import gmtime
 from typing import TextIO
 
 from catleg.parse_catala_markdown import parse_catala_file
@@ -18,7 +19,7 @@ async def check_expiry(f: TextIO, *, file_path: Path | None = None):
     back = get_backend("legifrance")
     ref_articles = await back.articles([article.id.upper() for article in articles])
     has_expired_articles = False
-    now = gmtime()
+    now = datetime.now(timezone.utc)
 
     for article, ref_article in zip(articles, ref_articles):
         if ref_article is None:
@@ -34,13 +35,13 @@ async def check_expiry(f: TextIO, *, file_path: Path | None = None):
         if not ref_article.is_open_ended:
             if now > ref_article.date_fin:
                 warnings.warn(
-                    f"Article '{article.id}' has expired (on {ref_article.date_fin}). "
+                    f"Article '{article.id}' has expired (on {ref_article.end_date}). "
                     f"It has been replaced by '{ref_article.latest_version_id}'."
                 )
                 has_expired_articles = True
             else:
                 warnings.warn(
-                    f"Article '{article.id}' will expire on {ref_article.date_fin}. "
+                    f"Article '{article.id}' will expire on {ref_article.end_date}. "
                     f"It will be replaced by '{ref_article.latest_version_id}'"
                 )
 
