@@ -1,15 +1,3 @@
-"""
-description copied from ocaml original
-
-(** Parses the Catala master source file and checks each article:
-    - if the article has a LégiFrance ID, checks the text of the article in the
-      source code vs the text from LégiFrance;
-    - if the article has an expiration date, display the difference between the
-      current version of the article and the next one on LégiFrance;
-    - fill each [@@Include ...@@] tag with the contents retrieved from
-      LégiFrance *)
-
-"""
 import sys
 import warnings
 from pathlib import Path
@@ -69,4 +57,9 @@ def _reformat(paragraph: str):
 
 
 def _escape_ref_text(paragraph: str):
+    """
+    Escape markdown special chars from reference text.
+    Since we use the "raw text" version of the Legifrance article,
+    we escape brackets and asteriks unconditionnally.
+    """
     return paragraph.replace("[", r"\[").replace("]", r"\]").replace("*", r"\*")
