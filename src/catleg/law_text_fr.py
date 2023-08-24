@@ -54,6 +54,7 @@ class CatalaFileArticle:
     text: str
     file_path: Path | None
     start_line: int
+    is_archive: bool
 
 
 def parse_article_id(article_id: str) -> tuple[ArticleType, str]:

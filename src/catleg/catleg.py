@@ -4,6 +4,7 @@ from pathlib import Path
 
 import typer
 
+from catleg.check_expiry import check_expiry as expiry
 from catleg.cli_util import set_basic_loglevel
 from catleg.find_changes import find_changes
 from catleg.query import get_backend
@@ -24,6 +25,16 @@ def diff(file: Path):
     """
     with open(file) as f:
         asyncio.run(find_changes(f, file_path=file))
+
+
+@app.command()
+def check_expiry(file: Path):
+    """
+    Check articles in a catala file for expiry.
+    """
+    with open(file) as f:
+        retcode = asyncio.run(expiry(f, file_path=file))
+        raise typer.Exit(retcode)
 
 
 @app.command()
