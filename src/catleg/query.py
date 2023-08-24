@@ -9,11 +9,12 @@ import functools
 import logging
 from collections.abc import Iterable
 from datetime import date, datetime, timedelta, timezone
-from typing import assert_never, Protocol
+from typing import Protocol
 
 import aiometer
 import httpx
 from markdownify import markdownify as md  # type: ignore
+from typing_extensions import assert_never
 
 from catleg.config import settings
 
