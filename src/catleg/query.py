@@ -9,6 +9,7 @@ import datetime
 import functools
 import logging
 from collections.abc import Iterable
+from time import gmtime, struct_time
 from typing import Protocol
 
 import aiometer
@@ -18,6 +19,10 @@ from markdownify import markdownify as md  # type: ignore
 from catleg.config import settings
 
 from catleg.law_text_fr import Article, ArticleType, parse_article_id
+
+
+# Legifrance uses 2999-01-01 to mark a non-expired or non-expiring text
+END_OF_TIME = gmtime(32472144000000 / 1000)
 
 
 class Backend(Protocol):
@@ -124,12 +129,31 @@ def get_backend(spec: str):
 
 
 class LegifranceArticle(Article):
-    def __init__(self, id: str, text: str, text_html: str, nota: str, nota_html: str):
+    def __init__(
+        self,
+        id: str,
+        text: str,
+        text_html: str,
+        nota: str,
+        nota_html: str,
+        date_fin: int | str | None,
+    ):
         self._id: str = id
         self._text: str = text
         self._text_html: str = text_html
         self._nota: str = nota
         self._nota_html: str = nota_html
+        self._date_fin: struct_time = (
+            gmtime(int(date_fin) / 1000) if date_fin is not None else END_OF_TIME
+        )
+
+    @property
+    def date_fin(self) -> struct_time:
+        return self._date_fin
+
+    @property
+    def is_open_ended(self) -> bool:
+        return self._date_fin == END_OF_TIME
 
     @property
     def id(self) -> str:
@@ -198,6 +222,7 @@ def _article_from_legifrance_reply(reply) -> Article | None:
         text_html=article["texteHtml"],
         nota=article["nota"] or "",
         nota_html=article["notaHtml"] or "",
+        date_fin=article["dateFin"],
     )
 
 

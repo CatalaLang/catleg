@@ -94,3 +94,9 @@ def test_strip_links_from_markdown():
     article = _json_from_test_file("LEGIARTI000006302217.json")
     res = _article_from_legifrance_reply(article)
     assert "affichCodeArticle.do" not in res.to_markdown()
+
+
+def test_expiry():
+    article = _json_from_test_file("LEGIARTI000046790860.json")
+    res = _article_from_legifrance_reply(article)
+    assert res.is_open_ended
