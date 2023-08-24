@@ -1,7 +1,6 @@
-import datetime
 import logging
 import warnings
-from datetime import timezone
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import TextIO
 
@@ -33,15 +32,17 @@ async def check_expiry(f: TextIO, *, file_path: Path | None = None):
         logger.info("checking article '%s'", article.id)
 
         if not ref_article.is_open_ended:
-            if now > ref_article.date_fin:
+            if now > ref_article.end_date:
                 warnings.warn(
-                    f"Article '{article.id}' has expired (on {ref_article.end_date}). "
+                    f"Article '{article.id}' has expired "
+                    f"(on {ref_article.end_date.date()}). "
                     f"It has been replaced by '{ref_article.latest_version_id}'."
                 )
                 has_expired_articles = True
             else:
                 warnings.warn(
-                    f"Article '{article.id}' will expire on {ref_article.end_date}. "
+                    f"Article '{article.id}' will expire "
+                    f"on {ref_article.end_date.date()}. "
                     f"It will be replaced by '{ref_article.latest_version_id}'"
                 )
 
