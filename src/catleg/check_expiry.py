@@ -1,3 +1,4 @@
+import logging
 import warnings
 from pathlib import Path
 from time import gmtime
@@ -5,6 +6,9 @@ from typing import TextIO
 
 from catleg.parse_catala_markdown import parse_catala_file
 from catleg.query import get_backend
+
+
+logger = logging.getLogger(__name__)
 
 
 async def check_expiry(f: TextIO, *, file_path: Path | None = None):
@@ -20,6 +24,12 @@ async def check_expiry(f: TextIO, *, file_path: Path | None = None):
         if ref_article is None:
             warnings.warn(f"Could not retrieve article '{article.id}'")
             continue
+
+        if article.is_archive:
+            logger.info("article '%s' is achived, skipping expiry check", article.id)
+            continue
+
+        logger.info("checking article '%s'", article.id)
 
         if not ref_article.is_open_ended:
             if now > ref_article.date_fin:

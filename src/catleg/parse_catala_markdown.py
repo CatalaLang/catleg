@@ -45,6 +45,7 @@ def _parse_catala_doc(
                     typ, id = type_id
                     text = []
                     curr_elem = window[0]
+                    is_archive = "[archive]" in window[-1].content
 
                     # start line of the first text block
                     inline_map = window[1].map
@@ -72,6 +73,7 @@ def _parse_catala_doc(
                             text=" ".join(text),
                             start_line=start_line,
                             file_path=file_path,
+                            is_archive=is_archive,
                         )
                     )
 
