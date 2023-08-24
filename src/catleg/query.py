@@ -8,7 +8,7 @@ Utilities for querying various data sources for law texts:
 import functools
 import logging
 from collections.abc import Iterable
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from typing import assert_never, Protocol
 
 import aiometer
@@ -95,7 +95,7 @@ class LegifranceBackend(Backend):
         return results, nb_results
 
     async def code_toc(self, id: str):
-        params = {"textId": id, "date": str(datetime.date.today())}
+        params = {"textId": id, "date": str(date.today())}
         reply = await self.client.post(
             f"{self.API_BASE_URL}/consult/legi/tableMatieres", json=params
         )
