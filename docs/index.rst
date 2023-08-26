@@ -7,9 +7,12 @@ Welcome to catleg's documentation!
 ==================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Contents:
 
+   introduction
+   installation
+   getting_started
 
 
 Indices and tables
