@@ -1,10 +1,17 @@
-.. catleg documentation master file, created by
-   sphinx-quickstart on Fri Aug 25 15:12:57 2023.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+=================
+ catleg |version|
+=================
 
-Welcome to catleg's documentation!
-==================================
+*A library of helper tools for catala programming in the context of French legislative texts.*
+
+|PyPI| |CI| |License|
+
+.. |PyPI| image:: https://img.shields.io/pypi/v/catleg.svg
+   :target: https://pypi.org/project/catleg/
+.. |CI| image:: https://github.com/CatalaLang/catleg/workflows/check/badge.svg
+   :target: https://github.com/CatalaLang/catleg/actions
+.. |License| image:: https://img.shields.io/badge/license-Apache%202.0-blue.svg
+   :target: https://github.com/CatalaLang/catleg/blob/main/LICENSE
 
 .. toctree::
    :maxdepth: 3

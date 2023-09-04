@@ -6,6 +6,9 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
+from subprocess import PIPE, Popen
+
+
 project = "catleg"
 copyright = "2023, the catala contributors"
 author = "the catala contributors"
@@ -24,3 +27,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 html_theme = "alabaster"
 html_static_path = ["_static"]
+
+# version
+pipe = Popen("hatch version", stdout=PIPE, shell=True)
+version = pipe.stdout.read().decode("utf8")
