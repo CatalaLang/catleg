@@ -40,6 +40,7 @@ dev = [
   "pytest",
   "ruff",
   "sphinx",
+  "sphinx-rtd-theme",
   "tox",
   "typer-cli"
 ]
