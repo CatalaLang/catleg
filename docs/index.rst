@@ -17,9 +17,7 @@
    :maxdepth: 3
    :caption: Contents:
 
-   introduction
    installation
-   getting_started
 
 
 Indices and tables
