@@ -18,3 +18,5 @@ __pycache__/
 dist/
 docs/_build/
 
+# CLI reference is auto-generated
+docs/cli_reference.md

@@ -18,6 +18,7 @@
    :caption: Contents:
 
    installation
+   cli_reference.md
 
 
 Indices and tables

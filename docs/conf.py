@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-from subprocess import PIPE, Popen
+from subprocess import PIPE, Popen, run
 
 
 project = "catleg"
@@ -16,7 +16,7 @@ author = "the catala contributors"
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+extensions = ["myst_parser"]
 
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
@@ -31,3 +31,20 @@ html_static_path = ["_static"]
 # version
 pipe = Popen("hatch version", stdout=PIPE, shell=True)
 version = pipe.stdout.read().decode("utf8")
+
+# generate CLI reference
+# (this command implies that `make html` is executed from the `docs`
+# directory -- this could be made more robust?)
+run(
+    [
+        "typer",
+        "../src/catleg/catleg.py",
+        "utils",
+        "docs",
+        "--name",
+        "catleg",
+        "--output",
+        "cli_reference.md",
+    ],
+    check=True,
+)
