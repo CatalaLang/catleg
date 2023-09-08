@@ -32,7 +32,7 @@ Providing Legifrance credentials
 
 This API is authenticated and requires credentials, which may be obtained by registering on `the Piste portal <https://piste.gouv.fr/>`__.
 
-To provide credentials to catleg, create a ``.catleg_secrets.toml`` file like so:
+To provide credentials to catleg, create a ``.catleg_secrets.toml`` file like so::
 
     lf_client_id = "your_client_id"
     lf_client_secret = "your_client_secret"
