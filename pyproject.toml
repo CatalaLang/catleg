@@ -34,11 +34,16 @@ dynamic = ["version"]
 
 [project.optional-dependencies]
 dev = [
+  "hatch",
   "mypy",
+  "myst-parser",
   "pre-commit",
   "pytest",
   "ruff",
+  "sphinx",
+  "sphinx-rtd-theme",
   "tox",
+  "typer-cli"
 ]
 
 [project.scripts]

@@ -13,4 +13,10 @@ __pycache__/
 .coverage
 
 .tox/
+
+# Build
 dist/
+docs/_build/
+
+# CLI reference is auto-generated
+docs/cli_reference.md
