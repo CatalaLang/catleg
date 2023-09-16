@@ -38,15 +38,6 @@ def check_expiry(file: Path):
 
 
 @app.command()
-def query(article_id: str):
-    """
-    Retrieve a reference version of a French law article.
-    """
-    back = get_backend("legifrance")
-    print(asyncio.run(back.article(article_id)))
-
-
-@app.command()
 def skeleton(textid: str, sectionid: str):
     """
     Output a given section of a law text.
