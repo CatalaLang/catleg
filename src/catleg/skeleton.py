@@ -28,8 +28,7 @@ async def markdown_skeleton(textid: str, sectionid: str) -> str:
             # If it is not a section, then it is an article
             parts.append(f"{'#' * (level + 1)} Article {node['num']} | {node['id']}")
             article = await back.article(node["id"])
-            formatted = mdformat.text(article.to_markdown(), options={"wrap": 80})
-            parts.append(formatted)
+            parts.append(_formatted_atricle(article))
         else:
             parts.append(f"{'#' * level} {node['title']}")
 
@@ -43,3 +42,7 @@ def _preorder(node, level=1):
         yield article, level
     for section in node["sections"]:
         yield from _preorder(section, level + 1)
+
+
+def _formatted_atricle(article):
+    return mdformat.text(article.to_markdown(), options={"wrap": 80, "number": True})
