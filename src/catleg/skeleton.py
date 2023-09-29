@@ -35,7 +35,7 @@ async def markdown_skeleton(textid: str, sectionid: str) -> str:
     return "\n\n".join(parts)
 
 
-async def article_skeleton(articleid: str):
+async def article_skeleton(articleid: str) -> str:
     """
     Return an article skeleton.
     """
