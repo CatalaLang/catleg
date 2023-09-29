@@ -44,6 +44,10 @@ async def article_skeleton(articleid: str):
     raw_article_json = await back.query_article_legi(articleid)
     article_json = raw_article_json["article"]
     article = _article_from_legifrance_reply(raw_article_json)
+    if article is None:
+        raise RuntimeError(
+            "Could not extract article from json reply %s", raw_article_json
+        )
     parts = []
     level = 1 + len(article_json["context"]["titresTM"])
     parts.append(f"{'#' * level} Article {article_json['num']} | {article.id}")
