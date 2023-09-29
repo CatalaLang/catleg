@@ -8,7 +8,7 @@ from catleg.check_expiry import check_expiry as expiry
 from catleg.cli_util import set_basic_loglevel
 from catleg.find_changes import find_changes
 from catleg.query import get_backend
-from catleg.skeleton import markdown_skeleton
+from catleg.skeleton import article_skeleton as askel, markdown_skeleton
 
 app = typer.Typer(add_completion=False)
 # legifrance-specific commands (query legifrance API and return
@@ -75,6 +75,15 @@ def toc(code: str):
     """
     back = get_backend("legifrance")
     print(json.dumps(asyncio.run(back.code_toc(code)), indent=2, ensure_ascii=False))
+
+
+@lf.command()
+def article_skeleton(articleid: str):
+    """
+    Output a markdown-formatted article.
+    """
+    skel = asyncio.run(askel(articleid))
+    print(skel)
 
 
 def main():

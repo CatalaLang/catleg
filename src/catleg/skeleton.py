@@ -2,7 +2,7 @@ from itertools import dropwhile
 
 import mdformat
 
-from catleg.query import get_backend
+from catleg.query import _article_from_legifrance_reply, get_backend
 
 
 async def markdown_skeleton(textid: str, sectionid: str) -> str:
@@ -32,6 +32,22 @@ async def markdown_skeleton(textid: str, sectionid: str) -> str:
         else:
             parts.append(f"{'#' * level} {node['title']}")
 
+    return "\n\n".join(parts)
+
+
+async def article_skeleton(articleid: str):
+    """
+    Return an article skeleton.
+    """
+    back = get_backend("legifrance")
+    # This uses the Legifrance API directly, not the backend abstraction
+    raw_article_json = await back.query_article_legi(articleid)
+    article_json = raw_article_json["article"]
+    article = _article_from_legifrance_reply(raw_article_json)
+    parts = []
+    level = 1 + len(article_json["context"]["titresTM"])
+    parts.append(f"{'#' * level} Article {article_json['num']} | {article.id}")
+    parts.append(_formatted_atricle(article))
     return "\n\n".join(parts)
 
 
