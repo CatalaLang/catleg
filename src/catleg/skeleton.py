@@ -49,7 +49,8 @@ async def article_skeleton(articleid: str) -> str:
             "Could not extract article from json reply %s", raw_article_json
         )
     parts = []
-    level = 1 + len(article_json["context"]["titresTM"])
+    # level: code (1) + length of section hierarchy + article (1)
+    level = 1 + len(article_json["context"]["titresTM"]) + 1
     parts.append(f"{'#' * level} Article {article_json['num']} | {article.id}")
     parts.append(_formatted_atricle(article))
     return "\n\n".join(parts)
