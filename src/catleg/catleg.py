@@ -8,13 +8,23 @@ from catleg.check_expiry import check_expiry as expiry
 from catleg.cli_util import set_basic_loglevel
 from catleg.find_changes import find_changes
 from catleg.query import get_backend
-from catleg.skeleton import markdown_skeleton
+from catleg.skeleton import article_skeleton as askel, markdown_skeleton
 
 app = typer.Typer(add_completion=False)
 # legifrance-specific commands (query legifrance API and return
 # raw JSON)
 lf = typer.Typer()
 app.add_typer(lf, name="lf", help="Commands for querying the raw Legifrance API")
+
+
+@app.command()
+def article(articleid: str):
+    """
+    Output an article.
+    By default, outputs markdown-formatted text
+    """
+    skel = asyncio.run(askel(articleid))
+    print(skel)
 
 
 @app.command()
@@ -46,9 +56,12 @@ def skeleton(textid: str, sectionid: str):
     print(skel)
 
 
-@lf.command()
-def article(article_id: str):
-    """Retrieve an article from Legifrance"""
+@lf.command("article")
+def lf_article(article_id: str):
+    """
+    Retrieve an article from Legifrance.
+    Outputs the raw Legifrance JSON representation.
+    """
     back = get_backend("legifrance")
     print(
         json.dumps(
