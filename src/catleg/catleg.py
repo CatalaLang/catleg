@@ -18,6 +18,16 @@ app.add_typer(lf, name="lf", help="Commands for querying the raw Legifrance API"
 
 
 @app.command()
+def article(articleid: str):
+    """
+    Output an article.
+    By default, outputs markdown-formatted text
+    """
+    skel = asyncio.run(askel(articleid))
+    print(skel)
+
+
+@app.command()
 def diff(file: Path):
     """
     Show differences between each article in a catala file and
@@ -46,9 +56,12 @@ def skeleton(textid: str, sectionid: str):
     print(skel)
 
 
-@lf.command()
-def article(article_id: str):
-    """Retrieve an article from Legifrance"""
+@lf.command("article")
+def lf_article(article_id: str):
+    """
+    Retrieve an article from Legifrance.
+    Outputs the raw Legifrance JSON representation.
+    """
     back = get_backend("legifrance")
     print(
         json.dumps(
@@ -75,15 +88,6 @@ def toc(code: str):
     """
     back = get_backend("legifrance")
     print(json.dumps(asyncio.run(back.code_toc(code)), indent=2, ensure_ascii=False))
-
-
-@lf.command()
-def article_skeleton(articleid: str):
-    """
-    Output a markdown-formatted article.
-    """
-    skel = asyncio.run(askel(articleid))
-    print(skel)
 
 
 def main():
