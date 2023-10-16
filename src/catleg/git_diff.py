@@ -34,7 +34,8 @@ def wdiff(st1: str, st2: str, *, return_exit_code=False, line_offset=0):
             capture_output=True,
             check=False,
         )
+        output = b"\n".join(result.stdout.splitlines()[4:])
         if return_exit_code:
-            return result.stdout, result.returncode
+            return output, result.returncode
         else:
-            return result.stdout
+            return output
