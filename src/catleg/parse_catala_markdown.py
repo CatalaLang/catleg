@@ -60,7 +60,7 @@ def _parse_catala_doc(
                             text.append(
                                 renderer.render(
                                     curr_elem.next_sibling.to_tokens(),
-                                    options={},
+                                    options={"mdformat": {"number": True}},
                                     env={},
                                 )
                             )
