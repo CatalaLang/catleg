@@ -32,8 +32,11 @@ async def find_changes(f: TextIO, *, file_path: Path | None = None):
             line_offset=article.start_line,
         )
         if retcode != 0:
-            print(article.id)
-            print(f"{article.file_path or 'UNKNOWN_FILE'}:{article.start_line}")
+            print(article.id, flush=True)
+            print(
+                f"{article.file_path or 'UNKNOWN_FILE'}:{article.start_line}",
+                flush=True,
+            )
             sys.stdout.buffer.write(diff)
             diffcnt += 1
     if diffcnt > 0:
