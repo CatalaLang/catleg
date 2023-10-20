@@ -12,6 +12,7 @@ from datetime import date, datetime, timedelta, timezone
 from typing import Protocol
 
 import aiometer
+import hishel
 import httpx
 from markdownify import markdownify as md  # type: ignore
 from typing_extensions import assert_never
@@ -60,7 +61,9 @@ class LegifranceBackend(Backend):
     def __init__(self, client_id, client_secret):
         headers = {"Accept": "application/json"}
         self.client = httpx.AsyncClient(
-            auth=LegifranceAuth(client_id, client_secret), headers=headers
+            auth=LegifranceAuth(client_id, client_secret),
+            headers=headers,
+            transport=hishel.AsyncCacheTransport(transport=httpx.AsyncHTTPTransport()),
         )
 
     async def article(self, id: str) -> Article | None:
