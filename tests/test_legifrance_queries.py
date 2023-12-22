@@ -118,3 +118,8 @@ def test_parse_legifrance_urls():
         "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033971416/"
     )
     assert res == ("article", "LEGIARTI000033971416")
+
+    res = parse_legifrance_url(
+        "https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006069577/LEGISCTA000006197199"
+    )
+    assert res == ("section", "LEGITEXT000006069577", "LEGISCTA000006197199")
