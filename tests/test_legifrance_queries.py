@@ -3,6 +3,7 @@ import os
 from json import load
 
 import pytest
+from catleg.cli_util import parse_legifrance_url
 from catleg.query import (
     _article_from_legifrance_reply,
     _get_legifrance_credentials,
@@ -105,3 +106,15 @@ def test_expiry():
     ceta_json_article = _json_from_test_file("CETATEXT000035260342.json")
     ceta_article = _article_from_legifrance_reply(ceta_json_article)
     assert ceta_article.is_open_ended
+
+
+def test_parse_legifrance_urls():
+    res = parse_legifrance_url(
+        "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033971416"
+    )
+    assert res == ("article", "LEGIARTI000033971416")
+
+    res = parse_legifrance_url(
+        "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033971416/"
+    )
+    assert res == ("article", "LEGIARTI000033971416")

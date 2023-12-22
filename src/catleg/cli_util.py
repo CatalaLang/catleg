@@ -31,6 +31,7 @@ def parse_legifrance_url(
         return None
 
     path_elems = parsed_url.path.split("/")[1:]
+    path_elems = [e for e in path_elems if e]  # remove empty path segments
 
     match path_elems:
         case ["codes", "article_lc", article_id]:
