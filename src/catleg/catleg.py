@@ -2,6 +2,7 @@ import asyncio
 import json
 import sys
 from pathlib import Path
+from typing import Annotated
 
 import typer
 
@@ -19,15 +20,23 @@ app.add_typer(lf, name="lf", help="Commands for querying the raw Legifrance API"
 
 
 @app.command()
-def article(aid_or_url: str):
+def article(
+    aid_or_url: Annotated[
+        str,
+        typer.Argument(
+            help="An article ID or Legifrance URL, for instance 'LEGIARTI000033971416' "
+            "or 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033971416'."
+        ),
+    ]
+):
     """
     Output an article.
-    By default, outputs markdown-formatted text
+    By default, outputs markdown-formatted text.
     """
     article_id = article_id_or_url(aid_or_url)
     if article_id is None:
         print(f"Sorry, I do not know how to fetch {article_id_or_url}", file=sys.stderr)
-        return 1
+        raise typer.Exit(code=1)
 
     skel = asyncio.run(askel(article_id))
     print(skel)
@@ -71,7 +80,7 @@ def lf_article(aid_or_url: str):
     article_id = article_id_or_url(aid_or_url)
     if article_id is None:
         print(f"Sorry, I do not know how to fetch {article_id_or_url}", file=sys.stderr)
-        return 1
+        raise typer.Exit(code=1)
 
     back = get_backend("legifrance")
     print(
