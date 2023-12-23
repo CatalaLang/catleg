@@ -72,7 +72,15 @@ def skeleton(textid: str, sectionid: str):
 
 
 @lf.command("article")
-def lf_article(aid_or_url: str):
+def lf_article(
+    aid_or_url: Annotated[
+        str,
+        typer.Argument(
+            help="An article ID or Legifrance URL, for instance 'LEGIARTI000033971416' "
+            "or 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033971416'."
+        ),
+    ]
+):
     """
     Retrieve an article from Legifrance.
     Outputs the raw Legifrance JSON representation.
