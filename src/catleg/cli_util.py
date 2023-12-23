@@ -2,6 +2,7 @@ from typing import Literal
 from urllib.parse import urlparse
 
 from catleg.config import settings
+from catleg.law_text_fr import find_id_in_string
 
 
 def set_basic_loglevel():
@@ -17,6 +18,19 @@ def set_basic_loglevel():
         import logging
 
         logging.basicConfig(level=log_level.upper())
+
+
+# XXX ugly
+def article_id_or_url(candidate: str) -> str | None:
+    if (type_id := find_id_in_string(candidate)) is not None:
+        return type_id[1]
+    try:
+        parse_res = parse_legifrance_url(candidate)
+    except ValueError:
+        return None
+    if parse_res is not None and parse_res[0] == "article":
+        return parse_res[1]
+    return None
 
 
 def parse_legifrance_url(

@@ -1,11 +1,12 @@
 import asyncio
 import json
+import sys
 from pathlib import Path
 
 import typer
 
 from catleg.check_expiry import check_expiry as expiry
-from catleg.cli_util import set_basic_loglevel
+from catleg.cli_util import article_id_or_url, set_basic_loglevel
 from catleg.find_changes import find_changes
 from catleg.query import get_backend
 from catleg.skeleton import article_skeleton as askel, markdown_skeleton
@@ -18,12 +19,17 @@ app.add_typer(lf, name="lf", help="Commands for querying the raw Legifrance API"
 
 
 @app.command()
-def article(articleid: str):
+def article(aid_or_url: str):
     """
     Output an article.
     By default, outputs markdown-formatted text
     """
-    skel = asyncio.run(askel(articleid))
+    article_id = article_id_or_url(aid_or_url)
+    if article_id is None:
+        print(f"Sorry, I do not know how to fetch {article_id_or_url}", file=sys.stderr)
+        return 1
+
+    skel = asyncio.run(askel(article_id))
     print(skel)
 
 
