@@ -63,11 +63,16 @@ def skeleton(textid: str, sectionid: str):
 
 
 @lf.command("article")
-def lf_article(article_id: str):
+def lf_article(aid_or_url: str):
     """
     Retrieve an article from Legifrance.
     Outputs the raw Legifrance JSON representation.
     """
+    article_id = article_id_or_url(aid_or_url)
+    if article_id is None:
+        print(f"Sorry, I do not know how to fetch {article_id_or_url}", file=sys.stderr)
+        return 1
+
     back = get_backend("legifrance")
     print(
         json.dumps(
