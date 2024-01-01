@@ -2,12 +2,12 @@ import asyncio
 import json
 import sys
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Optional
 
 import typer
 
 from catleg.check_expiry import check_expiry as expiry
-from catleg.cli_util import article_id_or_url, set_basic_loglevel
+from catleg.cli_util import article_id_or_url, parse_legifrance_url, set_basic_loglevel
 from catleg.find_changes import find_changes
 from catleg.query import get_backend
 from catleg.skeleton import article_skeleton as askel, markdown_skeleton
@@ -35,7 +35,9 @@ def article(
     """
     article_id = article_id_or_url(aid_or_url)
     if article_id is None:
-        print(f"Sorry, I do not know how to fetch {article_id_or_url}", file=sys.stderr)
+        print(
+            f"Sorry, I do not know how to process {article_id_or_url}", file=sys.stderr
+        )
         raise typer.Exit(code=1)
 
     skel = asyncio.run(askel(article_id))
@@ -63,10 +65,26 @@ def check_expiry(file: Path):
 
 
 @app.command()
-def skeleton(textid: str, sectionid: str):
+def skeleton(
+    url_or_textid: str,
+    sectionid: Annotated[Optional[str], typer.Argument()] = None,  # noqa: UP007
+):
     """
     Output a given section of a law text.
     """
+    if sectionid is not None:
+        textid = url_or_textid
+    else:
+        res = parse_legifrance_url(url_or_textid)
+        match res:
+            case ["section", textid, sectionid]:
+                textid, sectionid = textid, sectionid
+            case _:
+                print(
+                    f"Sorry, I do not know how to process {url_or_textid}",
+                    file=sys.stderr,
+                )
+                raise typer.Exit(code=1)
     skel = asyncio.run(markdown_skeleton(textid, sectionid))
     print(skel)
 
@@ -87,7 +105,7 @@ def lf_article(
     """
     article_id = article_id_or_url(aid_or_url)
     if article_id is None:
-        print(f"Sorry, I do not know how to fetch {article_id_or_url}", file=sys.stderr)
+        print(f"Sorry, I do not know how to fetch {aid_or_url}", file=sys.stderr)
         raise typer.Exit(code=1)
 
     back = get_backend("legifrance")
