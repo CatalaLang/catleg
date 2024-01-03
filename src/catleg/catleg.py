@@ -65,7 +65,7 @@ def check_expiry(file: Path):
         raise typer.Exit(retcode)
 
 
-def _skeleton(url_or_textid: str, sectionid: str | None):
+def _skeleton(url_or_textid: str, sectionid: str | None = None):
     """
     Output a given section of a law text.
     """

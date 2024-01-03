@@ -58,9 +58,13 @@ def test_query_article_by_url():
     _get_legifrance_credentials(raise_if_missing=False)[0] is None,
     reason="this test requires legifrance credentials",
 )
-def test_section_skeleton_by_url():
+def test_section_skeleton():
     skel = _skeleton("LEGITEXT000031366350", "LEGISCTA000031367367")
     assert "téléservice" in skel
+    skel2 = _skeleton(
+        "https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000031366350/LEGISCTA000031367367/"
+    )
+    assert skel == skel2
 
 
 @pytest.mark.skipif(
