@@ -3,7 +3,7 @@ import os
 from json import load
 
 import pytest
-from catleg.catleg import _lf_article
+from catleg.catleg import _lf_article, _skeleton
 from catleg.cli_util import parse_legifrance_url
 from catleg.law_text_fr import find_id_in_string
 from catleg.query import (
@@ -52,6 +52,15 @@ def test_query_article_by_url():
     )
     res = _article_from_legifrance_reply(article)
     assert "domicile" in res.text
+
+
+@pytest.mark.skipif(
+    _get_legifrance_credentials(raise_if_missing=False)[0] is None,
+    reason="this test requires legifrance credentials",
+)
+def test_section_skeleton_by_url():
+    skel = _skeleton("LEGITEXT000031366350", "LEGISCTA000031367367")
+    assert "téléservice" in skel
 
 
 @pytest.mark.skipif(
