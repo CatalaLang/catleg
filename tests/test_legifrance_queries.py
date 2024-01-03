@@ -4,6 +4,7 @@ from json import load
 
 import pytest
 from catleg.cli_util import parse_legifrance_url
+from catleg.law_text_fr import find_id_in_string
 from catleg.query import (
     _article_from_legifrance_reply,
     _get_legifrance_credentials,
@@ -38,6 +39,12 @@ def test_query_article_2():
     back = get_backend("legifrance")
     article = asyncio.run(back.article("CETATEXT000035260342"))
     assert article is not None
+
+
+# def test_query_article_by_url():
+#    back = get_backend("legifrance")
+#    article = asyncio.run(back.article("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033971416"))
+#    assert "logement" in article.text
 
 
 @pytest.mark.skipif(
@@ -106,6 +113,12 @@ def test_expiry():
     ceta_json_article = _json_from_test_file("CETATEXT000035260342.json")
     ceta_article = _article_from_legifrance_reply(ceta_json_article)
     assert ceta_article.is_open_ended
+
+
+def test_find_id_in_string():
+    assert find_id_in_string("LEGIARTI000033971416", strict=True) is not None
+    assert find_id_in_string("foo LEGIARTI000033971416", strict=True) is None
+    assert find_id_in_string("foo LEGIARTI000033971416", strict=False) is not None
 
 
 def test_parse_legifrance_urls():

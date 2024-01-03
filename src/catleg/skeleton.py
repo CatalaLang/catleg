@@ -7,7 +7,7 @@ from catleg.query import _article_from_legifrance_reply, get_backend
 
 async def markdown_skeleton(textid: str, sectionid: str) -> str:
     """
-    Return a skeleton (formatted law text section)
+    Return a skeleton (markdown-formatted law text section)
     """
     if sectionid[:8].upper() != "LEGISCTA":
         raise ValueError("Expected section identifier (should start with 'SCTA')")
@@ -37,7 +37,7 @@ async def markdown_skeleton(textid: str, sectionid: str) -> str:
 
 async def article_skeleton(articleid: str) -> str:
     """
-    Return an article skeleton.
+    Return an article skeleton (markdown-formatted law article).
     """
     back = get_backend("legifrance")
     # This uses the Legifrance API directly, not the backend abstraction

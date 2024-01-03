@@ -20,16 +20,20 @@ def set_basic_loglevel():
         logging.basicConfig(level=log_level.upper())
 
 
-# XXX ugly
 def article_id_or_url(candidate: str) -> str | None:
-    if (type_id := find_id_in_string(candidate)) is not None:
-        return type_id[1]
+    match find_id_in_string(candidate, strict=True):
+        case (_, article_id):
+            assert isinstance(
+                article_id, str
+            )  # not sure why mypy does not infer it itself?
+            return article_id
     try:
         parse_res = parse_legifrance_url(candidate)
     except ValueError:
         return None
-    if parse_res is not None and parse_res[0] == "article":
-        return parse_res[1]
+    match parse_res:
+        case ["article", article_id]:
+            return article_id
     return None
 
 
