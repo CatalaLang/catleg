@@ -3,6 +3,7 @@ import os
 from json import load
 
 import pytest
+from catleg.catleg import _lf_article
 from catleg.cli_util import parse_legifrance_url
 from catleg.law_text_fr import find_id_in_string
 from catleg.query import (
@@ -41,10 +42,16 @@ def test_query_article_2():
     assert article is not None
 
 
-# def test_query_article_by_url():
-#    back = get_backend("legifrance")
-#    article = asyncio.run(back.article("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033971416"))
-#    assert "logement" in article.text
+@pytest.mark.skipif(
+    _get_legifrance_credentials(raise_if_missing=False)[0] is None,
+    reason="this test requires legifrance credentials",
+)
+def test_query_article_by_url():
+    article = _lf_article(
+        "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033971416"
+    )
+    res = _article_from_legifrance_reply(article)
+    assert "domicile" in res.text
 
 
 @pytest.mark.skipif(

@@ -1,6 +1,5 @@
 import asyncio
 import json
-import sys
 from pathlib import Path
 from typing import Annotated, Optional
 
@@ -19,6 +18,15 @@ lf = typer.Typer()
 app.add_typer(lf, name="lf", help="Commands for querying the raw Legifrance API")
 
 
+def _article(aid_or_url: str):
+    article_id = article_id_or_url(aid_or_url)
+    if article_id is None:
+        raise ValueError(f"Sorry, I do not know how to process {article_id_or_url}")
+
+    skel = asyncio.run(askel(article_id))
+    return skel
+
+
 @app.command()
 def article(
     aid_or_url: Annotated[
@@ -33,15 +41,8 @@ def article(
     Output an article.
     By default, outputs markdown-formatted text.
     """
-    article_id = article_id_or_url(aid_or_url)
-    if article_id is None:
-        print(
-            f"Sorry, I do not know how to process {article_id_or_url}", file=sys.stderr
-        )
-        raise typer.Exit(code=1)
 
-    skel = asyncio.run(askel(article_id))
-    print(skel)
+    print(_article(aid_or_url))
 
 
 @app.command()
@@ -64,11 +65,7 @@ def check_expiry(file: Path):
         raise typer.Exit(retcode)
 
 
-@app.command()
-def skeleton(
-    url_or_textid: str,
-    sectionid: Annotated[Optional[str], typer.Argument()] = None,  # noqa: UP007
-):
+def _skeleton(url_or_textid: str, sectionid: str | None):
     """
     Output a given section of a law text.
     """
@@ -80,13 +77,26 @@ def skeleton(
             case ["section", textid, sectionid]:
                 textid, sectionid = textid, sectionid
             case _:
-                print(
-                    f"Sorry, I do not know how to process {url_or_textid}",
-                    file=sys.stderr,
-                )
-                raise typer.Exit(code=1)
+                raise ValueError(f"Sorry, I do not know how to process {url_or_textid}")
     skel = asyncio.run(markdown_skeleton(textid, sectionid))
-    print(skel)
+    return skel
+
+
+@app.command()
+def skeleton(
+    url_or_textid: str,
+    sectionid: Annotated[Optional[str], typer.Argument()] = None,  # noqa: UP007
+):
+    print(_skeleton(url_or_textid, sectionid))
+
+
+def _lf_article(aid_or_url: str):
+    article_id = article_id_or_url(aid_or_url)
+    if article_id is None:
+        raise ValueError(f"Sorry, I do not know how to fetch {aid_or_url}")
+
+    back = get_backend("legifrance")
+    return asyncio.run(back.query_article_legi(article_id))
 
 
 @lf.command("article")
@@ -103,18 +113,10 @@ def lf_article(
     Retrieve an article from Legifrance.
     Outputs the raw Legifrance JSON representation.
     """
-    article_id = article_id_or_url(aid_or_url)
-    if article_id is None:
-        print(f"Sorry, I do not know how to fetch {aid_or_url}", file=sys.stderr)
-        raise typer.Exit(code=1)
-
-    back = get_backend("legifrance")
-    print(
-        json.dumps(
-            asyncio.run(back.query_article_legi(article_id)),
-            indent=2,
-            ensure_ascii=False,
-        )
+    json.dumps(
+        _lf_article(aid_or_url),
+        indent=2,
+        ensure_ascii=False,
     )
 
 
