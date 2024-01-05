@@ -30,7 +30,7 @@ END_OF_TIME = _lf_timestamp_to_datetime(32472144000000)
 
 
 class Backend(Protocol):
-    async def article(self, id: str) -> Article | None:
+    async def article(self, id_or_url: str) -> Article | None:
         """
         Retrieve a law article.
         """
@@ -63,8 +63,8 @@ class LegifranceBackend(Backend):
             auth=LegifranceAuth(client_id, client_secret), headers=headers
         )
 
-    async def article(self, id: str) -> Article | None:
-        reply = await self.query_article_legi(id)
+    async def article(self, id_or_url: str) -> Article | None:
+        reply = await self.query_article_legi(id_or_url)
         article = _article_from_legifrance_reply(reply)
         if article is None:
             logging.warning(f"Could not retrieve article {id} (wrong identifier?)")
@@ -76,7 +76,8 @@ class LegifranceBackend(Backend):
         return [_article_from_legifrance_reply(reply) for reply in replies]
 
     async def list_codes(self):
-        return self._list_codes()[0]
+        res = await self._list_codes()
+        return res[0]
 
     async def _list_codes(self, page_size=20):
         params = {"pageSize": page_size, "pageNumber": 1, "states": ["VIGUEUR"]}

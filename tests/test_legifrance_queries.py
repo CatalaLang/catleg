@@ -3,6 +3,9 @@ import os
 from json import load
 
 import pytest
+from catleg.catleg import _lf_article, _skeleton
+from catleg.cli_util import parse_legifrance_url
+from catleg.law_text_fr import find_id_in_string
 from catleg.query import (
     _article_from_legifrance_reply,
     _get_legifrance_credentials,
@@ -37,6 +40,33 @@ def test_query_article_2():
     back = get_backend("legifrance")
     article = asyncio.run(back.article("CETATEXT000035260342"))
     assert article is not None
+
+
+@pytest.mark.skipif(
+    _get_legifrance_credentials(raise_if_missing=False)[0] is None,
+    reason="this test requires legifrance credentials",
+)
+def test_query_article_by_url():
+    article = _lf_article(
+        "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033971416"
+    )
+    res = _article_from_legifrance_reply(article)
+    assert "domicile" in res.text
+    article_by_id = _lf_article("LEGIARTI000033971416")
+    assert article["article"]["texte"] == article_by_id["article"]["texte"]
+
+
+@pytest.mark.skipif(
+    _get_legifrance_credentials(raise_if_missing=False)[0] is None,
+    reason="this test requires legifrance credentials",
+)
+def test_section_skeleton():
+    skel = _skeleton("LEGITEXT000031366350", "LEGISCTA000031367367")
+    assert "téléservice" in skel
+    skel2 = _skeleton(
+        "https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000031366350/LEGISCTA000031367367/"
+    )
+    assert skel == skel2
 
 
 @pytest.mark.skipif(
@@ -105,3 +135,26 @@ def test_expiry():
     ceta_json_article = _json_from_test_file("CETATEXT000035260342.json")
     ceta_article = _article_from_legifrance_reply(ceta_json_article)
     assert ceta_article.is_open_ended
+
+
+def test_find_id_in_string():
+    assert find_id_in_string("LEGIARTI000033971416", strict=True) is not None
+    assert find_id_in_string("foo LEGIARTI000033971416", strict=True) is None
+    assert find_id_in_string("foo LEGIARTI000033971416", strict=False) is not None
+
+
+def test_parse_legifrance_urls():
+    res = parse_legifrance_url(
+        "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033971416"
+    )
+    assert res == ("article", "LEGIARTI000033971416")
+
+    res = parse_legifrance_url(
+        "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033971416/"
+    )
+    assert res == ("article", "LEGIARTI000033971416")
+
+    res = parse_legifrance_url(
+        "https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006069577/LEGISCTA000006197199"
+    )
+    assert res == ("section", "LEGITEXT000006069577", "LEGISCTA000006197199")

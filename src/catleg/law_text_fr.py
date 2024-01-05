@@ -74,12 +74,22 @@ TYPES_OR_REGEX = "".join(intersperse("|", [typ.name for typ in ArticleType]))
 ARTICLE_ID_REGEX = re.compile(f"\\b(({TYPES_OR_REGEX})[0-9]{{12}})\\b")
 
 
-def find_id_in_string(text: str) -> tuple[ArticleType, str] | None:
+def find_id_in_string(text: str, strict=False) -> tuple[ArticleType, str] | None:
     """
     Finds an article ID in a string, returns a tuple (ArticleType, ID)
     if found or None if the string does not contain an article ID.
+
+    Parameters
+    ----------
+    strict : bool
+        If True, searches for an exact identifier. Otherwise, look for an
+        identifier in a possibly longer str.
     """
-    match = ARTICLE_ID_REGEX.search(text)
+    match = (
+        ARTICLE_ID_REGEX.search(text)
+        if not strict
+        else ARTICLE_ID_REGEX.fullmatch(text.strip())
+    )
     if match:
         return parse_article_id(match.group(0))
     return None
