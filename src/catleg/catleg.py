@@ -21,7 +21,7 @@ app.add_typer(lf, name="lf", help="Commands for querying the raw Legifrance API"
 def _article(aid_or_url: str):
     article_id = article_id_or_url(aid_or_url)
     if article_id is None:
-        raise ValueError(f"Sorry, I do not know how to process {article_id_or_url}")
+        raise ValueError(f"Sorry, I do not know how to process {aid_or_url}")
 
     skel = asyncio.run(askel(article_id))
     return skel

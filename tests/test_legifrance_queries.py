@@ -52,6 +52,8 @@ def test_query_article_by_url():
     )
     res = _article_from_legifrance_reply(article)
     assert "domicile" in res.text
+    article_by_id = _lf_article("LEGIARTI000033971416")
+    assert article["article"]["texte"] == article_by_id["article"]["texte"]
 
 
 @pytest.mark.skipif(

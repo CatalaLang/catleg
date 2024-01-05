@@ -54,7 +54,13 @@ def parse_legifrance_url(
     match path_elems:
         case ["codes", "article_lc", article_id]:
             return "article", article_id
-        case ["codes", "section_lc", text_id, section_id]:
+        case [
+            "codes",
+            "section_lc",
+            text_id,
+            section_id,
+            *_,
+        ]:  # ignore anchors in sections
             return "section", text_id, section_id
         case _:
             return None
