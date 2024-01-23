@@ -113,10 +113,12 @@ def lf_article(
     Retrieve an article from Legifrance.
     Outputs the raw Legifrance JSON representation.
     """
-    json.dumps(
-        _lf_article(aid_or_url),
-        indent=2,
-        ensure_ascii=False,
+    print(
+        json.dumps(
+            _lf_article(aid_or_url),
+            indent=2,
+            ensure_ascii=False,
+        )
     )
 
 
