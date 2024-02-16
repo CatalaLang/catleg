@@ -18,12 +18,12 @@ lf = typer.Typer()
 app.add_typer(lf, name="lf", help="Commands for querying the raw Legifrance API")
 
 
-def _article(aid_or_url: str):
+def _article(aid_or_url: str, breadcrumbs: bool):
     article_id = article_id_or_url(aid_or_url)
     if article_id is None:
         raise ValueError(f"Sorry, I do not know how to process {aid_or_url}")
 
-    skel = asyncio.run(askel(article_id))
+    skel = asyncio.run(askel(article_id, breadcrumbs=breadcrumbs))
     return skel
 
 
@@ -35,14 +35,20 @@ def article(
             help="An article ID or Legifrance URL, for instance 'LEGIARTI000033971416' "
             "or 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033971416'."
         ),
-    ]
+    ],
+    nb: Annotated[
+        bool,
+        typer.Option(
+            help="If specified, do not print breadcrumbs (table of contents headers)"
+        ),
+    ] = False,
 ):
     """
     Output an article.
     By default, outputs markdown-formatted text.
     """
 
-    print(_article(aid_or_url))
+    print(_article(aid_or_url, not nb))
 
 
 @app.command()

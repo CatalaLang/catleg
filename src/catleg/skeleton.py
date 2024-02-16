@@ -35,20 +35,43 @@ async def markdown_skeleton(textid: str, sectionid: str) -> str:
     return "\n\n".join(parts)
 
 
-async def article_skeleton(articleid: str) -> str:
+async def article_skeleton(articleid: str, breadcrumbs: bool = True) -> str:
     """
     Return an article skeleton (markdown-formatted law article).
+
+    Parameters
+    ----------
+    articleid: str
+       Legifrance article identifier
+    breadcrumbs: bool
+       if True, emits breadcrumbs (table of contents headers) before
+       outputting the article itself
+
+    Returns
+    -------
+    str
+       Markdown-formatted article
     """
     back = get_backend("legifrance")
     # This uses the Legifrance API directly, not the backend abstraction
     raw_article_json = await back.query_article_legi(articleid)
+    return _article_skeleton(raw_article_json=raw_article_json, breadcrumbs=breadcrumbs)
+
+
+# separate network calls and processing to ease unit testing
+def _article_skeleton(raw_article_json, breadcrumbs: bool = True):
     article_json = raw_article_json["article"]
     article = _article_from_legifrance_reply(raw_article_json)
     if article is None:
         raise RuntimeError(
             "Could not extract article from json reply %s", raw_article_json
         )
+
     parts = []
+    if breadcrumbs:
+        for i, toc_entry in enumerate(article_json["context"]["titresTM"], start=1):
+            parts.append(f"{'#' * i} {toc_entry['titre']}")
+
     # level: code (1) + length of section hierarchy + article (1)
     level = 1 + len(article_json["context"]["titresTM"]) + 1
     parts.append(f"{'#' * level} Article {article_json['num']} | {article.id}")

@@ -1,8 +1,10 @@
 from io import StringIO
 
+import pytest
+
 from catleg.parse_catala_markdown import parse_catala_file
 from catleg.query import _article_from_legifrance_reply
-from catleg.skeleton import _formatted_atricle
+from catleg.skeleton import _article_skeleton, _formatted_atricle
 
 from .test_legifrance_queries import _json_from_test_file
 
@@ -85,3 +87,12 @@ les conditions prévues pour cette dernière.
     assert "1. Le bénéfice ou revenu imposable est constitué" in article.text
     assert "2. Le revenu global net annuel" in article.text
     assert "3. Le bénéfice ou revenu net de chacune des catégories" in article.text
+
+
+@pytest.mark.parametrize("breadcrumbs", [False, True])
+def test_article_skeleton(breadcrumbs: bool):
+    article_json = _json_from_test_file("LEGIARTI000044983201.json")
+    askel = _article_skeleton(article_json)
+    assert "excédent du produit brut" in askel
+    if breadcrumbs:
+        assert "## Première Partie : Impôts d'État" in askel
