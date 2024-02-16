@@ -55,6 +55,11 @@ async def article_skeleton(articleid: str, breadcrumbs: bool = True) -> str:
     back = get_backend("legifrance")
     # This uses the Legifrance API directly, not the backend abstraction
     raw_article_json = await back.query_article_legi(articleid)
+    return _article_skeleton(raw_article_json=raw_article_json, breadcrumbs=breadcrumbs)
+
+
+# separate network calls and processing to ease unit testing
+def _article_skeleton(raw_article_json, breadcrumbs: bool = True):
     article_json = raw_article_json["article"]
     article = _article_from_legifrance_reply(raw_article_json)
     if article is None:
