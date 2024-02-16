@@ -69,7 +69,14 @@ def _article_skeleton(raw_article_json, breadcrumbs: bool = True):
 
     parts = []
     if breadcrumbs:
-        for i, toc_entry in enumerate(article_json["context"]["titresTM"], start=1):
+        texts = article_json["context"]["titreTxt"]
+        texts_in_force = [item for item in texts if item["etat"] == "VIGUEUR"]
+        # Pick the title of the first text currently in force,
+        # or the last item from the candidates list
+        crumbs = [texts_in_force[0] if texts_in_force else texts[-1]] + article_json[
+            "context"
+        ]["titresTM"]
+        for i, toc_entry in enumerate(crumbs, start=1):
             parts.append(f"{'#' * i} {toc_entry['titre']}")
 
     # level: code (1) + length of section hierarchy + article (1)
