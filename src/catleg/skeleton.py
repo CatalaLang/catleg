@@ -35,7 +35,7 @@ async def markdown_skeleton(textid: str, sectionid: str) -> str:
     return "\n\n".join(parts)
 
 
-async def article_skeleton(articleid: str) -> str:
+async def article_skeleton(articleid: str, breadcrumbs: bool = True) -> str:
     """
     Return an article skeleton (markdown-formatted law article).
     """
@@ -48,7 +48,12 @@ async def article_skeleton(articleid: str) -> str:
         raise RuntimeError(
             "Could not extract article from json reply %s", raw_article_json
         )
+
     parts = []
+    if breadcrumbs:
+        for i, toc_entry in enumerate(article_json["context"]["titresTM"], start=1):
+            parts.append(f"{'#' * i} {toc_entry['titre']}")
+
     # level: code (1) + length of section hierarchy + article (1)
     level = 1 + len(article_json["context"]["titresTM"]) + 1
     parts.append(f"{'#' * level} Article {article_json['num']} | {article.id}")
