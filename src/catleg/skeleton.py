@@ -38,6 +38,19 @@ async def markdown_skeleton(textid: str, sectionid: str) -> str:
 async def article_skeleton(articleid: str, breadcrumbs: bool = True) -> str:
     """
     Return an article skeleton (markdown-formatted law article).
+
+    Parameters
+    ----------
+    articleid: str
+       Legifrance article identifier
+    breadcrumbs: bool
+       if True, emits breadcrumbs (table of contents headers) before
+       outputting the article itself
+
+    Returns
+    -------
+    str
+       Markdown-formatted article
     """
     back = get_backend("legifrance")
     # This uses the Legifrance API directly, not the backend abstraction
