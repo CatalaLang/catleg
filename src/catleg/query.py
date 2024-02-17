@@ -7,6 +7,7 @@ Utilities for querying various data sources for law texts:
 
 import functools
 import logging
+import re
 from collections.abc import Iterable
 from datetime import date, datetime, timedelta, timezone
 from typing import Protocol
@@ -27,6 +28,10 @@ def _lf_timestamp_to_datetime(ts):
 
 # Legifrance uses 2999-01-01 to mark a non-expired or non-expiring text
 END_OF_TIME = _lf_timestamp_to_datetime(32472144000000)
+
+LF_TOKEN_REGEX = re.compile(
+    r"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+)
 
 
 class Backend(Protocol):
@@ -208,6 +213,13 @@ class LegifranceArticle(Article):
 def _get_legifrance_credentials(*, raise_if_missing=True):
     client_id = settings.get("lf_client_id")
     client_secret = settings.get("lf_client_secret")
+
+    if not LF_TOKEN_REGEX.match(client_id):
+        client_id = None
+
+    if not LF_TOKEN_REGEX.match(client_secret):
+        client_secret = None
+
     if raise_if_missing:
         if (client_id is None) or (client_secret is None):
             raise ValueError(

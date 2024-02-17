@@ -31,3 +31,5 @@ jobs:
         run: tox r --skip-pkg-install
         env:
           PYTEST_ADDOPTS: "-vv --durations=10"
+          CATLEG_LF_CLIENT_ID: ${{ secrets.CATLEG_LF_CLIENT_ID }}
+          CATLEG_LF_CLIENT_SECRET: ${{ secrets.CATLEG_LF_CLIENT_SECRET }}
