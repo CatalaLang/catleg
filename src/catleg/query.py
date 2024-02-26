@@ -211,13 +211,13 @@ class LegifranceArticle(Article):
 
 
 def _get_legifrance_credentials(*, raise_if_missing=True):
-    client_id = settings.get("lf_client_id")
-    client_secret = settings.get("lf_client_secret")
+    client_id: str | None = settings.get("lf_client_id")
+    client_secret: str | None = settings.get("lf_client_secret")
 
-    if not LF_TOKEN_REGEX.match(client_id):
+    if not LF_TOKEN_REGEX.match(client_id or ""):
         client_id = None
 
-    if not LF_TOKEN_REGEX.match(client_secret):
+    if not LF_TOKEN_REGEX.match(client_secret or ""):
         client_secret = None
 
     if raise_if_missing:
