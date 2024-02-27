@@ -1,11 +1,12 @@
+""" Atex heading (#, ##, ...) """
 from __future__ import annotations
 
 import logging
-
 from itertools import islice, repeat
 
 from markdown_it import MarkdownIt
-from markdown_it.common.utils import isSpace
+
+from markdown_it.common.utils import isStrSpace
 from markdown_it.rules_block.state_block import StateBlock
 
 """
@@ -39,45 +40,40 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-""" Atex heading (#, ##, ...) """
-
 LOGGER = logging.getLogger(__name__)
 HEADING_LIMIT = 20
 
 
-def more_heading(state: StateBlock, startLine: int, endLine: int, silent: bool):
+def more_heading(state: StateBlock, startLine: int, endLine: int, silent: bool) -> bool:
     LOGGER.debug("entering heading: %s, %s, %s, %s", state, startLine, endLine, silent)
 
     pos = state.bMarks[startLine] + state.tShift[startLine]
     maximum = state.eMarks[startLine]
 
-    # if it's indented more than 3 spaces, it should be a code block
-    if state.sCount[startLine] - state.blkIndent >= 4:
+    if state.is_code_block(startLine):
         return False
 
-    ch: int | None = state.srcCharCode[pos]
+    ch: str | None = state.src[pos]
 
-    # /* # */
-    if ch != 0x23 or pos >= maximum:
+    if ch != "#" or pos >= maximum:
         return False
 
     # count heading level
     level = 1
     pos += 1
     try:
-        ch = state.srcCharCode[pos]
+        ch = state.src[pos]
     except IndexError:
         ch = None
-    # /* # */
-    while ch == 0x23 and pos < maximum and level <= HEADING_LIMIT:
+    while ch == "#" and pos < maximum and level <= HEADING_LIMIT:
         level += 1
         pos += 1
         try:
-            ch = state.srcCharCode[pos]
+            ch = state.src[pos]
         except IndexError:
             ch = None
 
-    if level > HEADING_LIMIT or (pos < maximum and not isSpace(ch)):
+    if level > HEADING_LIMIT or (pos < maximum and not isStrSpace(ch)):
         return False
 
     if silent:
@@ -86,8 +82,8 @@ def more_heading(state: StateBlock, startLine: int, endLine: int, silent: bool):
     # Let's cut tails like '    ###  ' from the end of string
 
     maximum = state.skipSpacesBack(maximum, pos)
-    tmp = state.skipCharsBack(maximum, 0x23, pos)  # #
-    if tmp > pos and isSpace(state.srcCharCode[tmp - 1]):
+    tmp = state.skipCharsStrBack(maximum, "#", pos)
+    if tmp > pos and isStrSpace(state.src[tmp - 1]):
         maximum = tmp
 
     state.line = startLine + 1
