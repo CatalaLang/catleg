@@ -4,7 +4,7 @@ import pytest
 
 from catleg.parse_catala_markdown import parse_catala_file
 from catleg.query import _article_from_legifrance_reply
-from catleg.skeleton import _article_skeleton, _formatted_atricle
+from catleg.skeleton import _article_skeleton, _formatted_article
 
 from .test_legifrance_queries import _json_from_test_file
 
@@ -13,7 +13,7 @@ from .test_legifrance_queries import _json_from_test_file
 def test_no_article_renumbering():
     article_json = _json_from_test_file("LEGIARTI000044983201.json")
     article = _article_from_legifrance_reply(article_json)
-    formatted_article_md = _formatted_atricle(article)
+    formatted_article_md = _formatted_article(article)
     assert "1. Le bénéfice ou revenu imposable est constitué" in formatted_article_md
     assert "2. Le revenu global net annuel" in formatted_article_md
     assert (
