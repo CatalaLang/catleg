@@ -1,5 +1,5 @@
 # Version info
-_version.py
+src/catleg/_version.py
 
 # Ignore dynaconf secret files
 .catleg_secrets.*
