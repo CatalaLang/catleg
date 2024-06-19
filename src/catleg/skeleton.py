@@ -28,7 +28,7 @@ async def markdown_skeleton(textid: str, sectionid: str) -> str:
             # If it is not a section, then it is an article
             parts.append(f"{'#' * (level + 1)} Article {node['num']} | {node['id']}")
             article = await back.article(node["id"])
-            parts.append(_formatted_atricle(article))
+            parts.append(_formatted_article(article))
         else:
             parts.append(f"{'#' * level} {node['title']}")
 
@@ -82,7 +82,7 @@ def _article_skeleton(raw_article_json, breadcrumbs: bool = True):
     # level: code (1) + length of section hierarchy + article (1)
     level = 1 + len(article_json["context"]["titresTM"]) + 1
     parts.append(f"{'#' * level} Article {article_json['num']} | {article.id}")
-    parts.append(_formatted_atricle(article))
+    parts.append(_formatted_article(article))
     return "\n\n".join(parts)
 
 
@@ -95,5 +95,5 @@ def _preorder(node, level=1):
         yield from _preorder(section, level + 1)
 
 
-def _formatted_atricle(article):
+def _formatted_article(article):
     return mdformat.text(article.to_markdown(), options={"wrap": 80, "number": True})
