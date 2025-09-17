@@ -1,7 +1,7 @@
 import asyncio
 import json
 from pathlib import Path
-from typing import Annotated, Optional
+from typing import Annotated
 
 import typer
 
@@ -91,7 +91,7 @@ def _skeleton(url_or_textid: str, sectionid: str | None = None):
 @app.command()
 def skeleton(
     url_or_textid: str,
-    sectionid: Annotated[Optional[str], typer.Argument()] = None,  # noqa: UP007
+    sectionid: Annotated[str | None, typer.Argument()] = None,  # noqa: UP007
 ):
     print(_skeleton(url_or_textid, sectionid))
 

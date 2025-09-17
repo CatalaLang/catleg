@@ -53,4 +53,4 @@ catleg = "catleg.catleg:main"
 "Bug Tracker" = "https://github.com/CatalaLang/catleg/issues"
 
 [tool.ruff]
-select = ["E", "F", "T100", "UP"]
+lint.select = ["E", "F", "T100", "UP"]
