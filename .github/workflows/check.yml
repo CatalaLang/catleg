@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.py }}
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install tox-gh
         run: python -m pip install tox>=4 tox-gh
       - name: Setup test suite
