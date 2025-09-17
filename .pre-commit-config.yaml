@@ -8,6 +8,6 @@ repos:
         - usort == 1.0.7
 
 - repo: https://github.com/charliermarsh/ruff-pre-commit
-  rev: 'v0.0.269'
+  rev: 'v0.13.0'
   hooks:
-    - id: ruff
+    - id: ruff-check
