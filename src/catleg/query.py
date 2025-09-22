@@ -210,7 +210,9 @@ class LegifranceArticle(Article):
         return text_md
 
 
-def _get_legifrance_credentials(*, raise_if_missing=True):
+def _get_legifrance_credentials(
+    *, raise_if_missing=True
+) -> tuple[str | None, str | None]:
     client_id: str | None = settings.get("lf_client_id")
     client_secret: str | None = settings.get("lf_client_secret")
 

@@ -10,7 +10,7 @@ from subprocess import PIPE, Popen, run
 
 
 project = "catleg"
-copyright = "2024, the catala contributors"
+copyright = "2024-2025, the catala contributors"
 author = "the catala contributors"
 
 # -- General configuration ---------------------------------------------------
