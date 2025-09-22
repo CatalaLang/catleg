@@ -36,7 +36,7 @@ dynamic = ["version"]
 dev = [
   "hatch",
   "mypy",
-  "myst-parser",
+  "myst-parser", # sphinx with markdown
   "pre-commit",
   "pytest",
   "ruff",
