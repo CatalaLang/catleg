@@ -44,6 +44,11 @@ dev = [
   "sphinx-rtd-theme",
   "tox",
 ]
+web = [
+  "fastapi",
+  "uvicorn",
+  "jinja2",
+]
 
 [project.scripts]
 catleg = "catleg.catleg:main"

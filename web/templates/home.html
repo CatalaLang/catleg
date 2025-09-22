@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<form class="search" action="/" method="get">
+  <input type="text" name="query" placeholder="Collez un identifiant (LEGIARTI..., JORFARTI..., CETATEXT...) ou une URL Légifrance" value="{{ query }}">
+  <button type="submit">Rechercher</button>
+</form>
+{% if error %}
+<p class="small">{{ error }}</p>
+{% elif md %}
+<pre>{{ md }}</pre>
+{% endif %}
+{% endblock %}
