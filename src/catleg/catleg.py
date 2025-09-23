@@ -15,7 +15,9 @@ from catleg.skeleton import (
     markdown_skeleton,
 )
 
-app = typer.Typer(add_completion=False)
+app = typer.Typer(
+    add_completion=False, help="Helper tools for querying French legislative texts"
+)
 # legifrance-specific commands (query legifrance API and return
 # raw JSON)
 lf = typer.Typer()
@@ -94,9 +96,25 @@ def _skeleton(url_or_textid: str, sectionid: str | None = None):
 
 @app.command()
 def skeleton(
-    url_or_textid: str,
-    sectionid: Annotated[str | None, typer.Argument()] = None,  # noqa: UP007
+    url_or_textid: Annotated[
+        str,
+        typer.Argument(
+            help="A text ID or text section URL such as 'LEGITEXT000006069577' or 'https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006069577/LEGISCTA000006191575/'"
+        ),
+    ],
+    sectionid: Annotated[
+        str | None,
+        typer.Argument(
+            help="A section ID such as 'LEGISCTA000006191575'. "
+            "If not provided, `url_or_textid` must be a URL containing "
+            "a text ID and a section ID."
+        ),
+    ] = None,  # noqa: UP007
 ):
+    """
+    Output a Markdown-formatted rendering of
+    a section of a law text.
+    """
     print(_skeleton(url_or_textid, sectionid))
 
 
