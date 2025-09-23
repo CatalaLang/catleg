@@ -105,7 +105,7 @@ def skeleton(
             "If not provided, `url_or_textid` must be a URL containing "
             "a text ID and a section ID."
         ),
-    ] = None,  # noqa: UP007
+    ] = None,
 ):
     """
     Output a Markdown-formatted rendering of
