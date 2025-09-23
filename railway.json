@@ -1,0 +1,37 @@
+{
+
+    "build": {
+
+        "builder": "DOCKERFILE",
+
+        "dockerfilePath": "./web/Dockerfile",
+
+        "watchPatterns": [
+
+            "pyproject.toml",
+
+            "src/**",
+
+            "railway.json",
+
+            "web/Dockerfile"
+
+        ]
+
+    },
+
+    "deploy": {
+
+      "healthcheckPath": "/health",
+
+      "healthcheckTimeout": 90,
+
+      "startupTimeout": 90,
+
+      "restartPolicyType": "always",
+
+      "restartPolicyMaxRetries": 10
+
+    }
+
+}
