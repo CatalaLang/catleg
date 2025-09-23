@@ -28,6 +28,7 @@ dependencies = [
   "mdformat>=0.7.16",
   "more-itertools",
   "typer>=0.19.1",
+  "rich",
   "typing-extensions"
 ]
 dynamic = ["version"]

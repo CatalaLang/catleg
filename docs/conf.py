@@ -37,6 +37,8 @@ version = pipe.stdout.read().decode("utf8")
 # directory -- this could be made more robust?)
 run(
     [
+        "python",
+        "-m",
         "typer",
         "../src/catleg/catleg.py",
         "utils",
