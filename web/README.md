@@ -30,3 +30,11 @@ Local development
 
 3) Open:
    - http://127.0.0.1:8000
+
+Developer notes
+Test the Dockerfile locally (build context is the repository root):
+
+- Build the image:
+  - `docker build -f web/Dockerfile -t catleg-web:local .`
+- Run the container and expose it on http://127.0.0.1:8080:
+  - `docker run --rm -p 8080:8080 catleg-web:local`
