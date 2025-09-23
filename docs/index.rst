@@ -19,6 +19,7 @@
 
    installation
    cli_reference.md
+   legifrance
 
 
 Indices and tables
