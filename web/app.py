@@ -12,8 +12,8 @@ app = FastAPI(title="catleg markdown viewer", version="0.1.0")
 templates = Jinja2Templates(directory=str(Path(__file__).parent / "templates"))
 
 
-def _classify(q: str):
-    found = find_id_in_string(q, strict=False)
+def _classify(query: str):
+    found = find_id_in_string(query, strict=False)
     if not found:
         return None
     typ, id_ = found
