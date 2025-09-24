@@ -9,7 +9,11 @@ from catleg.check_expiry import check_expiry as expiry
 from catleg.cli_util import article_id_or_url, parse_legifrance_url, set_basic_loglevel
 from catleg.find_changes import find_changes
 from catleg.query import get_backend
-from catleg.skeleton import article_skeleton as askel, markdown_skeleton
+from catleg.skeleton import (
+    article_skeleton as askel,
+    jorf_markdown_skeleton,
+    markdown_skeleton,
+)
 
 app = typer.Typer(add_completion=False)
 # legifrance-specific commands (query legifrance API and return
@@ -96,6 +100,12 @@ def skeleton(
     print(_skeleton(url_or_textid, sectionid))
 
 
+# TODO accept urls
+@app.command()
+def jorf(jorftextid: str):
+    print(asyncio.run(jorf_markdown_skeleton(jorftextid)))
+
+
 def _lf_article(aid_or_url: str):
     article_id = article_id_or_url(aid_or_url)
     if article_id is None:
@@ -146,8 +156,8 @@ def toc(code: str):
     print(json.dumps(asyncio.run(back.code_toc(code)), indent=2, ensure_ascii=False))
 
 
-@lf.command()
-def jorf(id: str):
+@lf.command("jorf")
+def jorf_json(id: str):
     """
     Retrieve the JSON contents of a JORF (Journal Officiel)
     text.
