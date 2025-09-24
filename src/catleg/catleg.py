@@ -131,7 +131,7 @@ def lf_article(
 @lf.command()
 def codes():
     """
-    Retrieve a list of available codes.
+    Retrieve a JSON list of available codes.
     """
     back = get_backend("legifrance")
     print(json.dumps(asyncio.run(back.list_codes()), indent=2, ensure_ascii=False))
@@ -140,10 +140,20 @@ def codes():
 @lf.command()
 def toc(code: str):
     """
-    Retrieve the table of contents for a given code.
+    Retrieve the JSON table of contents for a given code.
     """
     back = get_backend("legifrance")
     print(json.dumps(asyncio.run(back.code_toc(code)), indent=2, ensure_ascii=False))
+
+
+@lf.command()
+def jorf(id: str):
+    """
+    Retrieve the JSON contents of a JORF (Journal Officiel)
+    text.
+    """
+    back = get_backend("legifrance")
+    print(json.dumps(asyncio.run(back.jorf(id)), indent=2, ensure_ascii=False))
 
 
 def main():

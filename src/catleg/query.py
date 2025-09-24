@@ -130,6 +130,14 @@ class LegifranceBackend(Backend):
         reply.raise_for_status()
         return reply.json()
 
+    async def jorf(self, id: str):
+        if id[:8].upper() != "JORFTEXT":
+            raise ValueError("Expected JORF text identifier")
+        params = {"textCid": id}
+        reply = await self.client.post(f"{self.API_BASE_URL}/consult/jorf", json=params)
+        reply.raise_for_status()
+        return reply.json()
+
 
 def get_backend(spec: str):
     # TODO: multiple backends, fallbacks...
