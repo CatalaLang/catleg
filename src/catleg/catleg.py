@@ -103,6 +103,9 @@ def skeleton(
 # TODO accept urls
 @app.command()
 def jorf(jorftextid: str):
+    """
+    Output a markdown-formatted Journal Officiel text (JORFTEXT)
+    """
     print(asyncio.run(jorf_markdown_skeleton(jorftextid)))
 
 
