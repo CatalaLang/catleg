@@ -3,7 +3,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 from catleg.law_text_fr import ArticleType, find_id_in_string
-from catleg.skeleton import article_skeleton, jorf_markdown_skeleton, markdown_skeleton
+from catleg.skeleton import article_skeleton, jorf_markdown_skeleton
 
 from fastapi import FastAPI, Request
 from fastapi.responses import PlainTextResponse
@@ -55,10 +55,8 @@ def _classify(query: str):
     found = find_id_in_string(q, strict=False)
     if found:
         typ, id_ = found
-        if typ in (ArticleType.LEGIARTI, ArticleType.JORFARTI):
+        if typ in (ArticleType.LEGIARTI, ArticleType.JORFARTI, ArticleType.CETATEXT):
             return {"source": "id", "kind": "article", "id": id_}
-        if typ == ArticleType.CETATEXT:
-            return {"source": "id", "kind": "text", "id": id_}
 
     # Also support JORFTEXT ids given directly
     m = re.search(r"\bJORFTEXT\d{12}\b", q, flags=re.I)
@@ -84,9 +82,6 @@ async def home(request: Request, query: str = ""):
                     md = await article_skeleton(id_)
                 elif kind == "jorftext" and id_:
                     md = await jorf_markdown_skeleton(id_)
-                elif kind == "text" and id_:
-                    # For texts, fetch top-level skeleton
-                    md = await markdown_skeleton(id_, sectionid="")
                 else:
                     error = "Aucun identifiant pris en charge n'a été trouvé"
                     "dans votre saisie."
