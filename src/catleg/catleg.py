@@ -169,6 +169,15 @@ def jorf_json(id: str):
     print(json.dumps(asyncio.run(back.jorf(id)), indent=2, ensure_ascii=False))
 
 
+@lf.command()
+def legi(id: str):
+    """
+    Retrieve the JSON contents of a LEGI text
+    """
+    back = get_backend("legifrance")
+    print(json.dumps(asyncio.run(back.legiPart(id)), indent=2, ensure_ascii=False))
+
+
 def main():
     set_basic_loglevel()
 
