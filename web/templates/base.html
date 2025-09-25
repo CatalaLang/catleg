@@ -10,6 +10,9 @@ form.search button { flex: 0 0 9rem; padding: .5rem .75rem; }
 pre { white-space: pre-wrap; word-wrap: break-word; background: #f6f8fa; padding: 1rem; border-radius: 6px; }
 label.small { color: #555; font-size: .9em; }
 footer { margin-top: 2rem; color: #666; font-size: .9em; }
+.render-toggle { display: inline-flex; align-items: center; gap: .4rem; margin: .5rem 0; color: #555; font-size: .9em; }
+.rendered { background: #f6f8fa; padding: 1rem; border-radius: 6px; }
+.hidden { display: none; }
 </style>
 <body>
 <h1>Textes de loi en Markdown (Légifrance)</h1>
@@ -19,5 +22,39 @@ footer { margin-top: 2rem; color: #666; font-size: .9em; }
   <p>Ce service est fourni « en l’état » sans aucune garantie.</p>
   <p><a href="https://legifrance.gouv.fr" target="_blank" rel="noopener noreferrer">Accéder à Légifrance</a></p>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.7/dist/purify.min.js"></script>
+<script>
+(function(){
+  function setupToggle() {
+    var toggle = document.getElementById('toggle-html');
+    var pre = document.getElementById('md-output');
+    var htmlDiv = document.getElementById('html-output');
+    if (!toggle || !pre || !htmlDiv) return;
+    toggle.addEventListener('change', function(){
+      if (this.checked) {
+        try {
+          var mdText = pre.textContent || '';
+          var html = (window.marked && window.marked.parse) ? window.marked.parse(mdText) : mdText;
+          var clean = (window.DOMPurify && window.DOMPurify.sanitize) ? window.DOMPurify.sanitize(html) : html;
+          htmlDiv.innerHTML = clean;
+        } catch (e) {
+          htmlDiv.innerHTML = '<p>Erreur lors du rendu HTML.</p>';
+        }
+        pre.classList.add('hidden');
+        htmlDiv.classList.remove('hidden');
+      } else {
+        htmlDiv.classList.add('hidden');
+        pre.classList.remove('hidden');
+      }
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupToggle);
+  } else {
+    setupToggle();
+  }
+})();
+</script>
 </body>
 </html>
