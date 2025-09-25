@@ -8,7 +8,7 @@
 <p class="small">{{ error }}</p>
 {% elif md %}
 <label class="render-toggle"><input type="checkbox" id="toggle-html"> Afficher en HTML</label>
-<pre id="md-output">{{ md }}</pre>
+<textarea id="md-output" readonly wrap="soft" tabindex="0" class="md-textarea" spellcheck="false">{{ md }}</textarea>
 <div id="html-output" class="rendered hidden"></div>
 {% endif %}
 {% endblock %}

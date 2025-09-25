@@ -13,6 +13,7 @@ footer { margin-top: 2rem; color: #666; font-size: .9em; }
 .render-toggle { display: inline-flex; align-items: center; gap: .4rem; margin: .5rem 0; color: #555; font-size: .9em; }
 .rendered { background: #f6f8fa; padding: 1rem; border-radius: 6px; }
 .hidden { display: none; }
+.md-textarea { width: 100%; min-height: 28rem; padding: 1rem; background: #f6f8fa; border: 0; border-radius: 6px; font: inherit; line-height: 1.4; resize: vertical; }
 </style>
 <body>
 <h1>Textes de loi en Markdown (Légifrance)</h1>
@@ -34,7 +35,7 @@ footer { margin-top: 2rem; color: #666; font-size: .9em; }
     toggle.addEventListener('change', function(){
       if (this.checked) {
         try {
-          var mdText = pre.textContent || '';
+          var mdText = (pre.tagName === 'TEXTAREA') ? pre.value : (pre.textContent || '');
           var html = (window.marked && window.marked.parse) ? window.marked.parse(mdText) : mdText;
           var clean = (window.DOMPurify && window.DOMPurify.sanitize) ? window.DOMPurify.sanitize(html) : html;
           htmlDiv.innerHTML = clean;
