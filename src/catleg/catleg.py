@@ -103,6 +103,9 @@ def skeleton(
 # TODO accept urls
 @app.command()
 def jorf(jorftextid: str):
+    """
+    Output a markdown-formatted Journal Officiel text (JORFTEXT)
+    """
     print(asyncio.run(jorf_markdown_skeleton(jorftextid)))
 
 
@@ -164,6 +167,15 @@ def jorf_json(id: str):
     """
     back = get_backend("legifrance")
     print(json.dumps(asyncio.run(back.jorf(id)), indent=2, ensure_ascii=False))
+
+
+@lf.command()
+def legi(id: str):
+    """
+    Retrieve the JSON contents of a LEGI text
+    """
+    back = get_backend("legifrance")
+    print(json.dumps(asyncio.run(back.legiPart(id)), indent=2, ensure_ascii=False))
 
 
 def main():
