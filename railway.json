@@ -14,7 +14,7 @@
 
             "railway.json",
 
-            "web/Dockerfile"
+            "web/**"
 
         ]
 
