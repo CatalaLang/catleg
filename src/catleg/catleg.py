@@ -15,7 +15,11 @@ from catleg.skeleton import (
     markdown_skeleton,
 )
 
-app = typer.Typer(add_completion=False)
+app = typer.Typer(
+    add_completion=False,
+    help="Helper tools for querying French legislative texts",
+    rich_markup_mode="markdown",
+)
 # legifrance-specific commands (query legifrance API and return
 # raw JSON)
 lf = typer.Typer()
@@ -36,8 +40,8 @@ def article(
     aid_or_url: Annotated[
         str,
         typer.Argument(
-            help="An article ID or Legifrance URL, for instance 'LEGIARTI000033971416' "
-            "or 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033971416'."
+            help="An article ID or Legifrance URL, for instance `LEGIARTI000033971416` "
+            "or `https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033971416`."
         ),
     ],
     nb: Annotated[
@@ -94,9 +98,25 @@ def _skeleton(url_or_textid: str, sectionid: str | None = None):
 
 @app.command()
 def skeleton(
-    url_or_textid: str,
-    sectionid: Annotated[str | None, typer.Argument()] = None,  # noqa: UP007
+    url_or_textid: Annotated[
+        str,
+        typer.Argument(
+            help="A text ID or text section URL such as `LEGITEXT000006069577` or `https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006069577/LEGISCTA000006191575/`"
+        ),
+    ],
+    sectionid: Annotated[
+        str | None,
+        typer.Argument(
+            help="A section ID such as `LEGISCTA000006191575`. "
+            "If not provided, `url_or_textid` must be a URL containing "
+            "a text ID and a section ID."
+        ),
+    ] = None,
 ):
+    """
+    Output a Markdown-formatted rendering of
+    a section of a law text.
+    """
     print(_skeleton(url_or_textid, sectionid))
 
 
@@ -120,8 +140,8 @@ def lf_article(
     aid_or_url: Annotated[
         str,
         typer.Argument(
-            help="An article ID or Legifrance URL, for instance 'LEGIARTI000033971416' "
-            "or 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033971416'."
+            help="An article ID or Legifrance URL, for instance `LEGIARTI000033971416` "
+            "or `https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033971416`."
         ),
     ]
 ):
