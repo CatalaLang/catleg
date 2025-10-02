@@ -86,17 +86,15 @@ async def jorf_markdown_skeleton(jorftextid: str) -> str:
 
         for _, kind, child in sorted(merged, key=lambda t: t[0]):
             if kind == "section":
-                # Emit section header at current level, then recurse
                 title = child.get("title") or ""
                 parts.append(f'{"#" * level} {title}'.rstrip())
                 walk(child, level + 1)
             else:
-                # Emit article header one level deeper, then render content
                 num = child.get("num")
                 header = (
-                    f'{"#" * (level + 1)} Article {num} | {child["id"]}'
+                    f'{"#" * level} Article {num} | {child["id"]}'
                     if num
-                    else f'{"#" * (level + 1)} {child["id"]}'
+                    else f'{"#" * level} {child["id"]}'
                 )
                 parts.append(header)
                 parts.append(_formatted_jorf_article_from_json(child))

@@ -138,6 +138,16 @@ class LegifranceBackend(Backend):
         reply.raise_for_status()
         return reply.json()
 
+    async def legiPart(self, id: str, at: date = date.today()):
+        if id[:8].upper() != "LEGITEXT":
+            raise ValueError("Expected LEGI text identifier")
+        params = {"textId": id, "date": str(at)}
+        reply = await self.client.post(
+            f"{self.API_BASE_URL}/consult/legiPart", json=params
+        )
+        reply.raise_for_status()
+        return reply.json()
+
 
 def get_backend(spec: str):
     # TODO: multiple backends, fallbacks...
