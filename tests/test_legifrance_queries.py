@@ -137,6 +137,27 @@ def test_expiry():
     assert ceta_article.is_open_ended
 
 
+def test_jorf_provenance_entry_not_mistaken_for_successor_legiarti():
+    """LEGIARTI000046790860 has cid=JORFARTI000045462583 (JORF-derived article).
+    Its articleVersions contains a JORF provenance entry (dateDebut=END_OF_TIME).
+    The article is VIGUEUR with no real successor, so latest_version_id must be
+    the article itself — not the provenance entry.
+    """
+    article = _json_from_test_file("LEGIARTI000046790860.json")
+    res = _article_from_legifrance_reply(article)
+    assert res.latest_version_id == "LEGIARTI000046790860"
+
+
+def test_jorf_provenance_entry_not_mistaken_for_successor_jorfarti():
+    """JORFARTI000046186676 has LEGI successors up to LEGIARTI000046873170,
+    plus its own id as a JORF provenance entry (dateDebut=END_OF_TIME).
+    latest_version_id must be the most recent LEGI version.
+    """
+    article = _json_from_test_file("JORFARTI000046186676.json")
+    res = _article_from_legifrance_reply(article)
+    assert res.latest_version_id == "LEGIARTI000046873170"
+
+
 def test_find_id_in_string():
     assert find_id_in_string("LEGIARTI000033971416", strict=True) is not None
     assert find_id_in_string("foo LEGIARTI000033971416", strict=True) is None

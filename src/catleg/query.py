@@ -22,12 +22,16 @@ from catleg.config import settings
 from catleg.law_text_fr import Article, ArticleType, parse_article_id
 
 
+logger = logging.getLogger(__name__)
+
+
 def _lf_timestamp_to_datetime(ts):
     return datetime.fromtimestamp(ts / 1000, timezone.utc)
 
 
 # Legifrance uses 2999-01-01 to mark a non-expired or non-expiring text
-END_OF_TIME = _lf_timestamp_to_datetime(32472144000000)
+END_OF_TIME_MS = 32472144000000
+END_OF_TIME = _lf_timestamp_to_datetime(END_OF_TIME_MS)
 
 LF_TOKEN_REGEX = re.compile(
     r"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
@@ -266,10 +270,54 @@ def _article_from_legifrance_reply(reply) -> Article | None:
         case ArticleType.CETATEXT:
             latest_version_id = article_id
         case ArticleType.LEGIARTI | ArticleType.JORFARTI:
-            article_versions = sorted(
-                article["articleVersions"], key=lambda d: int(d["dateDebut"])
+            # articleVersions mixes real versions with non-version provenance links.
+            # Both known link types use dateDebut=END_OF_TIME as a sentinel:
+            #   - JORF provenance link (origine=JORF, etat=""): points to the
+            #     original JORFARTI that seeded this LEGI article; id = article.cid
+            #   - Transfer source link (origine=LEGI, etat="TRANSFERE"): points to
+            #     an older LEGIARTI whose provisions were renumbered into this one
+            # Neither is a real version; filter both out before sorting.
+            non_version_entries = [
+                v
+                for v in article["articleVersions"]
+                if int(v["dateDebut"]) >= END_OF_TIME_MS
+            ]
+            expected_cid = (
+                article["cid"] if article.get("cid") is not None else article["id"]
             )
-            latest_version_id = article_versions[-1]["id"]
+            for g in non_version_entries:
+                etat = g.get("etat", "")
+                if etat == "" and g["id"] == expected_cid:
+                    logger.debug(
+                        "JORF provenance link for %s: id=%s", article["id"], g["id"]
+                    )
+                elif etat == "TRANSFERE":
+                    logger.debug(
+                        "Transfer source link for %s: id=%s", article["id"], g["id"]
+                    )
+                else:
+                    logger.warning(
+                        "Unknown articleVersions entry with dateDebut=END_OF_TIME "
+                        "for %s: id=%s etat=%r.",
+                        article["id"],
+                        g["id"],
+                        etat,
+                    )
+            real_versions = sorted(
+                [
+                    v
+                    for v in article["articleVersions"]
+                    if int(v["dateDebut"]) < END_OF_TIME_MS
+                ],
+                key=lambda d: int(d["dateDebut"]),
+            )
+            if real_versions and real_versions[-1]["id"] != article["id"]:
+                # A genuine successor exists
+                latest_version_id = real_versions[-1]["id"]
+            else:
+                # This article is itself the most recent real version: no
+                # successor has been published yet.
+                latest_version_id = article["id"]
         case _:
             assert_never()
 
