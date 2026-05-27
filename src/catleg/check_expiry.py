@@ -33,12 +33,23 @@ async def check_expiry(f: TextIO, *, file_path: Path | None = None):
         logger.info("checking article '%s'", article.id)
 
         if not ref_article.is_open_ended:
+            has_successor = ref_article.latest_version_id != ref_article.id
+            replacement_msg = (
+                f"It has been replaced by '{ref_article.latest_version_id}'."
+                if has_successor
+                else "No replacement version is known yet."
+            )
+            future_replacement_msg = (
+                f"It will be replaced by '{ref_article.latest_version_id}'."
+                if has_successor
+                else "No replacement version is known yet."
+            )
             if now > ref_article.end_date:
                 print(
                     f"{article.file_path}:{article.start_line} - "
                     f"Article '{article.id}' has expired "
                     f"(on {ref_article.end_date.date()}). "
-                    f"It has been replaced by '{ref_article.latest_version_id}'.",
+                    f"{replacement_msg}",
                     file=sys.stderr,
                 )
                 has_expired_articles = True
@@ -47,7 +58,7 @@ async def check_expiry(f: TextIO, *, file_path: Path | None = None):
                     f"{article.file_path}:{article.start_line} - "
                     f"Article '{article.id}' will expire "
                     f"on {ref_article.end_date.date()}. "
-                    f"It will be replaced by '{ref_article.latest_version_id}'.",
+                    f"{future_replacement_msg}",
                     file=sys.stderr,
                 )
 
