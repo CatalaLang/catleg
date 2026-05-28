@@ -25,6 +25,9 @@ async def find_changes(f: TextIO, *, file_path: Path | None = None):
             warnings.warn(f"Could not retrieve article '{article.id}'")
             continue
 
+        if article.is_archive:
+            continue
+
         diff, retcode = wdiff(
             _reformat(article.text),
             _reformat(_escape_ref_text(ref_article.text_and_nota())),
