@@ -165,8 +165,6 @@ def _formatted_jorf_article_from_json(article_json):
     text_html = article_json.get("content") or ""
     nota_html = article_json.get("nota") or ""
     end_date = article_json.get("dateFin")
-    # latest_version_id may be absent on JORF replies; fall back to id.
-    latest_version_id = article_json.get("latest_version_id") or art_id
 
     legi_article = LegifranceArticle(
         id=art_id,
@@ -175,6 +173,6 @@ def _formatted_jorf_article_from_json(article_json):
         nota="",
         nota_html=nota_html,
         end_date=end_date,
-        latest_version_id=latest_version_id,
+        latest_version_id=art_id,
     )
     return _formatted_article(legi_article)
