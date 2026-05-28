@@ -1,6 +1,5 @@
 import re
 from dataclasses import dataclass
-from datetime import date
 from enum import Enum
 from pathlib import Path
 from typing import Protocol
@@ -22,18 +21,6 @@ class Article(Protocol):
 
     @property
     def text(self) -> str:
-        ...
-
-
-class ExpiryInfo(Protocol):
-    @property
-    def expiration_date(self) -> date:
-        ...
-
-
-class NewVersionInfo(Protocol):
-    @property
-    def new_version(self) -> str:
         ...
 
 
