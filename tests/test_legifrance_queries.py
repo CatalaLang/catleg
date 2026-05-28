@@ -199,15 +199,14 @@ def test_legi_part_default_date_is_today():
     assert captured.get("body", {}).get("date") == str(date.today())
 
 
-def test_article_skeleton_crashes_on_cetatext():
-    """_article_skeleton assumes the reply has an 'article' key but CETATEXT
-    responses from /consult/juri use a 'text' key instead.  This test
-    documents the current crash so the bug is not overlooked.
-    Remove the pytest.raises once the function is fixed to handle CETATEXT.
+def test_article_skeleton_cetatext():
+    """_article_skeleton must handle CETATEXT responses (which use a 'text' key,
+    not 'article') and render the decision title and content without crashing.
     """
     raw = _json_from_test_file("CETATEXT000035260342.json")
-    with pytest.raises(KeyError):
-        _article_skeleton(raw, breadcrumbs=False)
+    result = _article_skeleton(raw, breadcrumbs=False)
+    assert "398563" in result  # decision number appears in the titre
+    assert "Vu la procédure" in result  # opening words of the decision text
 
 
 def test_find_id_in_string():
