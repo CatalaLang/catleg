@@ -1,7 +1,10 @@
 import asyncio
+import json
 import os
+from datetime import date
 from json import load
 
+import httpx
 import pytest
 from catleg.catleg import _lf_article, _skeleton
 from catleg.cli_util import parse_legifrance_url
@@ -10,7 +13,9 @@ from catleg.query import (
     _article_from_legifrance_reply,
     _get_legifrance_credentials,
     get_backend,
+    LegifranceBackend,
 )
+from catleg.skeleton import _article_skeleton
 
 
 def _json_from_test_file(fname):
@@ -156,6 +161,53 @@ def test_jorf_provenance_entry_not_mistaken_for_successor_jorfarti():
     article = _json_from_test_file("JORFARTI000046186676.json")
     res = _article_from_legifrance_reply(article)
     assert res.latest_version_id == "LEGIARTI000046873170"
+
+
+def _make_capturing_backend():
+    """Return a LegifranceBackend wired to a mock transport that records the
+    last request body and always returns HTTP 200 with an empty JSON object."""
+    captured = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        captured["body"] = json.loads(request.content)
+        return httpx.Response(200, json={})
+
+    back = LegifranceBackend.__new__(LegifranceBackend)
+    back.client = httpx.AsyncClient(transport=httpx.MockTransport(handler))
+    return back, captured
+
+
+def test_legi_part_explicit_date_is_forwarded():
+    """legiPart(at=...) must send the exact date passed by the caller."""
+    back, captured = _make_capturing_backend()
+    try:
+        asyncio.run(back.legiPart("LEGITEXT000006069577", at=date(2025, 1, 15)))
+    except Exception:
+        pass
+    assert captured.get("body", {}).get("date") == "2025-01-15"
+
+
+def test_legi_part_default_date_is_today():
+    """legiPart() with no date argument must send today's date, not the date
+    the module was imported (regression for the mutable-default-argument bug).
+    """
+    back, captured = _make_capturing_backend()
+    try:
+        asyncio.run(back.legiPart("LEGITEXT000006069577"))
+    except Exception:
+        pass
+    assert captured.get("body", {}).get("date") == str(date.today())
+
+
+def test_article_skeleton_crashes_on_cetatext():
+    """_article_skeleton assumes the reply has an 'article' key but CETATEXT
+    responses from /consult/juri use a 'text' key instead.  This test
+    documents the current crash so the bug is not overlooked.
+    Remove the pytest.raises once the function is fixed to handle CETATEXT.
+    """
+    raw = _json_from_test_file("CETATEXT000035260342.json")
+    with pytest.raises(KeyError):
+        _article_skeleton(raw, breadcrumbs=False)
 
 
 def test_find_id_in_string():

@@ -76,7 +76,9 @@ class LegifranceBackend(Backend):
         reply = await self.query_article_legi(id_or_url)
         article = _article_from_legifrance_reply(reply)
         if article is None:
-            logging.warning(f"Could not retrieve article {id} (wrong identifier?)")
+            logger.warning(
+                "Could not retrieve article %s (wrong identifier?)", id_or_url
+            )
         return article
 
     async def articles(self, ids: Iterable[str]) -> Iterable[Article | None]:
@@ -142,10 +144,10 @@ class LegifranceBackend(Backend):
         reply.raise_for_status()
         return reply.json()
 
-    async def legiPart(self, id: str, at: date = date.today()):
+    async def legiPart(self, id: str, at: date | None = None):
         if id[:8].upper() != "LEGITEXT":
             raise ValueError("Expected LEGI text identifier")
-        params = {"textId": id, "date": str(at)}
+        params = {"textId": id, "date": str(at or date.today())}
         reply = await self.client.post(
             f"{self.API_BASE_URL}/consult/legiPart", json=params
         )
