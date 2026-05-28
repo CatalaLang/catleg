@@ -230,3 +230,8 @@ def test_parse_legifrance_urls():
         "https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006069577/LEGISCTA000006197199"
     )
     assert res == ("section", "LEGITEXT000006069577", "LEGISCTA000006197199")
+
+    res = parse_legifrance_url(
+        "https://www.legifrance.gouv.fr/ceta/id/CETATEXT000035260342"
+    )
+    assert res == ("article", "CETATEXT000035260342")

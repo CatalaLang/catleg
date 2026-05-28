@@ -62,5 +62,7 @@ def parse_legifrance_url(
             *_,
         ]:  # ignore anchors in sections
             return "section", text_id, section_id
+        case ["ceta", "id", cetatext_id]:
+            return "article", cetatext_id
         case _:
             return None
