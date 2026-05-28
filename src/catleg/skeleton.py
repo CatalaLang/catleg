@@ -107,7 +107,8 @@ async def jorf_markdown_skeleton(jorftextid: str) -> str:
 
 # separate network calls and processing to ease unit testing
 def _article_skeleton(raw_article_json, breadcrumbs: bool = True):
-    article_json = raw_article_json["article"]
+    is_cetatext = "text" in raw_article_json
+    article_json = raw_article_json["text" if is_cetatext else "article"]
     article = _article_from_legifrance_reply(raw_article_json)
     if article is None:
         raise RuntimeError(
@@ -115,21 +116,27 @@ def _article_skeleton(raw_article_json, breadcrumbs: bool = True):
         )
 
     parts = []
-    if breadcrumbs:
-        texts = article_json["context"]["titreTxt"]
-        texts_in_force = [item for item in texts if item["etat"] == "VIGUEUR"]
-        # Pick the title of the first text currently in force,
-        # or the last item from the candidates list
-        crumbs = [texts_in_force[0] if texts_in_force else texts[-1]] + article_json[
-            "context"
-        ]["titresTM"]
-        for i, toc_entry in enumerate(crumbs, start=1):
-            parts.append(f"{'#' * i} {toc_entry['titre']}")
+    if is_cetatext:
+        # CETATEXT decisions have no code hierarchy; use the decision title.
+        parts.append(f"# {article_json.get('titre', article.id)}")
+        parts.append(_formatted_article(article))
+    else:
+        if breadcrumbs:
+            texts = article_json["context"]["titreTxt"]
+            texts_in_force = [item for item in texts if item["etat"] == "VIGUEUR"]
+            # Pick the title of the first text currently in force,
+            # or the last item from the candidates list
+            crumbs = [
+                texts_in_force[0] if texts_in_force else texts[-1]
+            ] + article_json["context"]["titresTM"]
+            for i, toc_entry in enumerate(crumbs, start=1):
+                parts.append(f"{'#' * i} {toc_entry['titre']}")
 
-    # level: code (1) + length of section hierarchy + article (1)
-    level = 1 + len(article_json["context"]["titresTM"]) + 1
-    parts.append(f"{'#' * level} Article {article_json['num']} | {article.id}")
-    parts.append(_formatted_article(article))
+        # level: code (1) + length of section hierarchy + article (1)
+        level = 1 + len(article_json["context"]["titresTM"]) + 1
+        parts.append(f"{'#' * level} Article {article_json['num']} | {article.id}")
+        parts.append(_formatted_article(article))
+
     return "\n\n".join(parts)
 
 
