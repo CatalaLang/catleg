@@ -23,3 +23,11 @@ Run this once:
 Then, before every commit, the code will be reformatted automatically.
 
 The pre-commit hook will also run the `ruff` linter.
+
+## Releasing a new version
+
+The version is derived automatically from git tags via `hatch-vcs`, so creating a release is just a matter of tagging.
+
+1. Go to the repository on GitHub → **Releases** → **Draft a new release**.
+2. Create a new tag (e.g. `v0.2.10`) targeting `main` and publish the release.
+3. The `publish` CI workflow triggers automatically: it runs the full test matrix, then builds and uploads the package to PyPI.
